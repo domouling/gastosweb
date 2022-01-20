@@ -1,0 +1,287 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    >Home</a></li>
+                    <li class="breadcrumb-item"><a [routerLink]="['/expense']"
+                        routerLinkActive="router-link-active">Gastos</a></li>
+                    <li class="breadcrumb-item active">{{subtitle}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <form #newExpense="ngForm" (ngSubmit)="onSubmit(newExpense)">
+                <div class="card-header">
+                    <h3 class="card-title">{{subtitle}}</h3>
+                </div>
+                <div class="card-body">
+                    
+                        <div class="row mb-3">
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>CECO</b></span>
+                                    <select class="form-select" name="ceco_id" id="ceco_id" #ceco_id="ngModel"
+                                    [(ngModel)]="expense.ceco_id">
+                                        <option *ngFor="let ceco of cecos" [value]=ceco.id>{{ ceco.centrocosto }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>Tipo Gasto</b></span>
+                                    <select class="form-select" name="tipogasto_id" id="tipogasto_id" #tipogasto_id="ngModel"
+                                    [(ngModel)]="expense.tipogasto_id">
+                                        <option *ngFor="let tipogasto of tipogastos" [value]=tipogasto.id>{{ tipogasto.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <input type="date" name="fechainicio" id="fechainicio" #fechainicio="ngModel"
+                                    [(ngModel)]="expense.fechainicio" class="form-control" required
+                                    placeholder="Fecha"  data-toggle="tooltip" title='Fecha'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-calendar-alt"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!fechainicio.valid && fechainicio.touched" class="invalid-feedback d-block">
+                                        Fecha Inicio es requerido
+                                    </small>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>Categoria</b></span>
+                                    <select class="form-select" name="categoria_id" id="categoria_id" #categoria_id="ngModel"
+                                    [(ngModel)]="expense.categoria_id" (change)="onChgSubc(expense.categoria_id)">
+                                        <!-- <option value="0" selected>Elegir Categoria...</option> -->
+                                        <option *ngFor="let category of categories" [value]=category.id>{{ category.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div *ngIf="is_edit == false" class="input-group">
+                                    <span class="input-group-text"><b>Subcategoria</b></span>
+                                    <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
+                                    [(ngModel)]="expense.subcategoria_id" (change)="onChgSubc2(expense.subcategoria_id)" disabled>
+                                        <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="is_edit == true" class="input-group">
+                                    <span class="input-group-text"><b>Subcategoria</b></span>
+                                    <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
+                                    [(ngModel)]="expense.subcategoria_id" (change)="onChgSubc2(expense.subcategoria_id)">
+                                        <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div *ngIf="is_edit == false" class="input-group">
+                                    <span class="input-group-text"><b>Descripción</b></span>
+                                    <select class="form-select" name="subcategoria2_id" id="subcategoria2_id" #subcategoria2_id="ngModel"
+                                    [(ngModel)]="expense.subcategoria2_id" disabled>
+                                        <option *ngFor="let subcategory2 of subcategories2" [value]=subcategory2.id>{{ subcategory2.nombre }}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="is_edit == true" class="input-group">
+                                    <span class="input-group-text"><b>Descripción</b></span>
+                                    <select class="form-select" name="subcategoria2_id" id="subcategoria2_id" #subcategoria2_id="ngModel"
+                                    [(ngModel)]="expense.subcategoria2_id">
+                                        <option *ngFor="let subcategory2 of subcategories2" [value]=subcategory2.id>{{ subcategory2.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md">
+                                <!-- <label class="montos" for="monto">Monto</label> -->
+                                <div class="input-group">
+                                    <input type="text" name="monto" id="monto" #monto="ngModel"
+                                    [(ngModel)]="expense.monto" class="form-control" (change)="onChgMonto(expense.monto)"
+                                    mask="separator.2" thousandSeparator="," prefix="$"
+                                    placeholder="Monto" data-toggle="tooltip" title='Monto'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-money-bill"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <!-- <label class="montos" for="montotrjcredito">Monto Trj. Credito</label> -->
+                                <div class="input-group">
+                                    <input type="text" name="descripcion" id="descripcion" #descripcion="ngModel"
+                                    [(ngModel)]="expense.descripcion" class="form-control"
+                                    placeholder="Detalle" data-toggle="tooltip" title='Detalle'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-pen"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>Metodo</b></span>
+                                    <select class="form-select" name="metodo" id="metodo" #metodo="ngModel"
+                                    [(ngModel)]="expense.metodo" (change)="onChgMetod(expense.metodo)">
+                                        <option *ngFor="let tipocuenta of tipocuentas" [value]=tipocuenta.id>{{ tipocuenta.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md">
+                                <!-- <label class="montos" for="montototal">Monto Total</label> -->
+                                <div class="input-group">
+                                    <input type="text" name="nombrecuenta" id="nombrecuenta" #nombrecuenta="ngModel"
+                                    [(ngModel)]="expense.nombrecuenta" class="form-control" 
+                                    placeholder="Nombre Cuenta" data-toggle="tooltip" title='Nombre Cuenta'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-tag"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>Proveedor</b></span>
+                                    <select class="form-select" name="proveedor_id" id="proveedor_id" #proveedor_id="ngModel"
+                                    [(ngModel)]="expense.proveedor_id">
+                                        <option *ngFor="let provider of providers" [value]=provider.id>{{ provider.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3 consw">
+                            <div class="col-md-7" *ngIf="is_edit == false">
+                                <input type="file" name="imagen" id="imagen" class="file-input" accept="image/*"
+                                (change)="onFileSelected($event)" #imagen="ngModel" #fileUpload
+                                [(ngModel)]="expense.imagen">
+
+                                <div class="file-upload">
+                                    {{ fileName || "Elija Imagen" }}
+                                    <button class="btn btn-primary btn-circle ml-2" type="button" (click)="fileUpload.click()"
+                                    data-toggle="tooltip" title='Subir Imagen'>
+                                        <i class="bi bi-cloud-arrow-up"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-circle ml-2" type="button" (click)="deleteAvatar()"
+                                    data-toggle="tooltip" title='Borrar Imagen'>
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                    <img *ngIf="!srcFile" class="img-avatar mt-1" src="assets/img/default-avatar.jpg" alt="">
+                                    <img *ngIf="srcFile" class="img-avatar mt-1" [src]="srcFile">
+                                </div>
+                            </div>
+
+                            <div class="col-md-7" *ngIf="is_edit == true">
+                                <input type="file" name="imagen" id="imagen" class="file-input" accept="image/*"
+                                (change)="onFileSelected($event)" #fileUpload
+                                >
+                                
+                                <div class="file-upload">
+                                    {{ fileName || "Elija Imagen" }}
+                                    <button class="btn btn-primary btn-circle ml-2" type="button" (click)="fileUpload.click()"
+                                    data-toggle="tooltip" title='Subir Imagen'>
+                                        <i class="bi bi-cloud-arrow-up"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-circle ml-2" type="button" (click)="deleteAvatar()"
+                                    data-toggle="tooltip" title='Borrar Avatar'>
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                    <img *ngIf="!srcFile && !expense.imagen" class="img-avatar mt-1" src="assets/img/default-avatar.jpg" alt="">
+                                    <img *ngIf="!srcFile && expense.imagen" class="img-avatar mt-1" src="{{ url + 'expense/imagen/' + fileName }}" alt="">
+                                    <img *ngIf="srcFile && srcFile.length > 0" class="img-avatar mt-1" [src]="srcFile">
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <div class="card mt-3 resumen">
+                                    <div class="card-header">
+                                        <h5 class="text-center">Resumen Contable en {{ tipocta || '' }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md">
+                                                Saldo Total Prespuesto
+                                            </div>
+                                            <div class="col-md">
+                                                ${{ montopresupuesto || 0 | mask: 'separator':',' }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md">
+                                                Monto Nuevo Gasto
+                                            </div>
+                                            <div class="col-md">
+                                                ${{ montonvogasto || 0 | mask: 'separator':',' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-gray">
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <b>Saldo Final Presupuesto</b>
+                                            </div>
+                                            <div class="col-md">
+                                                ${{ total || 0 | mask: 'separator':',' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-end">
+                        <a [routerLink]="['/expense']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="cajaForm.invalid"> -->
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="newExpense.invalid">
+                    </div>
+                </div>
+                <!-- /.card-footer-->
+            </form>
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+

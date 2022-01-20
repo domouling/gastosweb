@@ -1,0 +1,28 @@
+.custom-file-input ~ .custom-file-label::after {
+    content: "Explorar";
+}
+
+.file-input {
+    display: none;
+}
+
+.file-upload .btn-circle {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.img-avatar {
+    display: block;
+    margin: 0px auto;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.resumen {
+    box-shadow: 1px 1px 5px #444;
+}

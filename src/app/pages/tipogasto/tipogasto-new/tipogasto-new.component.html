@@ -1,0 +1,78 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    >Home</a></li>
+                    <li class="breadcrumb-item"><a [routerLink]="['/tipogasto']"
+                        routerLinkActive="router-link-active">Tipo Gasto</a></li>
+                    <li class="breadcrumb-item active">{{subtitle}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <form #tipoGasto="ngForm" (ngSubmit)="onSubmit(tipoGasto)">
+                <div class="card-header">
+                    <h3 class="card-title">{{subtitle}}</h3>
+                </div>
+                <div class="card-body">
+                    
+                        <div class="row mb-3 consw">
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <input type="text" name="nombre" id="nombre" #nombre="ngModel"
+                                    [(ngModel)]="tipogasto.nombre" class="form-control" required
+                                    placeholder="Nombre Gasto"  data-toggle="tooltip" title='Nombre Gasto'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-credit-card"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
+                                        Nombre Gasto es requerido
+                                    </small>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md">
+                                <div class="form-check form-switch text-center">
+                                    <input class="form-check-input" type="checkbox" id="status" name="status" #status="ngModel" 
+                                    [(ngModel)]="tipogasto.status">
+                                    <label class="form-check-label" for="status">Estatus</label>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-end">
+                        <a [routerLink]="['/tipogasto']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="cajaForm.invalid"> -->
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="tipoGasto.invalid">
+                    </div>
+                </div>
+                <!-- /.card-footer-->
+            </form>
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+

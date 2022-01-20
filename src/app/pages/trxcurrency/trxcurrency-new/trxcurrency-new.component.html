@@ -1,0 +1,116 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    >Home</a></li>
+                    <li class="breadcrumb-item"><a [routerLink]="['/trxcurrency']"
+                        routerLinkActive="router-link-active">Tipo Moneda</a></li>
+                    <li class="breadcrumb-item active">{{subtitle}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <form #trxCurrency="ngForm" (ngSubmit)="onSubmit(trxCurrency)">
+                <div class="card-header">
+                    <h3 class="card-title">{{subtitle}}</h3>
+                </div>
+                <div class="card-body">
+                    
+                        <div class="row mb-3 consw">
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <!-- <label for="name" class="form-label">Nombre</label> -->
+                                    <input type="text" name="nombre" id="nombre" #nombre="ngModel"
+                                    [(ngModel)]="trxcurrency.nombre" class="form-control" required
+                                    placeholder="Nombre Moneda"  data-toggle="tooltip" title='Nombre Moneda'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-money-bill-wave"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
+                                        Nombre Moneda es requerido
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <!-- <label for="name" class="form-label">Nombre</label> -->
+                                    <input type="text" name="isocode" id="isocode" #isocode="ngModel"
+                                    [(ngModel)]="trxcurrency.isocode" class="form-control" required
+                                    placeholder="Iso Code"  data-toggle="tooltip" title='Iso Code'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-money-check-alt"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!isocode.valid && isocode.touched" class="invalid-feedback d-block">
+                                        IsoCode es requerido
+                                    </small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3 consw">
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <!-- <label for="name" class="form-label">Nombre</label> -->
+                                    <input type="text" name="simbolo" id="simbolo" #simbolo="ngModel"
+                                    [(ngModel)]="trxcurrency.simbolo" class="form-control" required
+                                    placeholder="Simbolo Moneda"  data-toggle="tooltip" title='Simbolo Moneda'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-dollar-sign"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!simbolo.valid && simbolo.touched" class="invalid-feedback d-block">
+                                        Simbolo Moneda es requerido
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="form-check form-switch text-center">
+                                    <input class="form-check-input" type="checkbox" id="status" name="status" #status="ngModel" 
+                                    [(ngModel)]="trxcurrency.status">
+                                    <label class="form-check-label" for="status">Estatus</label>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-end">
+                        <a [routerLink]="['/trxcurrency']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="cajaForm.invalid"> -->
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="trxCurrency.invalid">
+                    </div>
+                </div>
+                <!-- /.card-footer-->
+            </form>
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+

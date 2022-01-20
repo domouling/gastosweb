@@ -1,0 +1,194 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    >Home</a></li>
+                    <li class="breadcrumb-item"><a [routerLink]="['/users']"
+                        routerLinkActive="router-link-active">Usuarios</a></li>
+                    <li class="breadcrumb-item active">{{subtitle}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <form #newUser="ngForm" (ngSubmit)="onSubmit(newUser)">
+                <div class="card-header">
+                    <h3 class="card-title">{{subtitle}}</h3>
+                </div>
+                <div class="card-body">
+                    
+                        <div class="row mb-3">
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <!-- <label for="name" class="form-label">Nombre</label> -->
+                                    <input type="text" name="nombre" id="nombre" #nombre="ngModel"
+                                    [(ngModel)]="user.nombre" class="form-control" required
+                                    placeholder="Nombre y Apellido"  data-toggle="tooltip" title='Nombre'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-user"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
+                                        Nombre es requerido
+                                    </small>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <!-- <label for="email" class="form-label">Email</label> -->
+                                    <input type="email" name="email" id="email" #email="ngModel"
+                                    [(ngModel)]="user.email" class="form-control" required
+                                    pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}"
+                                    placeholder="Correo Eléctronico" data-toggle="tooltip" title='Correo'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-envelope"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
+                                        Correo es requerido
+                                    </small>  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md">
+                                <div class="input-group ngif" *ngIf="is_edit == false">
+                                    <input type="password" name="password" id="password" #password="ngModel"
+                                    [(ngModel)]="user.password" class="form-control" required
+                                    placeholder="Password"  data-toggle="tooltip" title='Password'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-key"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">
+                                        Password es requerido
+                                    </small>
+                                </div>
+                                <div class="input-group ngif" *ngIf="is_edit == true">
+                                    <input type="password" name="passnew" id="passnew" #passnew="ngModel"
+                                    [(ngModel)]="user.passnew" class="form-control"
+                                    placeholder="Solo Cambiar Clave"  data-toggle="tooltip" title='Password'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-key"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="input-group" *ngIf="is_edit == false">
+                                    <input type="password" name="retypePassword" id="retypePassword" #retypePassword="ngModel"
+                                    [(ngModel)]="user.retypePassword" class="form-control" required
+                                    placeholder="Repetir Password"  data-toggle="tooltip" title='Repetir Password'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-key"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!retypePassword.valid && retypePassword.touched" class="invalid-feedback d-block">
+                                        Password es requerido
+                                    </small>
+                                </div>
+
+                                <div class="input-group" *ngIf="is_edit == true">
+                                    <input type="password" name="retypePassword" id="retypePassword" #retypePassword="ngModel"
+                                    [(ngModel)]="user.retypePassword" class="form-control"
+                                    placeholder="Repetir Password"  data-toggle="tooltip" title='Repetir Password'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-key"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md" *ngIf="is_edit == false">
+                                <input type="file" name="imagen" id="imagen" class="file-input" accept="image/*"
+                                (change)="onFileSelected($event)" #imagen="ngModel" #fileUpload
+                                [(ngModel)]="user.imagen">
+
+                                <div class="file-upload">
+                                    {{ fileName || "Elija Imagen" }}
+                                    <button class="btn btn-primary btn-circle ml-2" type="button" (click)="fileUpload.click()"
+                                    data-toggle="tooltip" title='Subir Avatar'>
+                                        <i class="bi bi-cloud-arrow-up"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-circle ml-2" type="button" (click)="deleteAvatar()"
+                                    data-toggle="tooltip" title='Borrar Avatar'>
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                    <img *ngIf="!srcFile" class="img-avatar mt-1" src="assets/img/default-avatar.jpg" alt="">
+                                    <img *ngIf="srcFile" class="img-avatar mt-1" [src]="srcFile">
+                                </div>
+                            </div>
+
+                            <div class="col-md" *ngIf="is_edit == true">
+                                <input type="file" name="imagen" id="imagen" class="file-input" accept="image/*"
+                                (change)="onFileSelected($event)" #fileUpload
+                                >
+                                
+                                <div class="file-upload">
+                                    {{ fileName || "Elija Imagen" }}
+                                    <button class="btn btn-primary btn-circle ml-2" type="button" (click)="fileUpload.click()"
+                                    data-toggle="tooltip" title='Subir Avatar'>
+                                        <i class="bi bi-cloud-arrow-up"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-circle ml-2" type="button" (click)="deleteAvatar()"
+                                    data-toggle="tooltip" title='Borrar Avatar'>
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                    <img *ngIf="!srcFile && !user.imagen" class="img-avatar mt-1" src="assets/img/default-avatar.jpg" alt="">
+                                    <img *ngIf="!srcFile && user.imagen" class="img-avatar mt-1" src="{{ url + 'user/avatar/' + fileName }}" alt="">
+                                    <img *ngIf="srcFile && srcFile.length > 0" class="img-avatar mt-1" [src]="srcFile">
+                                </div>
+                            </div>
+ 
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>Rol</b></span>
+                                    <select class="form-select" name="role" id="role" #role="ngModel"
+                                    [(ngModel)]="user.role">
+                                        <option value="ROLE_USER" selected>ROLE_USER</option>
+                                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                                    </select>
+                                </div>
+                            </div>
+        
+                        </div>
+                    
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-end">
+                        <a [routerLink]="['/users']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="cajaForm.invalid"> -->
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="newUser.invalid">
+                    </div>
+                </div>
+                <!-- /.card-footer-->
+            </form>
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->

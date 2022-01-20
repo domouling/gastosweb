@@ -1,0 +1,13 @@
+.img-circle {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-header {
+    background: rgb(170,168,204);
+    background: linear-gradient(0deg, rgba(57,47,223,1) 0%, rgba(26,40,158,1) 45%, rgba(19,1,80,1) 100%);
+}

@@ -1,0 +1,122 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    routerLinkActive="router-link-active">Home</a></li>
+                    <li class="breadcrumb-item active">{{title}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Lista de Usuarios</h3>
+
+                <div class="card-tools">
+                    <!-- <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        data-widget="remove"
+                        data-toggle="tooltip"
+                        title="Nuevo"
+                    >
+                        <i class="fa fa-plus"></i>
+                    </button> -->
+                    <a [routerLink]="['/users/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
+                id="usuarios" class="table table-bordered table-striped usuarios">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estatus</th>
+                            <th>Ultima Sesión</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users">
+                            <td>{{ user.id }}</td>
+                            <td>
+                                <a *ngIf="user.imagen" [routerLink]="['/users/edit/' + user.id]">
+                                    <img class="img-avatar mr-2" src="{{ url + 'user/avatar/' + user.imagen }}">
+                                </a>
+
+                                <a *ngIf="!user.imagen" [routerLink]="['/users/edit/' + user.id]">
+                                    <img class="img-avatar mr-2" src="assets/img/default-avatar.jpg">
+                                </a>
+                                {{ user.nombre }}
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.role }}</td>
+                            <td *ngIf="user.status == 1"><span class="badge badge-success">Activo</span></td>
+                            <td *ngIf="user.status == 0"><span class="badge badge-danger">Inactivo</span></td>
+                            <td>{{ user.ultimasesion }}</td>
+                            <td>
+                                <a [routerLink]="['/users/edit/' + user.id]" class="btn btn-primary btn-sm mr-1" 
+                                title="Editar"><i class="fa fa-pen"></i></a>
+                                
+                                <button type="button" class="btn btn-sm btn-danger" *ngIf="!user.nombre.includes('Admin')"
+                                data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+user.id">
+                                <i class="fa fa-trash"></i>
+                                </button>
+
+                                <!-- /* Modal */ -->                                
+                                <div class="modal fade" id="{{'modal' + user.id}}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Atencion</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p>¿Estas seguro de Borrar el Usuario "{{ user.nombre }}"?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <a (click)="deleteUser(user.id)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a>
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <!--/* Final Modal */-->
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+
+            </div>
+            <!-- /.card-footer-->
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+

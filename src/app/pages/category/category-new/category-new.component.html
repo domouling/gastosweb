@@ -1,0 +1,92 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    >Home</a></li>
+                    <li class="breadcrumb-item"><a [routerLink]="['/category']"
+                        routerLinkActive="router-link-active">Categoria</a></li>
+                    <li class="breadcrumb-item active">{{subtitle}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <form #newCategory="ngForm" (ngSubmit)="onSubmit(newCategory)">
+                <div class="card-header">
+                    <h3 class="card-title">{{subtitle}}</h3>
+                </div>
+                <div class="card-body">
+                    
+                        <div class="row mb-3 consw">
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <input type="text" name="nombre" id="nombre" #nombre="ngModel"
+                                    [(ngModel)]="category.nombre" class="form-control" required
+                                    placeholder="Nombre Categoria"  data-toggle="tooltip" title='Nombre Categoria'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-tags"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
+                                        Nombre Categpria es requerido
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="form-check form-switch text-center">
+                                    <input class="form-check-input" type="checkbox" id="status" name="status" #status="ngModel" 
+                                    [(ngModel)]="category.status">
+                                    <label class="form-check-label" for="status">Estatus</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <input type="text" name="jerarquia" id="jerarquia" #jerarquia="ngModel"
+                                    [(ngModel)]="category.jerarquia" class="form-control" 
+                                    placeholder="Jerarquia"  data-toggle="tooltip" title='Jerarquia'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-sitemap"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-end">
+                        <a [routerLink]="['/category']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="cajaForm.invalid"> -->
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="newCategory.invalid">
+                    </div>
+                </div>
+                <!-- /.card-footer-->
+            </form>
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+
+

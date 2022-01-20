@@ -1,0 +1,120 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    routerLinkActive="router-link-active">Home</a></li>
+                    <li class="breadcrumb-item active">{{title}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">SubCategorias2</h3>
+
+                <div class="card-tools">
+                    <!-- <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        data-widget="remove"
+                        data-toggle="tooltip"
+                        title="Nuevo"
+                    >
+                        <i class="fa fa-plus"></i>
+                    </button> -->
+                    <a [routerLink]="['/subcategory2/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
+                id="subcategoria2" class="table table-bordered table-striped subcategoria2">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>SubCategoria</th>
+                            <th>JerarquiaCat</th>
+                            <th>JerarquiaSubCat</th>
+                            <th>JerarquiaSubCat2</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let subcategory2 of subcategories2">
+                            <td>{{ subcategory2.id }}</td>
+                            <td>{{ subcategory2.nombre }}</td>
+                            <td>{{ subcategory2.subcategoria }}</td>
+                            <td>{{ subcategory2.jerarquiacat }}</td>
+                            <td>{{ subcategory2.jerarquiasubcat }}</td>
+                            <td>{{ subcategory2.jerarquiasubcat2 }}</td>
+                            <td *ngIf="subcategory2.status == 1"><span class="badge badge-success">Activo</span></td>
+                            <td *ngIf="subcategory2.status == 0"><span class="badge badge-danger">Inactivo</span></td>
+                            <td>
+                                <a [routerLink]="['/subcategory2/edit/' + subcategory2.id]" class="btn btn-primary btn-sm mr-1" 
+                                title="Editar"><i class="fa fa-pen"></i></a>
+                                
+                                <button type="button" class="btn btn-sm btn-danger"
+                                data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+subcategory2.id">
+                                <i class="fa fa-trash"></i>
+                                </button>
+
+                                <!-- /* Modal */ -->                                
+                                <div class="modal fade" id="{{'modal' + subcategory2.id}}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Atencion</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p>¿Estas seguro de Borrar la SubCategoria2 "{{ subcategory2.nombre }}"?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <a (click)="deleteSubcategory2(subcategory2.id)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a>
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <!--/* Final Modal */-->
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+
+            </div>
+            <!-- /.card-footer-->
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+
+
+
+
+

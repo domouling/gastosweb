@@ -1,0 +1,135 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    >Home</a></li>
+                    <li class="breadcrumb-item"><a [routerLink]="['/subcategory']"
+                        routerLinkActive="router-link-active">SubCategoria</a></li>
+                    <li class="breadcrumb-item active">{{subtitle}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <form #newSubcategory="ngForm" (ngSubmit)="onSubmit(newSubcategory)">
+                <div class="card-header">
+                    <h3 class="card-title">{{subtitle}}</h3>
+                </div>
+                <div class="card-body">
+                        <div class="row mb-3 consw">
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <input type="text" name="nombre" id="nombre" #nombre="ngModel"
+                                    [(ngModel)]="subcategory.nombre" class="form-control" required
+                                    placeholder="Nombre SubCategoria"  data-toggle="tooltip" title='Nombre SubCategoria'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-tag"></span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
+                                        Nombre SubCategoria es requerido
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>Categoria</b></span>
+                                    <select class="form-select" name="categoria_id" id="categoria_id" #categoria_id="ngModel"
+                                    [(ngModel)]="subcategory.categoria_id">
+                                        <option *ngFor="let category of categories" [value]=category.id>{{ category.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="form-check form-switch text-center">
+                                    <input class="form-check-input" type="checkbox" id="status" name="status" #status="ngModel" 
+                                    [(ngModel)]="subcategory.status">
+                                    <label class="form-check-label" for="status">Estatus</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3 consw">
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <input type="text" name="jerarquiasubcatpcpal" id="jerarquiasubcatpcpal" 
+                                    #jerarquiasubcatpcpal="ngModel"
+                                    [(ngModel)]="subcategory.jerarquiasubcatpcpal" class="form-control" 
+                                    placeholder="Jerarquiasubcatpcpal" data-toggle="tooltip" title='Jerarquiasubcatpcpal'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-sitemap"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <input type="text" name="jerarquiasubcat" id="jerarquiasubcat" 
+                                    #jerarquiasubcat="ngModel"
+                                    [(ngModel)]="subcategory.jerarquiasubcat" class="form-control" 
+                                    placeholder="Jerarquiasubcat" data-toggle="tooltip" title='Jerarquiasubcat'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-sitemap"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <input type="text" name="numjerarsubcat" id="numjerarsubcat" 
+                                    #jerarquiasubcatpcpal="ngModel"
+                                    [(ngModel)]="subcategory.numjerarsubcat" class="form-control" 
+                                    placeholder="Mumjerarsubcat" data-toggle="tooltip" title='Numjerarsubcat'>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-sitemap"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-end">
+                        <a [routerLink]="['/subcategory']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="cajaForm.invalid"> -->
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="newSubcategory.invalid">
+                    </div>
+                </div>
+                <!-- /.card-footer-->
+            </form>
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+
+
+

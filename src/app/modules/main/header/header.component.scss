@@ -1,0 +1,17 @@
+.fa-bars {
+    cursor: pointer;
+}
+
+.nav-item {
+    .nav-link {
+        cursor: pointer;
+    }
+}
+
+.main-header {
+    background-color: #130456;
+    color: white;
+    .navbar-nav a {
+        color: white
+    }
+}
