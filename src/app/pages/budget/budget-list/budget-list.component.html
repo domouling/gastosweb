@@ -77,7 +77,7 @@
                             <td class="text-right">${{ estimate.montoctacorriente | mask: 'separator':',' }}</td>
                             <td class="text-right">${{ estimate.montolineacredito | mask: 'separator':',' }}</td>
                             <td class="text-right">${{ estimate.montotrjcredito | mask: 'separator':',' }}</td>
-                            <td class="text-right">${{ estimate.montototal | mask: 'separator':',' }}</td>
+                            <td class="text-right">${{ estimate.montoctacorriente +  estimate.montolineacredito + estimate.montotrjcredito | mask: 'separator':',' }}</td>
                             <td>{{ estimate.tipogasto }}</td>
                             <td>{{ estimate.moneda }}</td>
                             <td *ngIf="estimate.status == 1"><span class="badge badge-success">Activo</span></td>
