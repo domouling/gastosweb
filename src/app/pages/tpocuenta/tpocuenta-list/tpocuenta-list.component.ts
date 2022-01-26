@@ -62,7 +62,7 @@ export class TpocuentaListComponent implements OnInit, OnDestroy {
       response => {
 
         if(response.status == 'success') {
-          this.tpocuentas = response.data;
+          this.tpocuentas = response.tpocuentas;
           this.dtTrigger.next(null);
         }
       },
@@ -93,7 +93,7 @@ export class TpocuentaListComponent implements OnInit, OnDestroy {
         this.status = 'error';
         if(error.status == 419){
           localStorage.removeItem('token');
-          localStorage.removeItem('identity');
+          /* localStorage.removeItem('identity'); */
           setTimeout(() => this._router.navigate(['/login']), 1500);
         }
       }

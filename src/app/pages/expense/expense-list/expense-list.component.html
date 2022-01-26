@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Gastos</h3>
+                <h3 class="card-title">Movimientos</h3>
 
                 <div class="card-tools">
                     <!-- <button
@@ -55,9 +55,9 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let expense of expenses">
-                            <td>{{ expense.ceco }}</td>
-                            <td>{{ expense.categoria }}</td>
-                            <td>{{ expense.proveedor }}</td>
+                            <td>{{ expense.centrocosto.centrocosto }}</td>
+                            <td>{{ expense.categoria.nombre }}</td>
+                            <td>{{ expense.proveedor.nombre }}</td>
                             <td class="text-right">${{ expense.monto | mask: 'separator':',' }}</td>
                             <td>{{ expense.fechainicio | date: 'dd/MM/yyyy' }}</td>
                             <td>
@@ -78,7 +78,7 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                          <p>¿Estas seguro de Borrar el Gasto "{{ expense.id }}"?</p>
+                                          <p>¿Estas seguro de Borrar el Movimiento "{{ expense.id }}"?</p>
                                         </div>
                                         <div class="modal-footer">
                                           <a (click)="deleteExpense(expense.id)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a>

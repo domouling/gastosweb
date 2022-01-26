@@ -22,70 +22,70 @@ export class CecoService {
 
     add(ceco:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.post(this.url + 'ceco/add', ceco, {headers: headers});
+        return this._http.post(this.url + 'cecos', ceco, {headers: headers});
     }
 
-    update(ceco:any):Observable<any>{
+    update(id:number, ceco:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.put(this.url + 'ceco/update', ceco, {headers: headers});
+        return this._http.put(this.url + 'cecos/' + id , ceco, {headers: headers});
     }
 
 
     addAvatar(file: File):Observable<any>{
         let formParams = new FormData();
-        formParams.append('file0', file);
+        formParams.append('image', file);
 
-        let headers = new HttpHeaders().set('Authorization', this.getToken());
+        let headers = new HttpHeaders().set('auth-token', this.getToken());
         
-        return this._http.post(this.url + 'ceco/upload-avatar', formParams, {headers: headers});
+        return this._http.post(this.url + 'cecos/upload-avatar', formParams, {headers: headers});
     }
 
     avatar(filename: string):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.get(this.url + 'ceco/avatar/' + filename, {headers: headers}); 
+        return this._http.get(this.url + 'cecos/file/' + filename, {headers: headers}); 
     }
 
 
     deleteAvatar(filename: string){
-        let headers = new HttpHeaders().set('Authorization', this.getToken());
+        let headers = new HttpHeaders().set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'ceco/delete-avatar/' + filename, {headers: headers});
+        return this._http.get(this.url + 'cecos/delete-avatar/' + filename, {headers: headers});
     }
 
 
     updateImage(data: any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.put(this.url + 'ceco/update-image', data, {headers: headers});
+        return this._http.put(this.url + 'cecos/image/update', data, {headers: headers});
     }
 
 
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'ceco/all', {headers: headers});
+        return this._http.get(this.url + 'cecos', {headers: headers});
     }
 
     getId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'ceco/edit/' + id, {headers: headers});
+        return this._http.get(this.url + 'cecos/' + id, {headers: headers});
     }
 
     deleteCeco(id:number){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                       .set('Authorization', this.getToken());
+                                       .set('auth-token', this.getToken());
         
-        return this._http.delete(this.url+'ceco/delete/'+id, {headers: headers});
+        return this._http.delete(this.url+'cecos/'+id, {headers: headers});
     }
 
     getToken(){
@@ -99,7 +99,7 @@ export class CecoService {
         return this.token;
     }
 
-    getIdentity(){
+    /* getIdentity(){
         let identity = JSON.parse(localStorage.getItem('identity')!);
         if(identity && identity != null && identity != undefined && identity != 'undefined') {
             this.identity = identity;
@@ -108,6 +108,13 @@ export class CecoService {
         }
 
         return this.identity;
+    } */
+
+    async getIdentity():Promise<Observable<any>> {
+        
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                       .set('auth-token', this.getToken());
+        return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
 
 }

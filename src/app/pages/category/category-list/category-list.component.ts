@@ -62,7 +62,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       response => {
 
         if(response.status == 'success') {
-          this.categories = response.data;
+          this.categories = response.categories;
           this.dtTrigger.next(null);
         }
       },

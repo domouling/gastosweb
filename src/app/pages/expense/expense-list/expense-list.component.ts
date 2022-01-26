@@ -32,7 +32,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     private _userService: UserService,
     private _expenserService: ExpenseService
   ) {
-    this.title = 'Gastos';
+    this.title = 'Movimientos';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -60,9 +60,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   getExpenses() {
     this._expenserService.getAll().subscribe(
       response => {
-
         if(response.status == 'success') {
-          this.expenses = response.data;
+          this.expenses = response.expenses;
           this.dtTrigger.next(null);
         }
       },
@@ -81,7 +80,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     this._expenserService.deleteExpense(id).subscribe(
       response => {
         this.status = 'success';
-        this.msg = "Gasto eliminado con Exito";
+        this.msg = "Movimiento eliminado con Exito";
         this.getExpenses();
         //window.location.reload();
         this._router.routeReuseStrategy.shouldReuseRoute = () => false;

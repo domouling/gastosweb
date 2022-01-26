@@ -62,7 +62,7 @@ export class TipogastoListComponent implements OnInit, OnDestroy {
       response => {
 
         if(response.status == 'success') {
-          this.tipogastos = response.data;
+          this.tipogastos = response.tpogastos;
           this.dtTrigger.next(null);
         }
       },

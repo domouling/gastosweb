@@ -56,7 +56,7 @@
                             <td>{{ ceco.id }}</td>
                             <td>
                                 <a *ngIf="ceco.imagen" [routerLink]="['/ceco/edit/' + ceco.id]">
-                                    <img class="img-avatar mr-2" src="{{ url + 'ceco/avatar/' + ceco.imagen }}">
+                                    <img class="img-avatar mr-2" src="{{ url + 'cecos/file/' + ceco.imagen }}">
                                 </a>
 
                                 <a *ngIf="!ceco.imagen" [routerLink]="['/ceco/edit/' + ceco.id]">

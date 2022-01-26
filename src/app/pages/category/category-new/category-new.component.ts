@@ -33,7 +33,7 @@ export class CategoryNewComponent implements OnInit {
     private _userService: UserService,
     private _categoryService: CategoryService
   ) {
-    this.category = new Category(1,1,'','',1,'','');
+    this.category = new Category(null,1,'','',1,'','');
     this.title = 'Categoria';
     this.subtitle = 'Categoria Nueva';
     this.url = global.url;

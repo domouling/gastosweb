@@ -22,37 +22,37 @@ export class TpoCuentaService {
 
     add(tpocuenta:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.post(this.url + 'tpocuenta/add', tpocuenta, {headers: headers});
+        return this._http.post(this.url + 'tpocuentas', tpocuenta, {headers: headers});
     }
 
-    update(tpocuenta:any):Observable<any>{
+    update(id: number, tpocuenta:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.put(this.url + 'tpocuenta/update', tpocuenta, {headers: headers});
+        return this._http.put(this.url + 'tpocuentas/' + id, tpocuenta, {headers: headers});
     }
 
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'tpocuenta/all', {headers: headers});
+        return this._http.get(this.url + 'tpocuentas', {headers: headers});
     }
 
     getId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'tpocuenta/edit/' + id, {headers: headers});
+        return this._http.get(this.url + 'tpocuentas/' + id, {headers: headers});
     }
 
     deleteTpocuenta(id:number){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                       .set('Authorization', this.getToken());
+                                       .set('auth-token', this.getToken());
         
-        return this._http.delete(this.url+'tpocuenta/delete/'+id, {headers: headers});
+        return this._http.delete(this.url+'tpocuentas/'+id, {headers: headers});
     }
 
     getToken(){
@@ -66,15 +66,11 @@ export class TpoCuentaService {
         return this.token;
     }
 
-    getIdentity(){
-        let identity = JSON.parse(localStorage.getItem('identity')!);
-        if(identity && identity != null && identity != undefined && identity != 'undefined') {
-            this.identity = identity;
-        } else {
-            this.identity = null
-        }
-
-        return this.identity;
+    async getIdentity():Promise<Observable<any>> {
+        
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                       .set('auth-token', this.getToken());
+        return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
 
 }

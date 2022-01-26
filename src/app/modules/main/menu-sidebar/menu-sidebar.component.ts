@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+
 import { UserService } from '@services/user.service'; 
 
 @Component({
@@ -9,7 +13,7 @@ import { UserService } from '@services/user.service';
     providers: [UserService]
 })
 export class MenuSidebarComponent implements OnInit {
-    public user;
+    public user:any = '';
     public menu = MENU;
 
     constructor(
@@ -17,7 +21,18 @@ export class MenuSidebarComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.user =  this._userService.getIdentity();
+        this.getInfo();
+    }
+
+    async getInfo() {
+        (await this._userService.getIdentity()).subscribe(
+            response => {
+                this.user = response.data;
+            },
+            error => {
+                console.log(error);
+            }
+        )
     }
 }
 
@@ -31,7 +46,7 @@ export const MENU = [
     {
         icon: 'bi bi-receipt',
         role: 'ALL',
-        name: 'Gastos',
+        name: 'Movimientos',
         path: ['/expense']
     },
     {

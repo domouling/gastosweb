@@ -33,7 +33,7 @@ export class TpocuentaEditComponent implements OnInit {
     private _userService: UserService,
     private _tpocuentaService: TpoCuentaService
   ) {
-    this.tpocuenta = new Tpocuenta(1,'',1,'','');
+    this.tpocuenta = new Tpocuenta(null,'',1,'','');
     this.title = 'Tipo de Cuenta';
     this.subtitle = 'Editar Tipo Cuenta';
     this.url = global.url;
@@ -47,7 +47,7 @@ export class TpocuentaEditComponent implements OnInit {
   }
 
   onSubmit(form:any){
-    this._tpocuentaService.update(this.tpocuenta).subscribe(
+    this._tpocuentaService.update(this.tpocuenta.id, this.tpocuenta).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
@@ -71,8 +71,8 @@ export class TpocuentaEditComponent implements OnInit {
       let id = params['id'];
       this._tpocuentaService.getId(id).subscribe(
         response => {
-          if(response.data) {
-            this.tpocuenta = response.data;
+          if(response.tpocuenta) {
+            this.tpocuenta = response.tpocuenta;
           } else {
             this._router.navigate(['/tpocuenta']);
           }

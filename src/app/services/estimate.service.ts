@@ -22,45 +22,76 @@ export class EstimateService {
 
     add(estimate:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.post(this.url + 'estimate/add', estimate, {headers: headers});
+        return this._http.post(this.url + 'estimates', estimate, {headers: headers});
     }
 
-    update(estimate:any):Observable<any>{
+    update(id: number, estimate:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.put(this.url + 'estimate/update', estimate, {headers: headers});
+        return this._http.put(this.url + 'estimates/' + id, estimate, {headers: headers});
     }
 
 
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'estimate/all', {headers: headers});
+        return this._http.get(this.url + 'estimates', {headers: headers});
     }
 
     getId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'estimate/edit/' + id, {headers: headers});
+        return this._http.get(this.url + 'estimates/' + id, {headers: headers});
     }
 
     getTotals():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'estimate/totals', {headers: headers});
+        return this._http.get(this.url + 'estimates/totales/total', {headers: headers});
     }
 
     deleteEstimate(id:number){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                       .set('Authorization', this.getToken());
+                                       .set('auth-token', this.getToken());
         
-        return this._http.delete(this.url+'estimate/delete/'+id, {headers: headers});
+        return this._http.delete(this.url+'estimates/'+id, {headers: headers});
+    }
+
+    addAvatar(file: File):Observable<any>{
+        let formParams = new FormData();
+        formParams.append('image', file);
+
+        let headers = new HttpHeaders().set('auth-token', this.getToken());
+        
+        return this._http.post(this.url + 'estimates/archivo/upload', formParams, {headers: headers});
+    }
+
+    avatar(filename: string):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('auth-token', this.getToken());
+
+        return this._http.get(this.url + 'estiamtes/file/' + filename, {headers: headers}); 
+    }
+
+
+    deleteAvatar(filename: string){
+        let headers = new HttpHeaders().set('auth-token', this.getToken());
+        
+        return this._http.get(this.url + 'estimates/delete-avatar/' + filename, {headers: headers});
+    }
+
+
+    updateImage(data: any):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('auth-token', this.getToken());
+
+        return this._http.put(this.url + 'estimates/image/update', data, {headers: headers});
     }
 
     getToken(){
@@ -74,15 +105,11 @@ export class EstimateService {
         return this.token;
     }
 
-    getIdentity(){
-        let identity = JSON.parse(localStorage.getItem('identity')!);
-        if(identity && identity != null && identity != undefined && identity != 'undefined') {
-            this.identity = identity;
-        } else {
-            this.identity = null
-        }
-
-        return this.identity;
+    async getIdentity():Promise<Observable<any>> {
+        
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                       .set('auth-token', this.getToken());
+        return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
 
     

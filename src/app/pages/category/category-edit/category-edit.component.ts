@@ -33,7 +33,7 @@ export class CategoryEditComponent implements OnInit {
     private _userService: UserService,
     private _categoryService: CategoryService
   ) {
-    this.category = new Category(1,1,'','',1,'','');
+    this.category = new Category(null,1,'','',1,'','');
     this.title = 'Categoria';
     this.subtitle = 'Categoria Nueva';
     this.url = global.url;
@@ -47,7 +47,7 @@ export class CategoryEditComponent implements OnInit {
   }
 
   onSubmit(form:any){
-    this._categoryService.update(this.category).subscribe(
+    this._categoryService.update(this.category.id, this.category).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
@@ -71,8 +71,8 @@ export class CategoryEditComponent implements OnInit {
       let id = params['id'];
       this._categoryService.getId(id).subscribe(
         response => {
-          if(response.data) {
-            this.category = response.data;
+          if(response.category) {
+            this.category = response.category;
           } else {
             this._router.navigate(['/category']);
           }

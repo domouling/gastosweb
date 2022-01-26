@@ -59,9 +59,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   getUsers() {
     this._userService.getAll().subscribe(
       response => {
-
         if(response.status == 'success') {
-          this.users = response.data;
+          this.users = response.users;
           this.dtTrigger.next(null);
         }
       },

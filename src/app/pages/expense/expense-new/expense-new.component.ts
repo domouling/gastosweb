@@ -88,10 +88,10 @@ export class ExpenseNewComponent implements OnInit {
     private _trxcurrencyService: TrxCurrencyService
   ) {
 
-    this.expense = new Expense(1,1,0,'','','','','','',0,'','',0,0,0,'',1,1,1,1,1,1,1,'',1,'','');
+    this.expense = new Expense(null,1,0,null,null,null,null,null,null,0,null,null,1,0,0,null,1,1,1,1,1,1,1,null,1,'','');
     this.expenseImage = new ExpenseImage(1,'');
-    this.title = 'Gastos';
-    this.subtitle = 'Nuevo Gasto';
+    this.title = 'Movimientos';
+    this.subtitle = 'Nuevo Movimientos';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -168,8 +168,8 @@ export class ExpenseNewComponent implements OnInit {
   getSubCatId(id: any){
     this._subcategoryService.getCatId(id).subscribe(
       response => {
-        if(response.data){
-          this.subcategories = response.data;
+        if(response.subcategory){
+          this.subcategories = response.subcategory;
         }
       },
       error => {
@@ -182,8 +182,8 @@ export class ExpenseNewComponent implements OnInit {
   getSubCat2Id(id: any){
     this._subcategoryService2.getSubCatId(id).subscribe(
       response => {
-        if(response.data){
-          this.subcategories2 = response.data;
+        if(response.subcategory2){
+          this.subcategories2 = response.subcategory2;
         }
       },
       error => {
@@ -195,24 +195,24 @@ export class ExpenseNewComponent implements OnInit {
   
 
   onSubmit(form:any){
-    /* let imagen = this.user.imagen;
-    let correo = this.user.email; */
+    let imagen = this.expense.imagen;
 
     this._expenseService.add(this.expense).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
           this.msg = 'Gasto creado con exito!';
-          /* if(imagen){
+          let id = response.expense.id;
+          if(imagen){
             if(this.filex){
-              this._userService.addAvatar(this.filex).subscribe(
+              this._expenseService.addAvatar(this.filex).subscribe(
                 response => {
                   imagen = response.data;
-                  this.userImage.imagen = imagen;
-                  this.userImage.email = correo;
-                  this._userService.updateImage(this.userImage).subscribe(
+                  this.expenseImage.imagen = imagen;
+                  this.expenseImage.id = id;
+                  this._expenseService.updateImage(this.expenseImage).subscribe(
                     response => {
-                      this.toastr.success(response.data.msg);
+                      this.toastr.success(response.msg);
                     },
                     error => {
                       console.log(error);
@@ -224,7 +224,7 @@ export class ExpenseNewComponent implements OnInit {
                 }
               ); 
             }
-          } */
+          }
           this.toastr.success(this.msg);
           this._router.navigate(['/expense']);
         }
@@ -243,8 +243,8 @@ export class ExpenseNewComponent implements OnInit {
   getTipogastos(){
     this._tipogastoService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.tipogastos = response.data;
+        if(response.tpogastos){
+          this.tipogastos = response.tpogastos;
         }
       },
       error => {
@@ -260,8 +260,8 @@ export class ExpenseNewComponent implements OnInit {
   getTipocuentas(){
     this._tipocuentaService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.tipocuentas = response.data;
+        if(response.tpocuentas){
+          this.tipocuentas = response.tpocuentas;
         }
       },
       error => {
@@ -277,8 +277,8 @@ export class ExpenseNewComponent implements OnInit {
   getCecos(){
     this._cecoService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.cecos = response.data;
+        if(response.cecos){
+          this.cecos = response.cecos;
         }
       },
       error => {
@@ -293,8 +293,8 @@ export class ExpenseNewComponent implements OnInit {
   getMonedas(){
     this._trxcurrencyService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.monedas = response.data;
+        if(response.trxcurrencies){
+          this.monedas = response.trxcurrencies;
         }
       },
       error => {
@@ -309,8 +309,8 @@ export class ExpenseNewComponent implements OnInit {
   getCategories(){
     this._categoryService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.categories = response.data;
+        if(response.categories){
+          this.categories = response.categories;
         }
       },
       error => {
@@ -325,8 +325,8 @@ export class ExpenseNewComponent implements OnInit {
   getSubCats(){
     this._subcategoryService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.subcategories = response.data;
+        if(response.subcategories){
+          this.subcategories = response.subcategories;
         }
       },
       error => {
@@ -341,8 +341,8 @@ export class ExpenseNewComponent implements OnInit {
   getSubCats2(){
     this._subcategoryService2.getAll().subscribe(
       response => {
-        if(response.data){
-          this.subcategories2 = response.data;
+        if(response.subcategories2){
+          this.subcategories2 = response.subcategories2;
         }
       },
       error => {
@@ -357,8 +357,8 @@ export class ExpenseNewComponent implements OnInit {
   getProviders(){
     this._providerService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.providers = response.data;
+        if(response.providers){
+          this.providers = response.providers;
         }
       },
       error => {
@@ -373,8 +373,8 @@ export class ExpenseNewComponent implements OnInit {
   getUsers(){
     this._userService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.users = response.data;
+        if(response.users){
+          this.users = response.users;
         }
       },
       error => {
@@ -389,8 +389,8 @@ export class ExpenseNewComponent implements OnInit {
   getEstTotal(){
     this._estimateService.getTotals().subscribe(
       response => {
-        if(response.data){
-          this.estimates = response.data;
+        if(response.estimates){
+          this.estimates = response.estimates;
         }
       },
       error => {

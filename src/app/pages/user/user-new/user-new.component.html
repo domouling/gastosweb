@@ -156,7 +156,7 @@
                                         <i class="bi bi-x-lg"></i>
                                     </button>
                                     <img *ngIf="!srcFile && !user.imagen" class="img-avatar mt-1" src="assets/img/default-avatar.jpg" alt="">
-                                    <img *ngIf="!srcFile && user.imagen" class="img-avatar mt-1" src="{{ url + 'user/avatar/' + fileName }}" alt="">
+                                    <img *ngIf="!srcFile && user.imagen" class="img-avatar mt-1" src="{{ url + 'users/file/' + fileName }}" alt="">
                                     <img *ngIf="srcFile && srcFile.length > 0" class="img-avatar mt-1" [src]="srcFile">
                                 </div>
                             </div>

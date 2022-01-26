@@ -33,7 +33,7 @@ export class ProviderNewComponent implements OnInit {
     private _userService: UserService,
     private _providerService: ProviderService
   ) {
-    this.provider = new Provider(1,'',1,'','');
+    this.provider = new Provider(null,'',1,'','');
     this.title = 'Proveedores';
     this.subtitle = 'Proveedor Nuevo';
     this.url = global.url;

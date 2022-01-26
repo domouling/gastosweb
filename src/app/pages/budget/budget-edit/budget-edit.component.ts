@@ -43,7 +43,7 @@ export class BudgetEditComponent implements OnInit {
     private _trxcurrencyService: TrxCurrencyService,
     private _estimateService: EstimateService
   ) {
-    this.estimate = new Estimate(1,'','',0,0,0,0,0,'',1,1,1,'',1,'','');
+    this.estimate = new Estimate(null,'','',0,0,0,0,0,'',1,1,1,null,1,'','');
     this.title = 'Prespuestos';
     this.subtitle = 'Editar Presupuesto';
     this.url = global.url;
@@ -60,7 +60,7 @@ export class BudgetEditComponent implements OnInit {
   }
 
   onSubmit(form:any){
-    this._estimateService.update(this.estimate).subscribe(
+    this._estimateService.update(this.estimate.id, this.estimate).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
@@ -84,8 +84,8 @@ export class BudgetEditComponent implements OnInit {
       let id = params['id'];
       this._estimateService.getId(id).subscribe(
         response => {
-          if(response.data){
-            this.estimate = response.data;
+          if(response.estimate){
+            this.estimate = response.estimate;
             this.estimate.fechainicio = moment(this.estimate.fechainicio).format('YYYY-MM-DD');
             this.estimate.fechafin = moment(this.estimate.fechafin).format('YYYY-MM-DD');
 
@@ -104,8 +104,8 @@ export class BudgetEditComponent implements OnInit {
   getTipogastos(){
     this._tipogastoService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.tipogastos = response.data;
+        if(response.tpogastos){
+          this.tipogastos = response.tpogastos;
         }
       },
       error => {
@@ -120,8 +120,8 @@ export class BudgetEditComponent implements OnInit {
   getCecos(){
     this._cecoService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.cecos = response.data;
+        if(response.cecos){
+          this.cecos = response.cecos;
         }
       },
       error => {
@@ -136,8 +136,8 @@ export class BudgetEditComponent implements OnInit {
   getMonedas(){
     this._trxcurrencyService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.monedas = response.data;
+        if(response.trxcurrencies){
+          this.monedas = response.trxcurrencies;
         }
       },
       error => {

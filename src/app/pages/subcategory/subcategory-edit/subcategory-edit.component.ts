@@ -37,7 +37,7 @@ export class SubcategoryEditComponent implements OnInit {
     private _categoryService: CategoryService,
     private _subcategoryService: SubCategoryService
   ) {
-    this.subcategory = new SubCategory(1,'',1,0,0,0,'',1,'','');
+    this.subcategory = new SubCategory(null,'',1,0,0,0,null,1,'','');
     this.title = 'SubCategoria';
     this.subtitle = 'Editar SubCategoria';
     this.url = global.url;
@@ -52,7 +52,7 @@ export class SubcategoryEditComponent implements OnInit {
   }
 
   onSubmit(form:any){
-    this._subcategoryService.update(this.subcategory).subscribe(
+    this._subcategoryService.update(this.subcategory.id, this.subcategory).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
@@ -76,15 +76,15 @@ export class SubcategoryEditComponent implements OnInit {
       let id = params['id'];
       this._subcategoryService.getId(id).subscribe(
         response => {
-          if(response.data) {
-            this.subcategory = response.data;
+          if(response.subcategory) {
+            this.subcategory = response.subcategory;
           } else {
             this._router.navigate(['/subcategory']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/subcategory']);  
+          this._router.navigate(['/subcategory']);
         }
       );
     })
@@ -93,8 +93,8 @@ export class SubcategoryEditComponent implements OnInit {
   getCategories(){
     this._categoryService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.categories = response.data;
+        if(response.categories){
+          this.categories = response.categories;
         }
       },
       error => {

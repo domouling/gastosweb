@@ -22,37 +22,37 @@ export class TrxCurrencyService {
 
     add(trxcurrency:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.post(this.url + 'trxcurrency/add', trxcurrency, {headers: headers});
+        return this._http.post(this.url + 'trxcurrency', trxcurrency, {headers: headers});
     }
 
-    update(trxcurrency:any):Observable<any>{
+    update(id:number, trxcurrency:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.put(this.url + 'trxcurrency/update', trxcurrency, {headers: headers});
+        return this._http.put(this.url + 'trxcurrency/' + id, trxcurrency, {headers: headers});
     }
 
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'trxcurrency/all', {headers: headers});
+        return this._http.get(this.url + 'trxcurrency', {headers: headers});
     }
 
     getId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'trxcurrency/edit/' + id, {headers: headers});
+        return this._http.get(this.url + 'trxcurrency/' + id, {headers: headers});
     }
 
     deleteTrxcurrency(id:number){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                       .set('Authorization', this.getToken());
+                                       .set('auth-token', this.getToken());
         
-        return this._http.delete(this.url+'trxcurrency/delete/'+id, {headers: headers});
+        return this._http.delete(this.url+'trxcurrency/'+id, {headers: headers});
     }
 
     getToken(){
@@ -66,15 +66,11 @@ export class TrxCurrencyService {
         return this.token;
     }
 
-    getIdentity(){
-        let identity = JSON.parse(localStorage.getItem('identity')!);
-        if(identity && identity != null && identity != undefined && identity != 'undefined') {
-            this.identity = identity;
-        } else {
-            this.identity = null
-        }
-
-        return this.identity;
+    async getIdentity():Promise<Observable<any>> {
+        
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                       .set('auth-token', this.getToken());
+        return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
 
 }

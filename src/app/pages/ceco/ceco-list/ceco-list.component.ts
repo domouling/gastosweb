@@ -60,9 +60,8 @@ export class CecoListComponent implements OnInit, OnDestroy {
   getCecos() {
     this._cecoService.getAll().subscribe(
       response => {
-
         if(response.status == 'success') {
-          this.cecos = response.data;
+          this.cecos = response.cecos;
           this.dtTrigger.next(null);
         }
       },
@@ -93,7 +92,7 @@ export class CecoListComponent implements OnInit, OnDestroy {
         this.status = 'error';
         if(error.status == 419){
           localStorage.removeItem('token');
-          localStorage.removeItem('identity');
+          //localStorage.removeItem('identity');
           setTimeout(() => this._router.navigate(['/login']), 1500);
         }
       }

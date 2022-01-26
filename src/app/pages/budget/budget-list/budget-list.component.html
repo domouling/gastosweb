@@ -71,15 +71,15 @@
                                 </button>
                             </td>
                             <td>{{ estimate.id }}</td>
-                            <td>{{ estimate.ceco }}</td>
+                            <td>{{ estimate.centrocosto.centrocosto }}</td>
                             <td>{{ estimate.fechainicio | date: 'dd/MM/yyyy' }}</td>
                             <td>{{ estimate.fechafin | date: 'dd/MM/yyyy' }}</td>
                             <td class="text-right">${{ estimate.montoctacorriente | mask: 'separator':',' }}</td>
                             <td class="text-right">${{ estimate.montolineacredito | mask: 'separator':',' }}</td>
                             <td class="text-right">${{ estimate.montotrjcredito | mask: 'separator':',' }}</td>
                             <td class="text-right">${{ estimate.montoctacorriente +  estimate.montolineacredito + estimate.montotrjcredito | mask: 'separator':',' }}</td>
-                            <td>{{ estimate.tipogasto }}</td>
-                            <td>{{ estimate.moneda }}</td>
+                            <td>{{ estimate.tipogasto.nombre }}</td>
+                            <td>{{ estimate.moneda.simbolo }}</td>
                             <td *ngIf="estimate.status == 1"><span class="badge badge-success">Activo</span></td>
                             <td *ngIf="estimate.status == 0"><span class="badge badge-danger">Inactivo</span></td>
                             <!-- /* Modal */ -->                                

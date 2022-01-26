@@ -36,7 +36,7 @@ export class SubcategoryNewComponent implements OnInit {
     private _categoryService: CategoryService,
     private _subcategoryService: SubCategoryService
   ) {
-    this.subcategory = new SubCategory(1,'',1,0,0,0,'',1,'','');
+    this.subcategory = new SubCategory(null,'',1,0,0,0,null,1,'','');
     this.title = 'SubCategoria';
     this.subtitle = 'SubCategoria Nueva';
     this.url = global.url;
@@ -72,8 +72,8 @@ export class SubcategoryNewComponent implements OnInit {
   getCategories(){
     this._categoryService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.categories = response.data;
+        if(response.categories){
+          this.categories = response.categories;
         }
       },
       error => {

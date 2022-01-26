@@ -62,7 +62,7 @@ export class TrxcurrencyListComponent implements OnInit, OnDestroy {
       response => {
 
         if(response.status == 'success') {
-          this.trxcurrencies = response.data;
+          this.trxcurrencies = response.trxcurrencies;
           this.dtTrigger.next(null);
         }
       },

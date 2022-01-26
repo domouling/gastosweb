@@ -42,7 +42,7 @@ export class BudgetNewComponent implements OnInit {
     private _trxcurrencyService: TrxCurrencyService,
     private _estimateService: EstimateService
   ) {
-    this.estimate = new Estimate(1,'','',0,0,0,0,0,'',1,1,1,'',1,'','');
+    this.estimate = new Estimate(null,'','',0,0,0,0,0,'',1,1,1,null,1,'','');
     this.title = 'Prespuestos';
     this.subtitle = 'Nuevo Presupuesto';
     this.url = global.url;
@@ -80,8 +80,8 @@ export class BudgetNewComponent implements OnInit {
   getTipogastos(){
     this._tipogastoService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.tipogastos = response.data;
+        if(response.tpogastos){
+          this.tipogastos = response.tpogastos;
         }
       },
       error => {
@@ -97,8 +97,8 @@ export class BudgetNewComponent implements OnInit {
   getCecos(){
     this._cecoService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.cecos = response.data;
+        if(response.cecos){
+          this.cecos = response.cecos;
         }
       },
       error => {
@@ -113,8 +113,8 @@ export class BudgetNewComponent implements OnInit {
   getMonedas(){
     this._trxcurrencyService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.monedas = response.data;
+        if(response.trxcurrencies){
+          this.monedas = response.trxcurrencies;
         }
       },
       error => {

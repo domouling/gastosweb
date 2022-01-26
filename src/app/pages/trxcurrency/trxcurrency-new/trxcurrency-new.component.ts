@@ -33,7 +33,7 @@ export class TrxcurrencyNewComponent implements OnInit {
     private _userService: UserService,
     private _trxcurrencyService: TrxCurrencyService
   ) {
-    this.trxcurrency = new Trxcurrency(1,'','','',1,'','');
+    this.trxcurrency = new Trxcurrency(null,'','','',1,'','');
     this.title = 'Tipo de Divisa';
     this.subtitle = 'Divisa Nueva';
     this.url = global.url;

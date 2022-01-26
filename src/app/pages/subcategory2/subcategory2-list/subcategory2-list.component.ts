@@ -60,9 +60,8 @@ export class Subcategory2ListComponent implements OnInit, OnDestroy {
   getSubcategories2() {
     this._subcategoryService2.getAll().subscribe(
       response => {
-
         if(response.status == 'success') {
-          this.subcategories2 = response.data;
+          this.subcategories2 = response.subcategories2;
           this.dtTrigger.next(null);
         }
       },

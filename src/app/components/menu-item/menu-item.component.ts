@@ -21,10 +21,12 @@ export class MenuItemComponent implements OnInit {
     constructor(
         private router: Router,
         private _userService: UserService
-    ) {}
+    ) {
+        this.identity = [];
+    }
 
     ngOnInit(): void {
-        this.identity = this._userService.getIdentity(); 
+        this.getInfo();
         if (
             this.menuItem &&
             this.menuItem.children &&
@@ -38,6 +40,17 @@ export class MenuItemComponent implements OnInit {
             .subscribe((event: NavigationEnd) => {
                 this.calculateIsActive(event.url);
             });
+    }
+
+    async getInfo() {
+        (await this._userService.getIdentity()).subscribe(
+            response => {
+                this.identity = response.data;
+            },
+            error => {
+                console.log(error);
+            }
+        )
     }
 
     public handleMainMenuAction() {

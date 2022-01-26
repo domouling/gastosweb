@@ -37,7 +37,7 @@ export class Subcategory2EditComponent implements OnInit {
     private _subcategoryService: SubCategoryService,
     private _subcategoryService2: SubCategoryService2
   ) {
-    this.subcategory2 = new SubCategory2(1,'',0,0,0,1,'',1,'','');
+    this.subcategory2 = new SubCategory2(null,'',0,0,0,1,null,1,'','');
     this.title = 'SubCategoria2';
     this.subtitle = 'Editar SubCategoria2';
     this.url = global.url;
@@ -52,7 +52,7 @@ export class Subcategory2EditComponent implements OnInit {
   }
 
   onSubmit(form:any){
-    this._subcategoryService2.update(this.subcategory2).subscribe(
+    this._subcategoryService2.update(this.subcategory2.id, this.subcategory2).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
@@ -76,8 +76,8 @@ export class Subcategory2EditComponent implements OnInit {
       let id = params['id'];
       this._subcategoryService2.getId(id).subscribe(
         response => {
-          if(response.data) {
-            this.subcategory2 = response.data;
+          if(response.subcategory2) {
+            this.subcategory2 = response.subcategory2;
           } else {
             this._router.navigate(['/subcategory2']);
           }
@@ -93,8 +93,8 @@ export class Subcategory2EditComponent implements OnInit {
   getCategories(){
     this._subcategoryService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.subcategories = response.data;
+        if(response.subcategories){
+          this.subcategories = response.subcategories;
         }
       },
       error => {

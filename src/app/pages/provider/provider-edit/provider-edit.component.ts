@@ -33,7 +33,7 @@ export class ProviderEditComponent implements OnInit {
     private _userService: UserService,
     private _providerService: ProviderService
   ) {
-    this.provider = new Provider(1,'',1,'','');
+    this.provider = new Provider(null,'',1,'','');
     this.title = 'Proveedores';
     this.subtitle = 'Proveedor Nuevo';
     this.url = global.url;
@@ -47,7 +47,7 @@ export class ProviderEditComponent implements OnInit {
   }
 
   onSubmit(form:any){
-    this._providerService.update(this.provider).subscribe(
+    this._providerService.update(this.provider.id, this.provider).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
@@ -71,8 +71,8 @@ export class ProviderEditComponent implements OnInit {
       let id = params['id'];
       this._providerService.getId(id).subscribe(
         response => {
-          if(response.data) {
-            this.provider = response.data;
+          if(response.provider) {
+            this.provider = response.provider;
           } else {
             this._router.navigate(['/provider']);
           }

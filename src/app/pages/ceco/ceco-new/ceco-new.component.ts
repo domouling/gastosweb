@@ -37,8 +37,8 @@ export class CecoNewComponent implements OnInit {
     private _userService: UserService,
     private _cecoService: CecoService
   ) {
-    this.ceco = new Ceco(1,'',1,'','','','');
-    this.cecoImage = new CecoImage(1,'');
+    this.ceco = new Ceco(null,'',1,null,null,'','');
+    this.cecoImage = new CecoImage(null,'');
     this.title = 'Centro de Costo';
     this.subtitle = 'Nuevo CeCo';
     this.url = global.url;
@@ -58,21 +58,24 @@ export class CecoNewComponent implements OnInit {
 
     this._cecoService.add(this.ceco).subscribe(
       response => {
+        //console.log(response);
         if(response.status == 'success'){
           this.status = 'success';
           this.msg = 'Centro Costo creado con exito!';
-          let id = response.data.data.insertId;
+          let id = response.ceco.id;
+
           if(imagen){
             if(this.filex){
               this._cecoService.addAvatar(this.filex).subscribe(
                 response => {
+                  console.log(response);
                   imagen = response.data;
                   this.cecoImage.imagen = imagen;
                   this.cecoImage.id = id;
                   console.log(this.cecoImage);
                   this._cecoService.updateImage(this.cecoImage).subscribe(
                     response => {
-                      this.toastr.success(response.data.msg);
+                      this.toastr.success(response.msg);
                     },
                     error => {
                       console.log(error);

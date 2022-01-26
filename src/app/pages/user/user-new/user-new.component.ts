@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from '@services/user.service';
+import { CecoService } from '@services/ceco.service';
+
 import { User } from '@/models/user';
 import { UserImage } from '@/models/userimage';
 import { global } from '@services/global';
@@ -12,7 +14,7 @@ import { global } from '@services/global';
   selector: 'app-user-new',
   templateUrl: './user-new.component.html',
   styleUrls: ['./user-new.component.scss'],
-  providers: [UserService]
+  providers: [UserService, CecoService]
 })
 export class UserNewComponent implements OnInit {
 
@@ -32,9 +34,10 @@ export class UserNewComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _cecoService: CecoService
   ) {
-    this.user = new User(1,'','','','','ROLE_USER',1,'','','','','');
+    this.user = new User(null,'','','','','ROLE_USER',1,'','','','','');
     this.userImage = new UserImage('','');
     this.title = 'Usuarios';
     this.subtitle = 'Nuevo Usuario';
@@ -58,10 +61,12 @@ export class UserNewComponent implements OnInit {
 
     this._userService.add(this.user).subscribe(
       response => {
+        console.log(response.user.imagen);
         if(response.status == 'success'){
           this.status = 'success';
           this.msg = 'Usuario creado con exito!';
-          if(imagen){
+          console.log(this.filex);
+          if(response.user.imagen){
             if(this.filex){
               this._userService.addAvatar(this.filex).subscribe(
                 response => {
@@ -70,7 +75,7 @@ export class UserNewComponent implements OnInit {
                   this.userImage.email = correo;
                   this._userService.updateImage(this.userImage).subscribe(
                     response => {
-                      this.toastr.success(response.data.msg);
+                      this.toastr.success(response.msg);
                     },
                     error => {
                       console.log(error);

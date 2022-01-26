@@ -1,3 +1,3 @@
 export const global = {
-    url: 'http://localhost:3500/api/'
+    url: 'http://localhost:4100/api/'
 }

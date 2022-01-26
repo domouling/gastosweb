@@ -33,7 +33,7 @@ export class TipogastoEditComponent implements OnInit {
     private _userService: UserService,
     private _tipogastoService: TipoGastoService
   ) {
-    this.tipogasto = new Tipogasto(1,'',1,'','');
+    this.tipogasto = new Tipogasto(null,'',1,'','');
     this.title = 'Tipo de Gasto';
     this.subtitle = 'Editar Tipo Gasto';
     this.url = global.url;
@@ -47,7 +47,7 @@ export class TipogastoEditComponent implements OnInit {
   }
 
   onSubmit(form:any){
-    this._tipogastoService.update(this.tipogasto).subscribe(
+    this._tipogastoService.update(this.tipogasto.id, this.tipogasto).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
@@ -71,8 +71,8 @@ export class TipogastoEditComponent implements OnInit {
       let id = params['id'];
       this._tipogastoService.getId(id).subscribe(
         response => {
-          if(response.data) {
-            this.tipogasto = response.data;
+          if(response.tpogasto) {
+            this.tipogasto = response.tpogasto;
           } else {
             this._router.navigate(['/tipogasto']);
           }

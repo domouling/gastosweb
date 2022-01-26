@@ -16,10 +16,22 @@ export class UserComponent implements OnInit {
 
     constructor(private _userService: UserService) {
         this.url = global.url;
+        this.user = [];
     }
 
-    ngOnInit(): void {
-        this.user = this._userService.getIdentity();
+    async ngOnInit(): Promise<void> {
+        await this.getInfo();
+    }
+
+    async getInfo() {
+        (await (this._userService.getIdentity())).subscribe(
+            response => {
+                this.user = response.data;
+            },
+            error => {
+                console.log(error);
+            }
+        )
     }
 
     logout() {

@@ -33,7 +33,7 @@ export class TpocuentaNewComponent implements OnInit {
     private _userService: UserService,
     private _tpocuentaService: TpoCuentaService
   ) {
-    this.tpocuenta = new Tpocuenta(1,'',1,'','');
+    this.tpocuenta = new Tpocuenta(null,'',1,'','');
     this.title = 'Tipo de Cuenta';
     this.subtitle = 'Tipo Cuenta Nueva';
     this.url = global.url;

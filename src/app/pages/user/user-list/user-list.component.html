@@ -59,7 +59,7 @@
                             <td>{{ user.id }}</td>
                             <td>
                                 <a *ngIf="user.imagen" [routerLink]="['/users/edit/' + user.id]">
-                                    <img class="img-avatar mr-2" src="{{ url + 'user/avatar/' + user.imagen }}">
+                                    <img class="img-avatar mr-2" src="{{ url + 'users/file/' + user.imagen }}">
                                 </a>
 
                                 <a *ngIf="!user.imagen" [routerLink]="['/users/edit/' + user.id]">
@@ -71,7 +71,7 @@
                             <td>{{ user.role }}</td>
                             <td *ngIf="user.status == 1"><span class="badge badge-success">Activo</span></td>
                             <td *ngIf="user.status == 0"><span class="badge badge-danger">Inactivo</span></td>
-                            <td>{{ user.ultimasesion }}</td>
+                            <td>{{ user.ultimasesion | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
                             <td>
                                 <a [routerLink]="['/users/edit/' + user.id]" class="btn btn-primary btn-sm mr-1" 
                                 title="Editar"><i class="fa fa-pen"></i></a>

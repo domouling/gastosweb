@@ -33,7 +33,7 @@ export class TipogastoNewComponent implements OnInit {
     private _userService: UserService,
     private _tipogastoService: TipoGastoService
   ) {
-    this.tipogasto = new Tipogasto(1,'',1,'','');
+    this.tipogasto = new Tipogasto(null,'',1,'','');
     this.title = 'Tipo de Gasto';
     this.subtitle = 'Tipo Gasto Nuevo';
     this.url = global.url;

@@ -22,37 +22,37 @@ export class ProviderService {
 
     add(provider:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.post(this.url + 'provider/add', provider, {headers: headers});
+        return this._http.post(this.url + 'providers', provider, {headers: headers});
     }
 
-    update(provider:any):Observable<any>{
+    update(id:number, provider:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.put(this.url + 'provider/update', provider, {headers: headers});
+        return this._http.put(this.url + 'providers/' + id, provider, {headers: headers});
     }
 
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'provider/all', {headers: headers});
+        return this._http.get(this.url + 'providers', {headers: headers});
     }
 
     getId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'provider/edit/' + id, {headers: headers});
+        return this._http.get(this.url + 'providers/' + id, {headers: headers});
     }
 
     deleteProvider(id:number){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                       .set('Authorization', this.getToken());
+                                       .set('auth-token', this.getToken());
         
-        return this._http.delete(this.url+'provider/delete/'+id, {headers: headers});
+        return this._http.delete(this.url+'providers/'+id, {headers: headers});
     }
 
     getToken(){
@@ -66,15 +66,11 @@ export class ProviderService {
         return this.token;
     }
 
-    getIdentity(){
-        let identity = JSON.parse(localStorage.getItem('identity')!);
-        if(identity && identity != null && identity != undefined && identity != 'undefined') {
-            this.identity = identity;
-        } else {
-            this.identity = null
-        }
-
-        return this.identity;
+    async getIdentity():Promise<Observable<any>> {
+        
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                       .set('auth-token', this.getToken());
+        return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
 
 }

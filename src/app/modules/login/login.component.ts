@@ -50,34 +50,35 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.isAuthLoading = true;
             this._userService.signup(this.loginForm.value).subscribe(
                 response => {
+/*                     (response.headers.get('auth-token'));
                     if(response.data || response.status == 'success'){
                         this.identity = response.data;
                         
                         localStorage.setItem('identity', JSON.stringify(this.identity));
 
-                        this._userService.signup(this.loginForm.value, true).subscribe(
-                            response => {
-                                if(response.token){
+                        this._userService.signup(this.loginForm.value, true).subscribe( */
+/*                             response => { */
+                                if(response.headers.get('auth-token')){
                                     this.status = 'success';
-                                    this.token = response.token;
+                                    this.token = response.headers.get('auth-token');
                                     localStorage.setItem('token', this.token);
                                     this.toastr.success('Login Exitoso!');
                                     setTimeout(() => this._router.navigate(['/']), 500);
                                 } else {
                                     this.status = 'error';
                                 }
-                            },
-                            error => {
+                           /*  }, */
+                            /* error => {
                                 this.status = 'error';
-                            }
-                        )
+                            } */
+                       /*  )
                     } else {
                         this.status = 'error';
                         this.toastr.error(response.msg);
-                    }
+                    } */
                 },
                 error => {
-                    //console.log(error);
+                    console.log(error);
                     this.toastr.error(error.error.msg);
                 }
             );

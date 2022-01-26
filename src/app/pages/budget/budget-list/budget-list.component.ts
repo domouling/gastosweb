@@ -60,9 +60,8 @@ export class BudgetListComponent implements OnInit, OnDestroy {
   getEstimates() {
     this._estimateService.getAll().subscribe(
       response => {
-
         if(response.status == 'success') {
-          this.estimates = response.data;
+          this.estimates = response.estimates;
           this.dtTrigger.next(null);
         }
       },

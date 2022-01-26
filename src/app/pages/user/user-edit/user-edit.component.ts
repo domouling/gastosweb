@@ -36,7 +36,7 @@ export class UserEditComponent implements OnInit {
     private toastr: ToastrService,
     private _userService: UserService
   ) {
-    this.user = new User(1,'','','','','ROLE_USER',1,'','','','','');
+    this.user = new User(null,'','','','','ROLE_USER',1,'','','','','');
     this.userImage = new UserImage('','');
     this.title = 'Usuarios';
     this.subtitle = 'Editar Usuario';
@@ -57,10 +57,12 @@ export class UserEditComponent implements OnInit {
   onSubmit(form:any){
     let imagen = this.fileName;
     let correo = this.user.email;
+    let id = this.user.id;
 
-    this._userService.update(this.user).subscribe(
+    this._userService.update(id,this.user).subscribe(
       response => {
         if(response.status == 'success'){
+          console.log(response);
           this.status = 'success';
           this.msg = 'Usuario actualizado con exito!';
           if(imagen){
@@ -80,7 +82,7 @@ export class UserEditComponent implements OnInit {
                   this.userImage.email = correo;
                   this._userService.updateImage(this.userImage).subscribe(
                     response => {
-                      this.toastr.success(response.data.msg);
+                      this.toastr.success(response.msg);
                     },
                     error => {
                       console.log(error);
@@ -137,8 +139,8 @@ export class UserEditComponent implements OnInit {
       let id = params['id'];
       this._userService.getUser(id).subscribe(
         response => {
-          if(response.data) {
-            this.user = response.data;
+          if(response.user) {
+            this.user = response.user;
             if(this.user.imagen){
               this.first = this.user.imagen;
             }

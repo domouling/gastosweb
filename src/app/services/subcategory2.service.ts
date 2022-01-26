@@ -22,44 +22,44 @@ export class SubCategoryService2 {
 
     add(subcategory2:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.post(this.url + 'subcategory2/add', subcategory2, {headers: headers});
+        return this._http.post(this.url + 'subcategories2', subcategory2, {headers: headers});
     }
 
-    update(subcategory2:any):Observable<any>{
+    update(id:number, subcategory2:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
 
-        return this._http.put(this.url + 'subcategory2/update', subcategory2, {headers: headers});
+        return this._http.put(this.url + 'subcategories2/' + id, subcategory2, {headers: headers});
     }
 
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'subcategory2/all', {headers: headers});
+        return this._http.get(this.url + 'subcategories2', {headers: headers});
     }
 
     getId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'subcategory2/edit/' + id, {headers: headers});
+        return this._http.get(this.url + 'subcategories2/' + id, {headers: headers});
     }
 
     getSubCatId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                      .set('Authorization', this.getToken());
+                                      .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'subcategory2/subcat/' + id, {headers: headers});
+        return this._http.get(this.url + 'subcategories2/subcat/' + id, {headers: headers});
     }
 
     deleteSubcategory2(id:number){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                       .set('Authorization', this.getToken());
+                                       .set('auth-token', this.getToken());
         
-        return this._http.delete(this.url+'subcategory2/delete/'+id, {headers: headers});
+        return this._http.delete(this.url+'subcategories2/'+id, {headers: headers});
     }
 
     getToken(){
@@ -73,15 +73,11 @@ export class SubCategoryService2 {
         return this.token;
     }
 
-    getIdentity(){
-        let identity = JSON.parse(localStorage.getItem('identity')!);
-        if(identity && identity != null && identity != undefined && identity != 'undefined') {
-            this.identity = identity;
-        } else {
-            this.identity = null
-        }
-
-        return this.identity;
+    async getIdentity():Promise<Observable<any>> {
+        
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                       .set('auth-token', this.getToken());
+        return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
 
 }

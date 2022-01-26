@@ -67,6 +67,7 @@ export class ExpenseEditComponent implements OnInit {
   public url: string;
   public msg: string;
   public error: string;
+  public first: any;
   public fileName: any;
   public filex: any;
   public srcFile: any;
@@ -88,13 +89,14 @@ export class ExpenseEditComponent implements OnInit {
     private _tipocuentaService: TpoCuentaService,
     private _trxcurrencyService: TrxCurrencyService
   ) {
-    this.expense = new Expense(1,1,0,'','','','','','',0,'','',0,0,0,'',1,1,1,1,1,1,1,'',1,'','');
-    this.expenseImage = new ExpenseImage(1,'');
-    this.title = 'Gastos';
-    this.subtitle = 'Nuevo Gasto';
+    this.expense = new Expense(null,1,0,null,null,null,null,null,null,0,null,null,1,0,0,null,1,1,1,1,1,1,1,null,1,'','');
+    this.expenseImage = new ExpenseImage(null,'');
+    this.title = 'Movimientos';
+    this.subtitle = 'Nuevo Movimiento';
     this.url = global.url;
     this.status = '';
     this.msg = '';
+    this.first = null;
     this.fileName = '';
     this.filex = null;
     this.srcFile = null;
@@ -169,8 +171,8 @@ export class ExpenseEditComponent implements OnInit {
   getSubCatId(id: any){
     this._subcategoryService.getCatId(id).subscribe(
       response => {
-        if(response.data){
-          this.subcategories = response.data;
+        if(response.subcategory){
+          this.subcategories = response.subcategory;
         }
       },
       error => {
@@ -183,8 +185,8 @@ export class ExpenseEditComponent implements OnInit {
   getSubCat2Id(id: any){
     this._subcategoryService2.getSubCatId(id).subscribe(
       response => {
-        if(response.data){
-          this.subcategories2 = response.data;
+        if(response.subcategory2){
+          this.subcategories2 = response.subcategory2;
         }
       },
       error => {
@@ -199,9 +201,13 @@ export class ExpenseEditComponent implements OnInit {
       let id = params['id'];
       this._expenseService.getExpense(id).subscribe(
         response => {
-          if(response.data){
-            this.expense = response.data;
+          if(response.expense){
+            this.expense = response.expense;
             this.expense.fechainicio = moment(this.expense.fechainicio).format('YYYY-MM-DD');
+            if(this.expense.imagen){
+              this.first = this.expense.imagen;
+            }
+            this.fileName = this.expense.imagen;
             this.montonvogasto = this.expense.monto;
             let caso = this.expense.metodo;
             
@@ -246,24 +252,32 @@ export class ExpenseEditComponent implements OnInit {
   
 
   onSubmit(form:any){
-    /* let imagen = this.user.imagen;
-    let correo = this.user.email; */
+    let imagen = this.fileName;
+    let id = this.expense.id;
 
-    this._expenseService.update(this.expense).subscribe(
+    this._expenseService.update(this.expense.id, this.expense).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
           this.msg = 'Gasto creado con exito!';
-          /* if(imagen){
+          if(imagen){
             if(this.filex){
-              this._userService.addAvatar(this.filex).subscribe(
+              if(this.filex != this.first && this.first){
+                this._expenseService.deleteAvatar(this.first).subscribe(
+                  response => {},
+                  error => {
+                    console.log(error);
+                  }
+                )
+              }
+              this._expenseService.addAvatar(this.filex).subscribe(
                 response => {
                   imagen = response.data;
-                  this.userImage.imagen = imagen;
-                  this.userImage.email = correo;
-                  this._userService.updateImage(this.userImage).subscribe(
+                  this.expenseImage.imagen = imagen;
+                  this.expenseImage.id = id;
+                  this._expenseService.updateImage(this.expenseImage).subscribe(
                     response => {
-                      this.toastr.success(response.data.msg);
+                      this.toastr.success(response.msg);
                     },
                     error => {
                       console.log(error);
@@ -275,7 +289,16 @@ export class ExpenseEditComponent implements OnInit {
                 }
               ); 
             }
-          } */
+          } else {
+            if(this.first){
+              this._expenseService.deleteAvatar(this.first).subscribe(
+                response => {},
+                error => {
+                  console.log(error);
+                }
+              )
+            }
+          }
           this.toastr.success(this.msg);
           this._router.navigate(['/expense']);
         }
@@ -294,8 +317,8 @@ export class ExpenseEditComponent implements OnInit {
   getTipogastos(){
     this._tipogastoService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.tipogastos = response.data;
+        if(response.tpogastos){
+          this.tipogastos = response.tpogastos;
         }
       },
       error => {
@@ -311,8 +334,8 @@ export class ExpenseEditComponent implements OnInit {
   getTipocuentas(){
     this._tipocuentaService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.tipocuentas = response.data;
+        if(response.tpocuentas){
+          this.tipocuentas = response.tpocuentas;
         }
       },
       error => {
@@ -328,8 +351,8 @@ export class ExpenseEditComponent implements OnInit {
   getCecos(){
     this._cecoService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.cecos = response.data;
+        if(response.cecos){
+          this.cecos = response.cecos;
         }
       },
       error => {
@@ -344,8 +367,8 @@ export class ExpenseEditComponent implements OnInit {
   getMonedas(){
     this._trxcurrencyService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.monedas = response.data;
+        if(response.trxcurrencies){
+          this.monedas = response.trxcurrencies;
         }
       },
       error => {
@@ -360,8 +383,8 @@ export class ExpenseEditComponent implements OnInit {
   getCategories(){
     this._categoryService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.categories = response.data;
+        if(response.categories){
+          this.categories = response.categories;
         }
       },
       error => {
@@ -376,8 +399,8 @@ export class ExpenseEditComponent implements OnInit {
   getSubCats(){
     this._subcategoryService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.subcategories = response.data;
+        if(response.subcategories){
+          this.subcategories = response.subcategories;
           console.log(this.subcategories);
         }
       },
@@ -393,8 +416,8 @@ export class ExpenseEditComponent implements OnInit {
   getSubCats2(){
     this._subcategoryService2.getAll().subscribe(
       response => {
-        if(response.data){
-          this.subcategories2 = response.data;
+        if(response.subcategories2){
+          this.subcategories2 = response.subcategories2;
         }
       },
       error => {
@@ -409,8 +432,8 @@ export class ExpenseEditComponent implements OnInit {
   getProviders(){
     this._providerService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.providers = response.data;
+        if(response.providers){
+          this.providers = response.providers;
         }
       },
       error => {
@@ -425,8 +448,8 @@ export class ExpenseEditComponent implements OnInit {
   getUsers(){
     this._userService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.users = response.data;
+        if(response.users){
+          this.users = response.users;
         }
       },
       error => {
@@ -441,8 +464,8 @@ export class ExpenseEditComponent implements OnInit {
   async getEstTotal(){
     await this._estimateService.getTotals().subscribe(
       response => {
-        if(response.data){
-          this.estimates = response.data;
+        if(response.estimates){
+          this.estimates = response.estimates;
         }
       },
       error => {

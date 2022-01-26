@@ -37,7 +37,7 @@ export class Subcategory2NewComponent implements OnInit {
     private _subcategoryService: SubCategoryService,
     private _subcategoryService2: SubCategoryService2
   ) {
-    this.subcategory2 = new SubCategory2(1,'',0,0,0,1,'',1,'','');
+    this.subcategory2 = new SubCategory2(null,'',0,0,0,1,null,1,'','');
     this.title = 'SubCategoria2';
     this.subtitle = 'SubCategoria2 Nueva';
     this.url = global.url;
@@ -73,8 +73,8 @@ export class Subcategory2NewComponent implements OnInit {
   getSubCategories(){
     this._subcategoryService.getAll().subscribe(
       response => {
-        if(response.data){
-          this.subcategories = response.data;
+        if(response.subcategories){
+          this.subcategories = response.subcategories;
         }
       },
       error => {

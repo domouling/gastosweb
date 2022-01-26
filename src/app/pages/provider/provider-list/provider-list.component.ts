@@ -62,7 +62,7 @@ export class ProviderListComponent implements OnInit, OnDestroy {
       response => {
 
         if(response.status == 'success') {
-          this.providers = response.data;
+          this.providers = response.providers;
           this.dtTrigger.next(null);
         }
       },

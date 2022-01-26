@@ -38,8 +38,8 @@ export class CecoEditComponent implements OnInit {
     private _userService: UserService,
     private _cecoService: CecoService
   ) {
-    this.ceco = new Ceco(1,'',1,'','','','');
-    this.cecoImage = new CecoImage(1,'');
+    this.ceco = new Ceco(null,'',1,null,null,'','');
+    this.cecoImage = new CecoImage(null,'');
     this.title = 'Centro de Costo';
     this.subtitle = 'Editar CeCo';
     this.url = global.url;
@@ -60,7 +60,8 @@ export class CecoEditComponent implements OnInit {
     let imagen = this.fileName;
     let id = this.ceco.id
 
-    this._cecoService.update(this.ceco).subscribe(
+
+    this._cecoService.update(id, this.ceco).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
@@ -82,7 +83,7 @@ export class CecoEditComponent implements OnInit {
                   this.cecoImage.id = id;
                   this._cecoService.updateImage(this.cecoImage).subscribe(
                     response => {
-                      this.toastr.success(response.data.msg);
+                      this.toastr.success(response.msg);
                     },
                     error => {
                       console.log(error);
@@ -147,8 +148,8 @@ export class CecoEditComponent implements OnInit {
       let id = params['id'];
       this._cecoService.getId(id).subscribe(
         response => {
-          if(response.data) {
-            this.ceco = response.data;
+          if(response.ceco) {
+            this.ceco = response.ceco;
             if(this.ceco.imagen){
               this.first = this.ceco.imagen;
             }

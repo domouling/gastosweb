@@ -39,7 +39,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     async getProfile() {
-        let identity = localStorage.getItem('identity');
+        let identity = localStorage.getItem('token');
         if (identity) {
             return true;
         } else {

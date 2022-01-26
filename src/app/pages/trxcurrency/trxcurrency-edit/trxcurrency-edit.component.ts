@@ -32,7 +32,7 @@ export class TrxcurrencyEditComponent implements OnInit {
     private _userService: UserService,
     private _trxcurrencyService: TrxCurrencyService
   ) {
-    this.trxcurrency = new Trxcurrency(1,'','','',1,'','');
+    this.trxcurrency = new Trxcurrency(null,'','','',1,'','');
     this.title = 'Tipo de Divisa';
     this.subtitle = 'Editar Divisa';
     this.url = global.url;
@@ -46,9 +46,10 @@ export class TrxcurrencyEditComponent implements OnInit {
   }
 
   onSubmit(form:any){
-    this._trxcurrencyService.update(this.trxcurrency).subscribe(
+    this._trxcurrencyService.update(this.trxcurrency.id, this.trxcurrency).subscribe(
       response => {
         if(response.status == 'success'){
+          console.log(response);
           this.status = 'success';
           this.msg = 'Tipo Moneda Editado con exito!';
           this.toastr.success(this.msg);
@@ -70,8 +71,8 @@ export class TrxcurrencyEditComponent implements OnInit {
       let id = params['id'];
       this._trxcurrencyService.getId(id).subscribe(
         response => {
-          if(response.data) {
-            this.trxcurrency = response.data;
+          if(response.trxcurrency) {
+            this.trxcurrency = response.trxcurrency;
           } else {
             this._router.navigate(['/trxcurrency']);
           }
