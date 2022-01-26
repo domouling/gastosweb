@@ -43,7 +43,7 @@ export class BudgetListComponent implements OnInit, OnDestroy {
       destroy: true,
       pagingType: 'full_numbers',
       pageLength: 10,
-      scrollX: true,
+      scrollX: false,
       scrollY: "385px",
       scrollCollapse: true,
       responsive: true,

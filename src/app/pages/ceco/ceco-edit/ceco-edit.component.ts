@@ -40,7 +40,7 @@ export class CecoEditComponent implements OnInit {
   ) {
     this.ceco = new Ceco(null,'',1,null,null,'','');
     this.cecoImage = new CecoImage(null,'');
-    this.title = 'Centro de Costo';
+    this.title = 'Centro Costo';
     this.subtitle = 'Editar CeCo';
     this.url = global.url;
     this.status = '';

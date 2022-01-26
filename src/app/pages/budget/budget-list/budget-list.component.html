@@ -50,10 +50,7 @@
                             <th>Ceco</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Final</th>
-                            <th>Cta. Corriente</th>
-                            <th>Linea Credito</th>
-                            <th>Trj. Credito</th>
-                            <th>Total</th>
+                            <th>Monto</th>
                             <th>Tipo Gasto</th>
                             <th>Moneda</th>
                             <th>Estatus</th>
@@ -74,10 +71,7 @@
                             <td>{{ estimate.centrocosto.centrocosto }}</td>
                             <td>{{ estimate.fechainicio | date: 'dd/MM/yyyy' }}</td>
                             <td>{{ estimate.fechafin | date: 'dd/MM/yyyy' }}</td>
-                            <td class="text-right">${{ estimate.montoctacorriente | mask: 'separator':',' }}</td>
-                            <td class="text-right">${{ estimate.montolineacredito | mask: 'separator':',' }}</td>
-                            <td class="text-right">${{ estimate.montotrjcredito | mask: 'separator':',' }}</td>
-                            <td class="text-right">${{ estimate.montoctacorriente +  estimate.montolineacredito + estimate.montotrjcredito | mask: 'separator':',' }}</td>
+                            <td class="text-right">${{ estimate.montototal | mask: 'separator':',' }}</td>
                             <td>{{ estimate.tipogasto.nombre }}</td>
                             <td>{{ estimate.moneda.simbolo }}</td>
                             <td *ngIf="estimate.status == 1"><span class="badge badge-success">Activo</span></td>

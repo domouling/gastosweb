@@ -43,7 +43,7 @@ export class BudgetNewComponent implements OnInit {
     private _estimateService: EstimateService
   ) {
     this.estimate = new Estimate(null,'','',0,0,0,0,0,'',1,1,1,null,1,'','');
-    this.title = 'Prespuestos';
+    this.title = 'Presupuestos';
     this.subtitle = 'Nuevo Presupuesto';
     this.url = global.url;
     this.status = '';

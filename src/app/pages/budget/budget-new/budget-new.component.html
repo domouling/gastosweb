@@ -48,7 +48,7 @@
                                     placeholder="Fecha Inicio"  data-toggle="tooltip" title='Fecha Inicio'>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-calendar-alt"></span>
+                                            <span class="fas fa-calendar-alt"></span>&nbsp; <b>Inicio</b>
                                         </div>
                                     </div>
                                     <small *ngIf="!fechainicio.valid && fechainicio.touched" class="invalid-feedback d-block">
@@ -64,7 +64,7 @@
                                     placeholder="Fecha Final"  data-toggle="tooltip" title='Fecha Final'>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-calendar-alt"></span>
+                                            <span class="fas fa-calendar-alt"></span>&nbsp; <b>Fin</b>
                                         </div>
                                     </div>
                                     <small *ngIf="!fechafin.valid && fechafin.touched" class="invalid-feedback d-block">
@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <!-- <div class="row mb-3">
                             <div class="col-md">
                                 <label class="montos" for="montoctacorriente">Monto Cta. Corriente</label>
                                 <div class="input-group">
@@ -119,11 +119,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row mb-3 consw">
                             <div class="col-md">
-                                <label class="montos" for="montototal">Monto Total</label>
+                                <!-- <label class="montos" for="montototal">Monto Total</label> -->
                                 <div class="input-group">
                                     <input type="text" name="montototal" id="montototal" #montototal="ngModel"
                                     [(ngModel)]="estimate.montototal" class="form-control"
@@ -131,15 +131,12 @@
                                     placeholder="Monto Total" data-toggle="tooltip" title='Monto Total'>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-money-bill"></span>
+                                            <span class="fas fa-money-bill"></span>&nbsp; <b>Monto</b>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
-
-                        <div class="row mb-3 consw">
                             <div class="col-md">
                                 <div class="input-group">
                                     <span class="input-group-text"><b>Tipo Gasto</b></span>
@@ -159,6 +156,10 @@
                                     </select>
                                 </div>
                             </div>
+
+                        </div>
+
+                        <div class="row mb-3 consw">
 
                             <div class="col-md">
                                 <div class="form-check form-switch text-center">

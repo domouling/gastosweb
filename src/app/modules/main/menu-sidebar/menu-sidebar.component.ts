@@ -69,7 +69,7 @@ export const MENU = [
             {
                 icon: 'bi bi-award',
                 role: 'ROLE_ADMIN',
-                name: 'Centro de Costo',
+                name: 'Centro Costo',
                 path: ['/ceco'],
             },
             {
