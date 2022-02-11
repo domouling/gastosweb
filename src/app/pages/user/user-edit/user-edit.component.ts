@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from '@services/user.service';
+import { CecoService } from '@services/ceco.service';
 import { User } from '@/models/user';
 import { UserImage } from '@/models/userimage';
 import { global } from '@services/global';
@@ -12,7 +13,7 @@ import { global } from '@services/global';
   selector: 'app-user-edit',
   templateUrl: '../user-new/user-new.component.html',
   styleUrls: ['../user-new/user-new.component.scss'],
-  providers: [UserService]
+  providers: [UserService, CecoService]
 })
 
 export class UserEditComponent implements OnInit {
@@ -30,13 +31,16 @@ export class UserEditComponent implements OnInit {
   public srcFile: any;
   public is_edit: boolean;
 
+  public cecos: any;
+
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _cecoService: CecoService
   ) {
-    this.user = new User(null,'','','','','ROLE_USER',1,'','','','','');
+    this.user = new User(null,'','','','','ROLE_USER',1,'','',1,'','','');
     this.userImage = new UserImage('','');
     this.title = 'Usuarios';
     this.subtitle = 'Editar Usuario';
@@ -47,14 +51,18 @@ export class UserEditComponent implements OnInit {
     this.fileName = '';
     this.filex = null;
     this.srcFile = null;
+    this.cecos = null;
+
     this.is_edit = true;
   }
 
   ngOnInit(): void {
     this.getUser();
+    this.getCecos();
   }
 
   onSubmit(form:any){
+    console.log(this.user);
     let imagen = this.fileName;
     let correo = this.user.email;
     let id = this.user.id;
@@ -117,6 +125,22 @@ export class UserEditComponent implements OnInit {
       }
     );
 
+  }
+
+  getCecos() {
+    this._cecoService.getAllAct().subscribe(
+      response => {
+        if(response.cecos){
+          this.cecos = response.cecos;
+        }
+      },
+      error => {
+        console.log(error);
+        if(error.status == 419){
+          this._userService.logout();
+        }
+      }
+    )
   }
 
   onFileSelected(data: any){

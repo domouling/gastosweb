@@ -33,6 +33,8 @@ export class BudgetEditComponent implements OnInit {
   public error: any;
   public is_edit: boolean;
 
+  public ceco: number;
+
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -43,7 +45,10 @@ export class BudgetEditComponent implements OnInit {
     private _trxcurrencyService: TrxCurrencyService,
     private _estimateService: EstimateService
   ) {
-    this.estimate = new Estimate(null,'','',0,0,0,0,0,'',1,1,1,null,1,'','');
+
+    this.ceco =  parseInt(localStorage.getItem('ceco'));
+
+    this.estimate = new Estimate(null,'','',0,0,0,0,0,'',1,this.ceco,1,null,1,'','');
     this.title = 'Presupuestos';
     this.subtitle = 'Editar Presupuesto';
     this.url = global.url;
@@ -102,7 +107,7 @@ export class BudgetEditComponent implements OnInit {
   }
 
   getTipogastos(){
-    this._tipogastoService.getAll().subscribe(
+    this._tipogastoService.getAllAct().subscribe(
       response => {
         if(response.tpogastos){
           this.tipogastos = response.tpogastos;

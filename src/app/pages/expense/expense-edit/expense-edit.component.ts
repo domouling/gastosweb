@@ -4,6 +4,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import moment, { Moment } from 'moment';
 
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { NewcategoryComponent } from '../modal/newcategory/newcategory.component';
+import { NewproviderComponent } from '../modal/newprovider/newprovider.component';
+import { NewsubcategoryComponent } from '../modal/newsubcategory/newsubcategory.component';
+import { Newsubcategory2Component } from '../modal/newsubcategory2/newsubcategory2.component';
+
 import { UserService } from '@services/user.service';
 import { ExpenseService } from '@services/expense.service';
 import { EstimateService } from '@services/estimate.service';
@@ -12,6 +18,7 @@ import { ProviderService } from '@services/provider.service';
 import { TipoGastoService } from '@services/tipogasto.service';
 import { TpoCuentaService } from '@services/tpocuenta.service';
 import { CecoService } from '@services/ceco.service';
+import { ProjectService } from '@services/project.service';
 import { TrxCurrencyService } from '@services/trxcurrency.service';
 import { SubCategoryService2 } from '@services/subcategory2.service';
 import { SubCategoryService } from '@services/subcategory.service';
@@ -23,6 +30,7 @@ import { UserImage } from '@/models/userimage';
 import { ExpenseImage } from '@/models/expenseimage';
 
 import { global } from '@services/global';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-expense-edit',
@@ -37,6 +45,7 @@ import { global } from '@services/global';
     TipoGastoService,
     TpoCuentaService,
     CecoService,
+    ProjectService,
     TrxCurrencyService,
     SubCategoryService,
     SubCategoryService2
@@ -54,6 +63,7 @@ export class ExpenseEditComponent implements OnInit {
   public tipogastos: any;
   public tipocuentas: any;
   public cecos: any;
+  public projects: any;
   public monedas: any;
   public subcategories: any;
   public subcategories2: any;
@@ -73,6 +83,11 @@ export class ExpenseEditComponent implements OnInit {
   public srcFile: any;
   public is_edit: boolean;
 
+  public ceco:number;
+  public cecoName: string = '';
+
+  public bsModalRef: BsModalRef;
+
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -84,15 +99,20 @@ export class ExpenseEditComponent implements OnInit {
     private _subcategoryService: SubCategoryService,
     private _subcategoryService2: SubCategoryService2,
     private _cecoService: CecoService,
+    private _projectService: ProjectService,
     private _providerService: ProviderService,
     private _tipogastoService: TipoGastoService,
     private _tipocuentaService: TpoCuentaService,
-    private _trxcurrencyService: TrxCurrencyService
+    private _trxcurrencyService: TrxCurrencyService,
+    private _modalService: BsModalService
   ) {
-    this.expense = new Expense(null,1,0,null,null,null,null,null,null,0,null,null,1,0,0,null,1,1,1,1,1,1,1,null,1,'','');
+
+    this.ceco = parseInt(localStorage.getItem('ceco'));
+
+    this.expense = new Expense(null,1,0,null,null,null,null,null,null,0,null,null,1,0,0,0,null,1,1,1,this.ceco,1,1,1,null,1,'','');
     this.expenseImage = new ExpenseImage(null,'');
     this.title = 'Movimientos';
-    this.subtitle = 'Nuevo Movimiento';
+    this.subtitle = 'Editar Cargo';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -114,6 +134,8 @@ export class ExpenseEditComponent implements OnInit {
     this.getTipogastos();
     this.getTipocuentas()
     this.getCecos();
+    this.getProjects();
+    this.getCeco();
     this.getMonedas();
 
   }
@@ -138,6 +160,16 @@ export class ExpenseEditComponent implements OnInit {
 
   async onChgMonto(data: any) {
     this.montonvogasto = data;
+  }
+
+  async onMetodChange(data:any){
+    let proy: any = document.getElementById('colproj');
+    if(data == 4){
+      proy.classList.add('d-block');
+    } else {
+      proy.classList.replace('d-block','d-none');
+    }
+    
   }
   
 
@@ -166,6 +198,20 @@ export class ExpenseEditComponent implements OnInit {
     }
     this.total = this.montopresupuesto - this.montonvogasto || 0;
     console.log(this.total);
+  }
+
+  onProjectChange(data:any){
+    this._projectService.getId(data).subscribe(
+      response => {
+        console.log(response.provider);
+        /* if(response.status = 'success'){
+          this.expense.provvedor_id = response.
+        } */
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   getSubCatId(id: any){
@@ -215,12 +261,12 @@ export class ExpenseEditComponent implements OnInit {
             
             if(caso == '1') {
               this.tipocta = 'Cta. Corriente';
-              console.log(this.tipocta);
+              //console.log(this.tipocta);
               this.montopresupuesto = this.estimates[0].totctacorriente;
             }
             if(caso == '1') {
               this.tipocta = 'Cta. Corriente';
-              console.log(this.tipocta);
+              //console.log(this.tipocta);
               this.montopresupuesto = this.estimates[0].totctacorriente;
             }
             if(caso == '5') {
@@ -235,7 +281,7 @@ export class ExpenseEditComponent implements OnInit {
               this.tipocta = 'Global';
               this.montopresupuesto = this.estimates[0].totlineacredito;
             }
-            console.log('ohoh', this.montopresupuesto);
+            //console.log('ohoh', this.montopresupuesto);
             this.total = this.montopresupuesto || 0 - this.montonvogasto || 0;
 
           } else {
@@ -254,12 +300,17 @@ export class ExpenseEditComponent implements OnInit {
   onSubmit(form:any){
     let imagen = this.fileName;
     let id = this.expense.id;
+    if(this.expense.tipogasto_id != 4){
+      this.expense.proyecto_id = 0;
+    }
+    let proyecto = this.expense.proyecto_id;
+    let monto = this.expense.monto;
 
     this._expenseService.update(this.expense.id, this.expense).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
-          this.msg = 'Gasto creado con exito!';
+          this.msg = 'Cargo editado con exito!';
           if(imagen){
             if(this.filex){
               if(this.filex != this.first && this.first){
@@ -299,6 +350,19 @@ export class ExpenseEditComponent implements OnInit {
               )
             }
           }
+          /* if(proyecto != 0){
+            let datap = {
+              montopag: monto
+            }
+            this._expenseService.putSaldo(proyecto,datap).subscribe(
+              response => {
+                this.toastr.success(response.msg);
+              },
+              error => {
+                console.log(error);
+              }
+            );
+          } */
           this.toastr.success(this.msg);
           this._router.navigate(['/expense']);
         }
@@ -315,7 +379,7 @@ export class ExpenseEditComponent implements OnInit {
   }
 
   getTipogastos(){
-    this._tipogastoService.getAll().subscribe(
+    this._tipogastoService.getAllAct().subscribe(
       response => {
         if(response.tpogastos){
           this.tipogastos = response.tpogastos;
@@ -349,7 +413,7 @@ export class ExpenseEditComponent implements OnInit {
   }
 
   getCecos(){
-    this._cecoService.getAll().subscribe(
+    this._cecoService.getAllAct().subscribe(
       response => {
         if(response.cecos){
           this.cecos = response.cecos;
@@ -362,6 +426,22 @@ export class ExpenseEditComponent implements OnInit {
         }
       }
     )
+  }
+
+  getProjects(){
+    this._projectService.getAll(this.ceco).subscribe(
+      response => {
+        if(response.projects) {
+          this.projects = response.projects;
+        }
+      },
+      error => {
+        console.log(error);
+        if(error.status == 419){
+          this._userService.logout();
+        }
+      }
+    );
   }
 
   getMonedas(){
@@ -401,7 +481,6 @@ export class ExpenseEditComponent implements OnInit {
       response => {
         if(response.subcategories){
           this.subcategories = response.subcategories;
-          console.log(this.subcategories);
         }
       },
       error => {
@@ -497,6 +576,104 @@ export class ExpenseEditComponent implements OnInit {
     this.srcFile = null;
     this.expense.imagen = null;
   }
+
+  getCeco(){
+    this._cecoService.getId(this.ceco).subscribe(
+    response => {
+        if(response.ceco) {
+            this.cecoName = response.ceco.centrocosto;
+            /* if(this.ceco.imagen){
+                this.first = this.ceco.imagen;
+            }
+            this.fileName = this.ceco.imagen; */
+        } /* else {
+            this._router.navigate(['/ceco']);
+        } */
+    },
+    error => {
+        console.log(error);
+    });
+  }
+
+
+  newCategoria(e: Event){
+    e.preventDefault();
+    this.bsModalRef = this._modalService.show(NewcategoryComponent);
+    
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.categories = result;
+      }
+    })
+  }
+
+  newSubCategoria(e: Event){
+    e.preventDefault();
+    this.bsModalRef = this._modalService.show(NewsubcategoryComponent);
+    
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.categories = result;
+      }
+    })
+  }
+
+  newSubCategoria2(e: Event){
+    e.preventDefault();
+    this.bsModalRef = this._modalService.show(Newsubcategory2Component);
+    
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.categories = result;
+      }
+    })
+  }
+
+  newProveedor(e: Event){
+    e.preventDefault();
+    this.bsModalRef = this._modalService.show(NewproviderComponent);
+    
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.categories = result;
+      }
+    })
+  }
+
+  newProject(e: Event){
+    e.preventDefault();
+
+    console.log(localStorage.getItem('ceco'));
+
+    /* this._categoryService.getId(this.expense.categoria_id).subscribe(
+      response => {
+        if(response.category){
+          const nombre = response.category.nombre;
+          const initialState = {
+              list: [nombre],
+              title: 'Nueva Subcategoria',
+              id: response.category.id
+          };
+
+          this.bsModalRef = this._modalService.show(NewsubcategoryComponent, {initialState});
+ 
+          this.bsModalRef.content.onClose = new Subject<boolean>();
+          this.bsModalRef.content.onClose.subscribe(result => {
+            if(result !== null){
+              this.subcategories = result.data;
+              this.expense.subcategoria_id = result.newId;
+              this.onChgSubc(result.newId);
+            }
+          })
+        }
+      }
+    ) */
+  }
+
 
 }
 

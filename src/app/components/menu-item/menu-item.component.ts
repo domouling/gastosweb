@@ -45,6 +45,7 @@ export class MenuItemComponent implements OnInit {
     async getInfo() {
         (await this._userService.getIdentity()).subscribe(
             response => {
+                //console.log(response.data);
                 this.identity = response.data;
             },
             error => {

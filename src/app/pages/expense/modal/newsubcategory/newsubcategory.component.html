@@ -1,0 +1,40 @@
+<form #newSubCategorym="ngForm" (ngSubmit)="onSubmit(newSubCategorym)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h6 class="circularBold signUpHeading">{{ title }}</h6>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" 
+            aria-label="Close" (click)="bsModalRef.hide()"></button>
+        </div>
+        <div class="modal-body">
+                    
+                <h4 class="mb-2">Categoria: {{ list[0] }}</h4>
+
+                <div class="row">
+                    <div class="col-md">
+                        <div class="input-group">
+                            <input type="text" name="nombre" id="nombre" #nombre="ngModel"
+                            [(ngModel)]="subcategory.nombre" class="form-control" required
+                            placeholder="Nombre SubCategoria"  data-toggle="tooltip" title='Nombre SubCategoria'>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-tags"></span>
+                                </div>
+                            </div>
+                            <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
+                                Nombre SubCategpria es requerido
+                            </small>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <!-- <a (click)="deleteExpense(expense.idreg)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a> -->
+            <!-- <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onConfirm()">Aceptar</button> -->
+            <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+            [disabled]="newSubCategorym.invalid">
+            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" (click)="onCancel()">
+                Cancelar
+            </button>
+        </div>
+    </div>
+    </form>

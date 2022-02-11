@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>{{title}}</h1>
+                <h1 class="m-0 badge badge-pill badge-primary">CECO: {{ cecoName }}</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -23,20 +23,38 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Movimientos</h3>
+                <div class="row float-left consw">
+                    <div class="col-md-2">
+                        <h3 class="card-title">Movimientos</h3>
+                    </div>
+                    <div class="col-md">
+                        <div class="input-group">
+                            <span class="input-group-text"><b>Desde</b></span>
+                            <input type="date" name="fechaini" id="fechaini"
+                            class="form-control" 
+                            placeholder="Fecha Inicio" data-toggle="tooltip" title='Fecha'
+                            value={{desde}} (change)="onInitChange()">
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="input-group">
+                            <span class="input-group-text"><b>Hasta</b></span>
+                            <input type="date" name="fechafin" id="fechafin"
+                            class="form-control" 
+                            placeholder="Fecha Inicio" data-toggle="tooltip" title='Fecha'
+                            value={{hasta}} (change)="onInitChange()">
+                        </div>
 
+                    </div>
+                </div>
+                
                 <div class="card-tools">
-                    <!-- <button
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        data-widget="remove"
-                        data-toggle="tooltip"
-                        title="Nuevo"
-                    >
-                        <i class="fa fa-plus"></i>
-                    </button> -->
-                    <a [routerLink]="['/expense/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
-                        <i class="fa fa-plus"></i>
+                   
+                    <a [routerLink]="['/expense/new']" class="btn btn-danger btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
+                        <i class="fa fa-plus"></i> Nuevo Cargo
+                    </a>
+                    <a [routerLink]="['/payments/new']" class="btn btn-success btn-sm ml-2" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
+                        <i class="fa fa-plus"></i> Nuevo Abono
                     </a>
                 </div>
             </div>
@@ -46,31 +64,48 @@
                     <thead>
                         <tr>
                             <th>CECO</th>
-                            <th>Categoria</th>
-                            <th>Proveedor</th>
-                            <th>Monto</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Tipo Cargo</th>
+                            <th>Proyecto</th>
+                            <!-- <th>Metodo</th> -->
                             <th>Fecha</th>
-                            <th>Acciones</th>
+                            <th>Monto</th>
+                            <th class="notexport nosort">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let expense of expenses">
-                            <td>{{ expense.centrocosto.centrocosto }}</td>
-                            <td>{{ expense.categoria.nombre }}</td>
-                            <td>{{ expense.proveedor.nombre }}</td>
-                            <td class="text-right">${{ expense.monto | mask: 'separator':',' }}</td>
-                            <td>{{ expense.fechainicio | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ expense.ceconame }}</td>
+                            <td>{{ expense.tabla }}</td>
+                            <td *ngIf="expense.imagen"><i class="fas fa-paperclip"></i>&nbsp;{{ expense.descripcion }}</td>
+                            <td *ngIf="!expense.imagen">{{ expense.descripcion }}</td>
+                            <td>{{ expense.tipogasto }}</td>
+                            <td>{{ expense.proyecto || '-' }}</td>
+                            <!-- <td>{{ expense.metodo }}</td> -->
+                            <td>{{ expense.fecha | date: 'dd/MM/yyyy' }}</td>
+                            <td class="text-right fw-bold" [ngClass]="{
+                                'colorred': expense.tabla == 'cargo' && expense.metodo == 1,
+                                'colorblue': expense.tabla == 'cargo' && expense.metodo == 5,
+                                'colorgreen': expense.tabla == 'abono'
+                            }">
+                                ${{ expense.monto | mask: 'separator':',' }}
+                            </td>
+                            <!-- <td>{{ expense.fechainicio | date: 'dd/MM/yyyy' }}</td> -->
                             <td>
-                                <a [routerLink]="['/expense/edit/' + expense.id]" class="btn btn-primary btn-sm mr-1" 
+                                <a  *ngIf="expense.tabla == 'cargo'"  [routerLink]="['/expense/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1" 
                                 title="Editar"><i class="fa fa-pen"></i></a>
-                                
+
+                                <a  *ngIf="expense.tabla == 'abono'"  [routerLink]="['/payments/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1" 
+                                title="Editar"><i class="fa fa-pen"></i></a>
+                               
                                 <button type="button" class="btn btn-sm btn-danger"
-                                data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+expense.id">
-                                <i class="fa fa-trash"></i>
+                                    data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+expense.idreg">
+                                    <i class="fa fa-trash"></i>
                                 </button>
 
                                 <!-- /* Modal */ -->                                
-                                <div class="modal fade" id="{{'modal' + expense.id}}" tabindex="-1">
+                                <div *ngIf="expense.tabla=='cargo'" class="modal fade" id="{{'modal' + expense.idreg}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">
                                         <div class="modal-header">
@@ -78,10 +113,30 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                          <p>¿Estas seguro de Borrar el Movimiento "{{ expense.id }}"?</p>
+                                          <p>¿Estas seguro de Borrar este Gasto?</p>
                                         </div>
                                         <div class="modal-footer">
-                                          <a (click)="deleteExpense(expense.id)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a>
+                                          <a (click)="deleteExpense(expense.idreg)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a>
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="expense.tabla=='abono'" class="modal fade" id="{{'modal' + expense.idreg}}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Atencion</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p>¿Estas seguro de Borrar este Abono?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <a (click)="deletePayment(expense.idreg)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a>
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                             Cancelar
                                           </button>
@@ -95,11 +150,32 @@
                             </td>
                         </tr>
                     </tbody>
+                    <!-- <tfoot>
+                        <tr>
+                            <th colspan="6"></th>
+                            <th class="text-right"></th>
+                            <th></th>
+                        </tr>
+                    </tfoot> -->
                 </table>
             </div>
             <!-- /.card-body -->
-            <div class="card-footer">
-
+            <div class="card-footer mt-0 pt-0">
+                <div class="row">
+                    <div class="col-md bg-info rounded-pill ml-1 mr-1 totales">
+                        <h3 class="text-center">Abonos: ${{ totpay || 0 | mask: 'separator':',' }}</h3>
+                    </div>
+                    <div class="col-md bg-info rounded-pill ml-1 mr-1 totales">
+                        <h3 class="text-center">Gastos ${{ totexp || 0 | mask: 'separator':',' }}</h3>
+                    </div>
+                    <div class = "col-md rounded-pill ml-1 mr-1 totales" [ngClass]="{
+                        'bg-red': totpay-totexp < 0,
+                        'bg-green': totpay-totexp >= 0
+                    }">
+                        <h3 *ngIf="totpay - totexp >= 0" class="text-center">Saldo ${{ totpay - totexp | mask: 'separator':',' }}</h3>
+                        <h3 *ngIf="totpay - totexp < 0" class="text-center">Saldo $ -{{ totpay - totexp | mask: 'separator':',' }}</h3>
+                    </div>
+                </div>
             </div>
             <!-- /.card-footer-->
         </div>

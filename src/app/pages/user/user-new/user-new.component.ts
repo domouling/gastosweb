@@ -30,6 +30,8 @@ export class UserNewComponent implements OnInit {
   public srcFile: any;
   public is_edit: boolean;
 
+  public cecos: any;
+
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -37,7 +39,7 @@ export class UserNewComponent implements OnInit {
     private _userService: UserService,
     private _cecoService: CecoService
   ) {
-    this.user = new User(null,'','','','','ROLE_USER',1,'','','','','');
+    this.user = new User(null,'','','','','ROLE_USER',1,'','',1,'','','');
     this.userImage = new UserImage('','');
     this.title = 'Usuarios';
     this.subtitle = 'Nuevo Usuario';
@@ -47,12 +49,14 @@ export class UserNewComponent implements OnInit {
     this.fileName = '';
     this.filex = null;
     this.srcFile = null;
+    this.cecos = null;
+
     this.is_edit = false;
 
   }
 
   ngOnInit(): void {
-    
+    this.getCecos();
   }
 
   onSubmit(form:any){
@@ -101,6 +105,22 @@ export class UserNewComponent implements OnInit {
       }
     );
 
+  }
+
+  getCecos() {
+    this._cecoService.getAllAct().subscribe(
+      response => {
+        if(response.cecos){
+          this.cecos = response.cecos;
+        }
+      },
+      error => {
+        console.log(error);
+        if(error.status == 419){
+          this._userService.logout();
+        }
+      }
+    )
   }
 
   onFileSelected(data: any){

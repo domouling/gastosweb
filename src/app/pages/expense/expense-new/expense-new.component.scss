@@ -23,6 +23,14 @@
     object-fit: cover;
 }
 
+.img-bill {
+    display: block;
+    margin: 0px auto;
+    width: 150px;
+    height: 200px;
+    object-fit: contain;
+}
+
 .resumen {
     box-shadow: 1px 1px 5px #444;
 }

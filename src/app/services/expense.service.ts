@@ -34,6 +34,12 @@ export class ExpenseService {
         return this._http.put(this.url + 'expenses/' + id, expense, {headers: headers});
     }
 
+    putSaldo(id:number, data:any):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('auth-token', this.getToken());
+
+        return this._http.put(this.url + 'projects/saldo/pag/' + id, data, {headers: headers});
+    }
 
     addAvatar(file: File):Observable<any>{
         let formParams = new FormData();
@@ -67,18 +73,40 @@ export class ExpenseService {
     }
 
 
-    getAll():Observable<any> {
+    getAll(ceco: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'expenses', {headers: headers});
+        return this._http.get(this.url + 'expenses/all/' + ceco, {headers: headers});
     }
+
+    getMovements(ceco: number, data: any):Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('auth-token', this.getToken());
+        
+        return this._http.post(this.url + 'expenses/movements/all/' + ceco, data, {headers: headers});
+    }
+
+    totalCeco(data: any):Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('auth-token', this.getToken());
+
+        return this._http.post(this.url + 'expenses/total/ceco', data, {headers: headers});
+    }
+
 
     getExpense(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
         
         return this._http.get(this.url + 'expenses/' + id, {headers: headers});
+    }
+
+    getExpenseMonth(ceco: number):Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('auth-token', this.getToken());
+        
+        return this._http.get(this.url + 'expenses/total/month/' + ceco, {headers: headers});
     }
 
     deleteExpense(id:number){

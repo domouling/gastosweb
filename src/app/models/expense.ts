@@ -13,6 +13,7 @@ export class Expense {
         public imagen: string,
         public mailregistro: string,
         public metodo: number,
+        public proyecto_id: number,
         public monto: number,
         public montobase: number,
         public nombrecuenta: string,

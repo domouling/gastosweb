@@ -23,6 +23,8 @@ export class BudgetListComponent implements OnInit, OnDestroy {
   public msg: string;
   public prueba: any;
 
+  public ceco: number;
+
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject<any>();
 
@@ -36,6 +38,7 @@ export class BudgetListComponent implements OnInit, OnDestroy {
     this.url = global.url;
     this.status = '';
     this.msg = '';
+    this.ceco =  parseInt(localStorage.getItem('ceco'));
   }
 
   ngOnInit(): void {
@@ -50,15 +53,15 @@ export class BudgetListComponent implements OnInit, OnDestroy {
       language: {url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json'},
     }
 
-    this.getEstimates();  
+    this.getEstimates(this.ceco);  
   }
 
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();  
   }
 
-  getEstimates() {
-    this._estimateService.getAll().subscribe(
+  getEstimates(ceco:number) {
+    this._estimateService.getAll(ceco).subscribe(
       response => {
         if(response.status == 'success') {
           this.estimates = response.estimates;
@@ -81,7 +84,7 @@ export class BudgetListComponent implements OnInit, OnDestroy {
       response => {
         this.status = 'success';
         this.msg = "Presupuesto eliminado con Exito";
-        this.getEstimates();
+        this.getEstimates(this.ceco);
         //window.location.reload();
         this._router.routeReuseStrategy.shouldReuseRoute = () => false;
         this._router.onSameUrlNavigation = 'reload';

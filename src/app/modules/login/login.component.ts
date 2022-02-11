@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.isAuthLoading = true;
             this._userService.signup(this.loginForm.value).subscribe(
                 response => {
+                        //console.log(response.body.data.ceco_id);
 /*                     (response.headers.get('auth-token'));
                     if(response.data || response.status == 'success'){
                         this.identity = response.data;
@@ -62,6 +63,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                                     this.status = 'success';
                                     this.token = response.headers.get('auth-token');
                                     localStorage.setItem('token', this.token);
+                                    let rol = response.body.data.role;
+                                    let val = rol != 'ROLE_ADMIN' ? true : false;
+                                    if(val){
+                                        localStorage.setItem('ceco', response.body.data.ceco_id);
+                                    }
                                     this.toastr.success('Login Exitoso!');
                                     setTimeout(() => this._router.navigate(['/']), 500);
                                 } else {

@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable, Output } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import {Router} from '@angular/router';
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject, ReplaySubject } from "rxjs";
 import { global } from "./global";
 
 @Injectable()
@@ -9,7 +9,16 @@ export class UserService {
     public url: string;
     public identity: any;
     public token: any;
+    public cecoch: any;
     public user: any;
+    public cecoNombre: string;
+    public test: any = '';
+
+    private mensajero = new BehaviorSubject<any>('');
+    public mensaje$ = this.mensajero.asObservable();
+
+    //@Output() change: EventEmitter<string> = new EventEmitter();
+
 
     constructor(
         public _http: HttpClient,
@@ -18,6 +27,20 @@ export class UserService {
         this.url = global.url;
         this.identity = null;
         this.token = null;
+        this.cecoch = null;
+    
+    }
+
+    public get recibir() {
+        return this.mensajero.asObservable();
+    }
+
+    cambio(msg:any){
+        /* console.log(msg);
+        console.log('invocado');
+        this.test = 'Cambie';
+        this.change.emit(msg); */
+        this.mensajero.next(msg);
     }
 
     signup(user:any, gettoken:any = null):Observable<any> {
@@ -128,11 +151,22 @@ export class UserService {
                                        .set('auth-token', this.getToken());
         return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
+
+    getCecoChoice(){
+        let cecoch = localStorage.getItem('ceco');
+        if(cecoch && cecoch != null && cecoch != undefined && cecoch != 'undefined' ){
+            this.cecoch = cecoch;
+        } else {
+            this.cecoch = null;
+        }
+
+        return this.cecoch;
+    }
     
 
     logout() {
         localStorage.removeItem('token');
-        localStorage.removeItem('identity');
+        localStorage.removeItem('ceco');
         this.user = null;
         this._router.navigate(['/login']);
     }

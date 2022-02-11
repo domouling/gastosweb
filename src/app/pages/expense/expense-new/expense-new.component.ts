@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import moment, { Moment } from 'moment';
+
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { NewcategoryComponent } from '../modal/newcategory/newcategory.component';
+import { NewproviderComponent } from '../modal/newprovider/newprovider.component';
+import { NewsubcategoryComponent } from '../modal/newsubcategory/newsubcategory.component';
+import { Newsubcategory2Component } from '../modal/newsubcategory2/newsubcategory2.component';
+import { NewprojectComponent } from '../modal/newproject/newproject.component';
 
 import { UserService } from '@services/user.service';
 import { ExpenseService } from '@services/expense.service';
@@ -11,6 +19,7 @@ import { ProviderService } from '@services/provider.service';
 import { TipoGastoService } from '@services/tipogasto.service';
 import { TpoCuentaService } from '@services/tpocuenta.service';
 import { CecoService } from '@services/ceco.service';
+import { ProjectService } from '@services/project.service';
 import { TrxCurrencyService } from '@services/trxcurrency.service';
 import { SubCategoryService2 } from '@services/subcategory2.service';
 import { SubCategoryService } from '@services/subcategory.service';
@@ -22,6 +31,7 @@ import { UserImage } from '@/models/userimage';
 import { ExpenseImage } from '@/models/expenseimage';
 
 import { global } from '@services/global';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-expense-new',
@@ -36,6 +46,7 @@ import { global } from '@services/global';
     TipoGastoService,
     TpoCuentaService,
     CecoService,
+    ProjectService,
     TrxCurrencyService,
     SubCategoryService,
     SubCategoryService2
@@ -45,6 +56,7 @@ export class ExpenseNewComponent implements OnInit {
 
   public title: string;
   public subtitle: string;
+  public today: string;
   public users: any;
   public expense: any;
   public estimates: any;
@@ -53,6 +65,7 @@ export class ExpenseNewComponent implements OnInit {
   public tipogastos: any;
   public tipocuentas: any;
   public cecos: any;
+  public projects: any;
   public monedas: any;
   public subcategories: any = [];
   public subcategories2: any = [];
@@ -71,6 +84,11 @@ export class ExpenseNewComponent implements OnInit {
   public srcFile: any;
   public is_edit: boolean;
 
+  public ceco:number;
+  public cecoName: string = '';
+
+  public bsModalRef: BsModalRef;
+
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -82,16 +100,22 @@ export class ExpenseNewComponent implements OnInit {
     private _subcategoryService: SubCategoryService,
     private _subcategoryService2: SubCategoryService2,
     private _cecoService: CecoService,
+    private _projectService: ProjectService,
     private _providerService: ProviderService,
     private _tipogastoService: TipoGastoService,
     private _tipocuentaService: TpoCuentaService,
-    private _trxcurrencyService: TrxCurrencyService
+    private _trxcurrencyService: TrxCurrencyService,
+    private _modalService: BsModalService
   ) {
 
-    this.expense = new Expense(null,1,0,null,null,null,null,null,null,0,null,null,1,0,0,null,1,1,1,1,1,1,1,null,1,'','');
+    this.today = moment().format('YYYY-MM-DD');
+
+    this.ceco = parseInt(localStorage.getItem('ceco'));
+
+    this.expense = new Expense(null,1,0,null,null,null,null,this.today,null,0,null,null,1,0,0,0,null,1,1,1,this.ceco,1,1,1,null,1,'','');
     this.expenseImage = new ExpenseImage(1,'');
     this.title = 'Movimientos';
-    this.subtitle = 'Nuevo Movimientos';
+    this.subtitle = 'Nuevo Cargo';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -112,6 +136,8 @@ export class ExpenseNewComponent implements OnInit {
     this.getTipogastos();
     this.getTipocuentas()
     this.getCecos();
+    this.getProjects();
+    this.getCeco();
     this.getMonedas();
   }
 
@@ -137,9 +163,17 @@ export class ExpenseNewComponent implements OnInit {
     this.montonvogasto = data;
   }
 
+  async onMetodChange(data:any){
+    let proy: any = document.getElementById('colproj');
+    if(data == 4){
+      proy.classList.replace('d-none','d-block');
+    } else {
+      proy.classList.replace('d-block','d-none');
+    } 
+  }
+
   async onChgMetod(data: any){
-    console.log(data);
-    console.log(this.estimates);
+    //console.log(this.estimates);
     switch (data) {
       case '1':
         this.tipocta = 'Cta. Corriente';
@@ -162,7 +196,20 @@ export class ExpenseNewComponent implements OnInit {
         break;
     }
     this.total = this.montopresupuesto - this.montonvogasto || 0;
-    console.log(this.total);
+    //console.log(this.total);
+  }
+
+  onProjectChange(data:any){
+    this._projectService.getId(data).subscribe(
+      response => {
+        if(response.status = 'success'){
+          this.expense.proveedor_id = response.project.proveedor_id;
+        } 
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   getSubCatId(id: any){
@@ -196,12 +243,17 @@ export class ExpenseNewComponent implements OnInit {
 
   onSubmit(form:any){
     let imagen = this.expense.imagen;
+    if(this.expense.tipogasto_id != 4){
+      this.expense.proyecto_id = 0;
+    }
+    let proyecto = this.expense.proyecto_id;
+    let monto = this.expense.monto;
 
     this._expenseService.add(this.expense).subscribe(
       response => {
         if(response.status == 'success'){
           this.status = 'success';
-          this.msg = 'Gasto creado con exito!';
+          this.msg = 'Cargo creado con exito!';
           let id = response.expense.id;
           if(imagen){
             if(this.filex){
@@ -225,6 +277,19 @@ export class ExpenseNewComponent implements OnInit {
               ); 
             }
           }
+          /* if(proyecto != 0){
+            let datap = {
+              montopag: monto
+            }
+            this._expenseService.putSaldo(proyecto,datap).subscribe(
+              response => {
+                this.toastr.success(response.msg);
+              },
+              error => {
+                console.log(error);
+              }
+            );
+          } */
           this.toastr.success(this.msg);
           this._router.navigate(['/expense']);
         }
@@ -241,7 +306,7 @@ export class ExpenseNewComponent implements OnInit {
   }
 
   getTipogastos(){
-    this._tipogastoService.getAll().subscribe(
+    this._tipogastoService.getAllAct().subscribe(
       response => {
         if(response.tpogastos){
           this.tipogastos = response.tpogastos;
@@ -275,7 +340,7 @@ export class ExpenseNewComponent implements OnInit {
   }
 
   getCecos(){
-    this._cecoService.getAll().subscribe(
+    this._cecoService.getAllAct().subscribe(
       response => {
         if(response.cecos){
           this.cecos = response.cecos;
@@ -288,6 +353,22 @@ export class ExpenseNewComponent implements OnInit {
         }
       }
     )
+  }
+
+  getProjects(){
+    this._projectService.getAll(this.ceco).subscribe(
+      response => {
+        if(response.projects) {
+          this.projects = response.projects;
+        }
+      },
+      error => {
+        console.log(error);
+        if(error.status == 419){
+          this._userService.logout();
+        }
+      }
+    );
   }
 
   getMonedas(){
@@ -422,5 +503,124 @@ export class ExpenseNewComponent implements OnInit {
     this.srcFile = null;
     this.expense.imagen = null;
   }
+
+  getCeco(){
+    this._cecoService.getId(this.ceco).subscribe(
+    response => {
+        if(response.ceco) {
+            this.cecoName = response.ceco.centrocosto;
+            
+        } 
+    },
+    error => {
+        console.log(error);
+    });
+  }
+
+  newCategoria(e: Event){
+    e.preventDefault();
+    this.bsModalRef = this._modalService.show(NewcategoryComponent);
+    
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.categories = result.data;
+        this.expense.categoria_id = result.newId;
+      }
+    })
+  }
+
+  newSubCategoria(e: Event){
+    e.preventDefault();
+
+    this._categoryService.getId(this.expense.categoria_id).subscribe(
+      response => {
+        if(response.category){
+          const nombre = response.category.nombre;
+          const initialState = {
+              list: [nombre],
+              title: 'Nueva Subcategoria',
+              id: response.category.id
+          };
+
+          this.bsModalRef = this._modalService.show(NewsubcategoryComponent, {initialState});
+ 
+          this.bsModalRef.content.onClose = new Subject<boolean>();
+          this.bsModalRef.content.onClose.subscribe(result => {
+            if(result !== null){
+              this.subcategories = result.data;
+              this.expense.subcategoria_id = result.newId;
+              this.onChgSubc(result.newId);
+            }
+          })
+        }
+      }
+    )
+  }
+
+  newSubCategoria2(e: Event){
+    e.preventDefault();
+
+    this._subcategoryService.getId(this.expense.subcategoria_id).subscribe(
+      response => {
+        if(response.subcategory){
+          const nombre = response.subcategory.nombre;
+          const initialState = {
+              list: [nombre],
+              title: 'Nueva Descripción',
+              id: response.subcategory.id
+          };
+
+          this.bsModalRef = this._modalService.show(Newsubcategory2Component, {initialState});
+ 
+          this.bsModalRef.content.onClose = new Subject<boolean>();
+          this.bsModalRef.content.onClose.subscribe(result => {
+            if(result !== null){
+              this.subcategories2 = result.data;
+              this.expense.subcategoria2_id = result.newId;
+            }
+          })
+        }
+      }
+    )
+  }
+
+  newProveedor(e: Event){
+    e.preventDefault();
+    this.bsModalRef = this._modalService.show(NewproviderComponent);
+    
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.providers = result.data;
+        this.expense.proveedor_id = result.newId;
+      }
+    })
+    
+  }
+
+  newProject(e: Event){
+    e.preventDefault();
+    const cecoid = localStorage.getItem('ceco');
+    const initialState = {
+      list: [cecoid],
+      title: 'Nuevo Proyecto',
+  };
+
+    this.bsModalRef = this._modalService.show(NewprojectComponent, {initialState});
+
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.projects = result.data;
+        this.expense.proyecto_id = result.newId;
+        this.expense.proveedor_id = result.prov;
+      }
+    })
+        
+      
+
+  }
+  
 
 }

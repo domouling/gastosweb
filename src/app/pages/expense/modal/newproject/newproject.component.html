@@ -1,0 +1,103 @@
+<form #newProjectm="ngForm" (ngSubmit)="onSubmit(newProjectm)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h6 class="circularBold signUpHeading">{{ title }}</h6>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" 
+            aria-label="Close" (click)="bsModalRef.hide()"></button>
+        </div>
+        <div class="modal-body">
+
+                <div class="row mb-2">
+                    <div class="col-md">
+                        <div class="input-group">
+                            <input type="text" name="nombre" id="nombre" #nombre="ngModel"
+                            [(ngModel)]="project.nombre" class="form-control" required
+                            placeholder="Nombre Proyecto"  data-toggle="tooltip" title='Nombre Proyecto'>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-tags"></span>
+                                </div>
+                            </div>
+                            <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
+                                Nombre Proyecto es requerido
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md">
+                        <div class="input-group">
+                            <input type="date" name="fechainicio" id="fechainicio" #fechainicio="ngModel"
+                            [(ngModel)]="project.fechainicio" class="form-control" required
+                            placeholder="Fecha Inicio"  data-toggle="tooltip" title='Fecha Inicio'>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-calendar-alt"></span>&nbsp; <b>Inicio</b>
+                                </div>
+                            </div>
+                            <small *ngIf="!fechainicio.valid && fechainicio.touched" class="invalid-feedback d-block">
+                                Fecha Inicio es requerido
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md">
+                        <div class="input-group">
+                            <input type="date" name="fechafin" id="fechafin" #fechafin="ngModel"
+                            [(ngModel)]="project.fechafin" class="form-control" required
+                            placeholder="Fecha Final"  data-toggle="tooltip" title='Fecha Final'>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-calendar-alt"></span>&nbsp; <b>Fin</b>
+                                </div>
+                            </div>
+                            <small *ngIf="!fechafin.valid && fechafin.touched" class="invalid-feedback d-block">
+                                Fecha Final es requerido
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-2">
+                    <div class="col-md">
+                        <div class="input-group">
+                            <input type="text" name="monto" id="monto" #monto="ngModel"
+                            [(ngModel)]="project.monto" class="form-control"
+                            mask="separator.2" thousandSeparator="," prefix="$"
+                            placeholder="Monto" data-toggle="tooltip" title='Monto'>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-money-bill"></span>&nbsp; <b>Monto</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md">
+                        <div class="input-group">
+                            <span class="input-group-text"><b>Proveedor</b></span>
+                            <select class="form-select" name="proveedor_id" id="role" #proveedor_id="ngModel"
+                            [(ngModel)]="project.proveedor_id">
+                                <option *ngFor="let provider of providers" [value]=provider.id>{{ provider.nombre }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <!-- <a (click)="deleteExpense(expense.idreg)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a> -->
+            <!-- <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onConfirm()">Aceptar</button> -->
+            <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+            [disabled]="newProjectm.invalid">
+            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" (click)="onCancel()">
+                Cancelar
+            </button>
+        </div>
+    </div>
+    </form>
+

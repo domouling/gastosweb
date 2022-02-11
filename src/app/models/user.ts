@@ -9,6 +9,7 @@ export class User {
         public status: number,
         public email: string,
         public imagen: string,
+        public ceco_id: number,
         public ultimasesion: string,
         public created_at: string,
         public updated_at: string

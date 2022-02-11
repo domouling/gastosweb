@@ -133,3 +133,16 @@ body {
     margin-right: 0;
     margin-left: -8px;
 }
+
+
+/* Clases Botones DataTables */
+.dt-buttons {
+    float: left;
+}
+
+@media (max-width: 640px) {
+    .dt-buttons {
+        float: none;
+        text-align: center;
+    }
+}

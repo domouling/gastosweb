@@ -74,6 +74,13 @@ export class CecoService {
         return this._http.get(this.url + 'cecos', {headers: headers});
     }
 
+    getAllAct():Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('auth-token', this.getToken());
+        
+        return this._http.get(this.url + 'cecos/act/all', {headers: headers});
+    }
+
     getId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());

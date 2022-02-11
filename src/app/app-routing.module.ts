@@ -6,8 +6,13 @@ import {LoginComponent} from '@modules/login/login.component';
 import {ProfileComponent} from '@pages/profile/profile.component';
 import {RegisterComponent} from '@modules/register/register.component';
 import {DashboardComponent} from '@pages/dashboard/dashboard.component';
+
 import {AuthGuard} from '@guards/auth.guard';
 import {NonAuthGuard} from '@guards/non-auth.guard';
+import { CecoSelectGuard } from '@guards/ceco-select.guard';
+import { AdminGuard } from '@guards/admin.guard';
+
+
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
 import {PrivacyPolicyComponent} from '@modules/privacy-policy/privacy-policy.component';
@@ -19,6 +24,12 @@ import { UserEditComponent } from '@pages/user/user-edit/user-edit.component';
 import { ExpenseListComponent } from '@pages/expense/expense-list/expense-list.component';
 import { ExpenseNewComponent } from '@pages/expense/expense-new/expense-new.component';
 import { ExpenseEditComponent } from '@pages/expense/expense-edit/expense-edit.component';
+import { PaymentListComponent } from '@pages/payment/payment-list/payment-list.component';
+import { PaymentNewComponent } from  '@pages/payment/payment-new/payment-new.component';
+import { PaymentEditComponent } from  '@pages/payment/payment-edit/payment-edit.component';
+import { ProjectListComponent } from '@pages/project/project-list/project-list.component';
+import { ProjectNewComponent } from '@pages/project/project-new/project-new.component';
+import { ProjectEditComponent } from '@pages/project/project-edit/project-edit.component';
 import { ProviderListComponent } from '@pages/provider/provider-list/provider-list.component';
 import { ProviderEditComponent } from '@pages/provider/provider-edit/provider-edit.component';
 import { ProviderNewComponent } from '@pages/provider/provider-new/provider-new.component';
@@ -47,12 +58,14 @@ import { CecoEditComponent } from '@pages/ceco/ceco-edit/ceco-edit.component';
 import { TipogastoListComponent } from '@pages/tipogasto/tipogasto-list/tipogasto-list.component';
 import { TipogastoNewComponent } from '@pages/tipogasto/tipogasto-new/tipogasto-new.component';
 import { TipogastoEditComponent } from '@pages/tipogasto/tipogasto-edit/tipogasto-edit.component';
+import { CecoChoiceComponent } from '@pages/ceco/ceco-choice/ceco-choice.component';
+
 
 const routes: Routes = [
     {
         path: '',
         component: MainComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, CecoSelectGuard],
         canActivateChild: [AuthGuard],
         children: [
             {
@@ -62,86 +75,107 @@ const routes: Routes = [
             {
                 path: 'users',
                 component: UserListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'users/new',
                 component: UserNewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'users/edit/:id',
                 component: UserEditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'expense',
                 component: ExpenseListComponent,
+                canActivate: [CecoSelectGuard]
             },
             {
                 path: 'expense/new',
                 component: ExpenseNewComponent,
+                canActivate: [CecoSelectGuard]
             },
             {
                 path: 'expense/edit/:id',
                 component: ExpenseEditComponent,
+                canActivate: [CecoSelectGuard]
             },
             {
                 path: 'provider',
                 component: ProviderListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'provider/new',
                 component: ProviderNewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'provider/edit/:id',
                 component: ProviderEditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'category',
                 component: CategoryListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'category/new',
                 component: CategoryNewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'category/edit/:id',
                 component: CategoryEditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'subcategory',
                 component: SubcategoryListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'subcategory/new',
                 component: SubcategoryNewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'subcategory/edit/:id',
                 component: SubcategoryEditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'subcategory2',
                 component: Subcategory2ListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'subcategory2/new',
                 component: Subcategory2NewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'subcategory2/edit/:id',
                 component: Subcategory2EditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'estimate',
                 component: BudgetListComponent,
+                canActivate: [CecoSelectGuard]
             },
             {
                 path: 'estimate/new',
                 component: BudgetNewComponent,
+                canActivate: [CecoSelectGuard]
             },
             {
                 path: 'estimate/edit/:id',
                 component: BudgetEditComponent,
+                canActivate: [CecoSelectGuard]
             },
             {
                 path: 'reports',
@@ -150,50 +184,62 @@ const routes: Routes = [
             {
                 path: 'tpocuenta',
                 component: TpocuentaListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'tpocuenta/edit/:id',
                 component: TpocuentaEditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'tpocuenta/new',
                 component: TpocuentaNewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'trxcurrency',
                 component: TrxcurrencyListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'trxcurrency/edit/:id',
                 component: TrxcurrencyEditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'trxcurrency/new',
                 component: TrxcurrencyNewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'ceco',
                 component: CecoListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'ceco/edit/:id',
                 component: CecoEditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'ceco/new',
                 component: CecoNewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'tipogasto',
                 component: TipogastoListComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'tipogasto/edit/:id',
                 component: TipogastoEditComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'tipogasto/new',
                 component: TipogastoNewComponent,
+                canActivate: [AdminGuard]
             },
             {
                 path: 'blank',
@@ -209,8 +255,44 @@ const routes: Routes = [
             },
             {
                 path: '',
-                component: DashboardComponent
-            }
+                component: DashboardComponent,
+                canActivate: [CecoSelectGuard]
+            },
+            {
+                path: 'choice',
+                component: CecoChoiceComponent,
+                canActivate: [AdminGuard]
+            },
+            {
+                path: 'projects',
+                component: ProjectListComponent,
+                canActivate: [CecoSelectGuard]
+            },
+            {
+                path: 'projects/edit/:id',
+                component: ProjectEditComponent,
+                canActivate: [CecoSelectGuard]
+            },
+            {
+                path: 'projects/new',
+                component: ProjectNewComponent,
+                canActivate: [CecoSelectGuard]
+            },
+            {
+                path: 'payments',
+                component: PaymentListComponent,
+                canActivate: [CecoSelectGuard]
+            },
+            {
+                path: 'payments/edit/:id',
+                component: PaymentEditComponent,
+                canActivate: [CecoSelectGuard]
+            },
+            {
+                path: 'payments/new',
+                component: PaymentNewComponent,
+                canActivate: [CecoSelectGuard]
+            },
         ]
     },
     {

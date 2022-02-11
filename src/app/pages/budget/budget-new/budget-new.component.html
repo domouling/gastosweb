@@ -35,7 +35,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><b>CECO</b></span>
                                     <select class="form-select" name="ceco_id" id="role" #ceco_id="ngModel"
-                                    [(ngModel)]="estimate.ceco_id">
+                                    [(ngModel)]="estimate.ceco_id" disabled>
                                         <option *ngFor="let ceco of cecos" [value]=ceco.id>{{ ceco.centrocosto }}</option>
                                     </select>
                                 </div>

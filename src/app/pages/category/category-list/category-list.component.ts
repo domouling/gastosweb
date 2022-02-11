@@ -23,7 +23,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   public msg: string;
   public prueba: any;
 
-  public dtOptions: DataTables.Settings = {};
+  public dtOptions: any;
   public dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
@@ -47,6 +47,42 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       scrollY: "385px",
       scrollCollapse: true,
       responsive: true,
+      columnDefs: [
+        {
+          targets: 'nosort',
+          orderable: false
+        }
+      ],
+      dom: 'lBfrtip',
+        buttons: [ 
+          {
+            extend: 'excel',
+            text: '<i class="far fa-file-excel"></i>',
+            className: "btn btn-sm btn-success ml-3 excelBtn",
+            titleAttr: 'Exportar a Excel',
+            exportOptions: {
+              columns: ':not(.notexport)'
+            }
+          },
+          {
+            extend: 'pdf',
+            text: '<i class="far fa-file-pdf"></i>',
+            className: "btn btn-sm btn-danger pdfBtn",
+            titleAttr: 'Exportar a PDF',
+            exportOptions: {
+              columns: ':not(.notexport)'
+            }
+          },
+          {
+            extend: 'print',
+            text: '<i class="fas fa-print"></i>',
+            className: "btn btn-sm btn-primary printBtn",
+            titleAttr: 'Imprimir',
+            exportOptions: {
+              columns: ':not(.notexport)'
+            }
+          }
+         ],
       language: {url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json'},
     }
 

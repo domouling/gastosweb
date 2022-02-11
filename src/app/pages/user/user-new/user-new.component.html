@@ -120,6 +120,30 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>CECO</b></span>
+                                    <select class="form-select" name="ceco_id" id="ceco_id" #ceco_id="ngModel"
+                                    [(ngModel)]="user.ceco_id">
+                                        <option *ngFor="let ceco of cecos" [value]=ceco.id>{{ ceco.centrocosto }}</option>
+                                    </select>
+                                </div>
+                            </div>
+ 
+                            <div class="col-md">
+                                <div class="input-group">
+                                    <span class="input-group-text"><b>Rol</b></span>
+                                    <select class="form-select" name="role" id="role" #role="ngModel"
+                                    [(ngModel)]="user.role">
+                                        <option value="ROLE_USER" selected>ROLE_USER</option>
+                                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                                    </select>
+                                </div>
+                            </div>
+        
+                        </div>
+
+                        <div class="row mb-3">
                             <div class="col-md" *ngIf="is_edit == false">
                                 <input type="file" name="imagen" id="imagen" class="file-input" accept="image/*"
                                 (change)="onFileSelected($event)" #imagen="ngModel" #fileUpload
@@ -160,18 +184,6 @@
                                     <img *ngIf="srcFile && srcFile.length > 0" class="img-avatar mt-1" [src]="srcFile">
                                 </div>
                             </div>
- 
-                            <div class="col-md">
-                                <div class="input-group">
-                                    <span class="input-group-text"><b>Rol</b></span>
-                                    <select class="form-select" name="role" id="role" #role="ngModel"
-                                    [(ngModel)]="user.role">
-                                        <option value="ROLE_USER" selected>ROLE_USER</option>
-                                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
-                                    </select>
-                                </div>
-                            </div>
-        
                         </div>
                     
                 </div>

@@ -1,0 +1,133 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 badge badge-pill badge-primary">CECO: {{ cecoName }}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    >Home</a></li>
+                    <li class="breadcrumb-item"><a [routerLink]="['/expense']"
+                        routerLinkActive="router-link-active">Movimientos</a></li>
+                    <li class="breadcrumb-item active">{{subtitle}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <form #newPayment="ngForm" (ngSubmit)="onSubmit(newPayment)">
+                <div class="card-header">
+                    <h3 class="card-title">{{subtitle}}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3 consw">
+                        <div class="col-md">
+                            <div class="input-group">
+                                <input type="text" name="descripcion" id="descripcion" #descripcion="ngModel"
+                                [(ngModel)]="payment.descripcion" class="form-control" required
+                                placeholder="Descripcion Abono"  data-toggle="tooltip" title='Descripcion Abono'>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-tag"></span>
+                                    </div>
+                                </div>
+                                <small *ngIf="!descripcion.valid && descripcion.touched" class="invalid-feedback d-block">
+                                    Descripcion Abono es requerido
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md" id="colproj">
+                            <div class="input-group">
+                                <span class="input-group-text"><b>Proyecto</b></span>
+                                <select class="form-select" name="proyecto_id" id="proyecto_id" #proyecto_id="ngModel"
+                                [(ngModel)]="payment.proyecto_id">
+                                    <option value=0>N/A</option>
+                                    <option *ngFor="let project of projects" [value]=project.id>{{ project.nombre }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3 consw">
+
+                        <div class="col-md">
+                            <div class="input-group">
+                                <input type="text" name="monto" id="monto" #monto="ngModel"
+                                [(ngModel)]="payment.monto" class="form-control"
+                                mask="separator.2" thousandSeparator="," prefix="$"
+                                placeholder="Monto" data-toggle="tooltip" title='Monto'>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-money-bill"></span>&nbsp; <b>Monto</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="input-group">
+                                <input type="date" name="fecha" id="fecha" #fecha="ngModel"
+                                [(ngModel)]="payment.fecha" class="form-control" required
+                                placeholder="Fecha"  data-toggle="tooltip" title='Fecha'>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-calendar-alt"></span>&nbsp; <b>Inicio</b>
+                                    </div>
+                                </div>
+                                <small *ngIf="!fecha.valid && fecha.touched" class="invalid-feedback d-block">
+                                    Fecha es requerido
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="input-group">
+                                <span class="input-group-text"><b>Ceco</b></span>
+                                <select class="form-select" name="ceco-id" id="role" #ceco_id="ngModel"
+                                [(ngModel)]="payment.ceco_id" disabled>
+                                    <option *ngFor="let ceco of cecos" [value]=ceco.id>{{ ceco.centrocosto }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3 consw">
+                        <div class="col-md">
+                            <div class="form-check form-switch text-center">
+                                <input class="form-check-input" type="checkbox" id="status" name="status" #status="ngModel" 
+                                [(ngModel)]="payment.status">
+                                <label class="form-check-label" for="status">Estatus</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-end">
+                        <a [routerLink]="['/expense']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="cajaForm.invalid"> -->
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        [disabled]="newPayment.invalid">
+                    </div>
+                </div>
+                <!-- /.card-footer-->
+            </form>
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->

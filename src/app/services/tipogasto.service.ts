@@ -41,6 +41,13 @@ export class TipoGastoService {
         return this._http.get(this.url + 'tpogastos', {headers: headers});
     }
 
+    getAllAct():Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                      .set('auth-token', this.getToken());
+        
+        return this._http.get(this.url + 'tpogastos/act/all', {headers: headers});
+    }
+
     getId(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());

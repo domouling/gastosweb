@@ -35,11 +35,11 @@ export class EstimateService {
     }
 
 
-    getAll():Observable<any> {
+    getAll(ceco: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
         
-        return this._http.get(this.url + 'estimates', {headers: headers});
+        return this._http.get(this.url + 'estimates/all/' + ceco, {headers: headers});
     }
 
     getId(id: number):Observable<any> {

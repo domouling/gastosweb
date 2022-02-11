@@ -1,3 +1,25 @@
 table.dataTable {
     font-size: 0.90rem !important;
 }
+
+.consw {
+    align-items: center;
+}
+
+.colorred {
+    color: red !important;
+}
+
+.colorblue {
+    color: blue !important;
+}
+
+.colorgreen {
+    color: green !important;
+}
+
+@media (max-width: 768px) {
+    .totales {
+        margin: 5px;
+    }
+}

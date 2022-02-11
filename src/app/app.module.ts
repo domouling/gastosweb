@@ -5,6 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgChartsModule } from 'ng2-charts';
+import { ModalModule } from 'ngx-bootstrap/modal'
 
 import {AppRoutingModule} from '@/app-routing.module';
 import {AppComponent} from './app.component';
@@ -69,6 +70,19 @@ import { BudgetEditComponent } from './pages/budget/budget-edit/budget-edit.comp
 import { ExpenseListComponent } from './pages/expense/expense-list/expense-list.component';
 import { ExpenseNewComponent } from './pages/expense/expense-new/expense-new.component';
 import { ExpenseEditComponent } from './pages/expense/expense-edit/expense-edit.component';
+import { CecoChoiceComponent } from './pages/ceco/ceco-choice/ceco-choice.component';
+import { ProjectListComponent } from './pages/project/project-list/project-list.component';
+import { ProjectNewComponent } from './pages/project/project-new/project-new.component';
+import { ProjectEditComponent } from './pages/project/project-edit/project-edit.component';
+import { PaymentListComponent } from './pages/payment/payment-list/payment-list.component';
+import { PaymentNewComponent } from './pages/payment/payment-new/payment-new.component';
+import { PaymentEditComponent } from './pages/payment/payment-edit/payment-edit.component';
+import { NewcategoryComponent } from './pages/expense/modal/newcategory/newcategory.component';
+import { NewsubcategoryComponent } from './pages/expense/modal/newsubcategory/newsubcategory.component';
+import { Newsubcategory2Component } from './pages/expense/modal/newsubcategory2/newsubcategory2.component';
+import { NewproviderComponent } from './pages/expense/modal/newprovider/newprovider.component';
+import { NewprojectComponent } from './pages/expense/modal/newproject/newproject.component';
+import { UserService } from '@services/user.service';
 
 /* registerLocaleData(localeEs, 'es-ES'); */
 
@@ -129,7 +143,19 @@ import { ExpenseEditComponent } from './pages/expense/expense-edit/expense-edit.
         BudgetEditComponent,
         ExpenseListComponent,
         ExpenseNewComponent,
-        ExpenseEditComponent
+        ExpenseEditComponent,
+        CecoChoiceComponent,
+        ProjectListComponent,
+        ProjectNewComponent,
+        ProjectEditComponent,
+        PaymentListComponent,
+        PaymentNewComponent,
+        PaymentEditComponent,
+        NewcategoryComponent,
+        NewsubcategoryComponent,
+        Newsubcategory2Component,
+        NewproviderComponent,
+        NewprojectComponent
     ],
     imports: [
         BrowserModule,
@@ -147,9 +173,10 @@ import { ExpenseEditComponent } from './pages/expense/expense-edit/expense-edit.
             timeOut: 2500,
             positionClass: 'toast-top-right',
             preventDuplicates: true
-        })
+        }),
+        ModalModule.forRoot()
     ],
-    providers: [],
+    providers: [UserService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

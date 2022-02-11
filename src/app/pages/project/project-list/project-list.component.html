@@ -1,0 +1,123 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 badge badge-pill badge-primary">CECO: {{ cecoName }}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/']"
+                    routerLinkActive="router-link-active">Home</a></li>
+                    <li class="breadcrumb-item active">{{title}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Proyectos</h3>
+
+                <div class="card-tools">
+                    <!-- <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        data-widget="remove"
+                        data-toggle="tooltip"
+                        title="Nuevo"
+                    >
+                        <i class="fa fa-plus"></i>
+                    </button> -->
+                    <a [routerLink]="['/projects/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
+                id="proyecto" class="table table-bordered table-striped proyecto">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Inicial</th>
+                            <th>Pagado</th>
+                            <th>Por Ejecutar</th>
+                            <th>Proveedor</th>
+                            <!--<th>Estatus</th> -->
+                            <th class="notexport nosort">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let project of projects">
+                            <td>{{ project.id }}</td>
+                            <td>{{ project.nombre }}</td>
+                            <td>{{ project.fechainicio | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ project.fechafin | date: 'dd/MM/yyyy' }}</td>
+                            <td class="text-right">${{ project.monto | mask: 'separator':','}}</td>
+                            <td class="text-right">${{ project.pagado | mask: 'separator':','}}</td>
+                            <td *ngIf="project.monto-project.pagado<0" class="text-right">$-{{ project.monto - project.pagado | mask: 'separator':','}}</td>
+                            <td *ngIf="project.monto-project.pagado>=0" class="text-right">${{ project.monto - project.pagado | mask: 'separator':','}}</td>
+                            <td>{{ project.proveedor }}</td>
+                            <td>
+                                <a [routerLink]="['/projects/edit/' + project.id]" class="btn btn-primary btn-sm mr-1" 
+                                title="Editar"><i class="fa fa-pen"></i></a>
+                                
+                                <button type="button" class="btn btn-sm btn-danger"
+                                data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+project.id">
+                                <i class="fa fa-trash"></i>
+                                </button>
+
+                                <!-- /* Modal */ -->                                
+                                <div class="modal fade" id="{{'modal' + project.id}}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Atencion</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p>¿Estas seguro de Borrar el Proyecto "{{ project.nombre }}"?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <a (click)="deleteProject(project.id)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a>
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <!--/* Final Modal */-->
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+
+            </div>
+            <!-- /.card-footer-->
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+
+
+
+
+

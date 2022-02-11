@@ -1,0 +1,37 @@
+<form #newCategorym="ngForm" (ngSubmit)="onSubmit(newCategorym)">
+<div class="modal-content">
+	<div class="modal-header">
+		<h6 class="circularBold signUpHeading">Nueva Categoria</h6>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" 
+        aria-label="Close" (click)="bsModalRef.hide()"></button>
+	</div>
+	<div class="modal-body">
+            <div class="row">
+                <div class="col-md">
+                    <div class="input-group">
+                        <input type="text" name="nombre" id="nombre" #nombre="ngModel"
+                        [(ngModel)]="category.nombre" class="form-control" required
+                        placeholder="Nombre Categoria"  data-toggle="tooltip" title='Nombre Categoria'>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-tags"></span>
+                            </div>
+                        </div>
+                        <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
+                            Nombre Categpria es requerido
+                        </small>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <!-- <a (click)="deleteExpense(expense.idreg)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a> -->
+        <!-- <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onConfirm()">Aceptar</button> -->
+        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+        [disabled]="newCategorym.invalid">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" (click)="onCancel()">
+            Cancelar
+        </button>
+    </div>
+</div>
+</form>

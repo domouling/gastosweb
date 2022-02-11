@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { UserService } from '@services/user.service'; 
 
@@ -15,13 +16,25 @@ import { UserService } from '@services/user.service';
 export class MenuSidebarComponent implements OnInit {
     public user:any = '';
     public menu = MENU;
+    public cecoch: any;
+    public message: any;
+    public editMessage: string;
+
+
+    @Input() NombreCeco: string = '';
 
     constructor(
-        private _userService: UserService
+        public _userService: UserService
     ) {}
 
     ngOnInit() {
         this.getInfo();
+        this._userService.mensaje$.pipe(take(1)).subscribe(msg => this.message);
+        /* this._userService.change.subscribe(message => {
+            this.message = message;
+            console.log('entre' + this.message);
+        }) */
+        //this.getCecoChoice();
     }
 
     async getInfo() {
@@ -34,9 +47,19 @@ export class MenuSidebarComponent implements OnInit {
             }
         )
     }
+
+    getCecoChoice(){
+        this.cecoch = this._userService.getCecoChoice();
+    }
 }
 
 export const MENU = [
+    {
+        icon: 'bi bi-layers',
+        role: 'ROLE_ADMIN',
+        name: 'Elegir Ceco',
+        path: ['/choice']
+    },
     {
         icon: 'bi bi-speedometer2',
         role: 'ALL',
@@ -49,11 +72,23 @@ export const MENU = [
         name: 'Movimientos',
         path: ['/expense']
     },
-    {
+    /* {
+        icon: 'bi bi-wallet2',
+        role: 'ALL',
+        name: 'Abonos',
+        path: ['/payments']
+    }, */
+    /* {
         icon: 'bi bi-kanban',
         role: 'ALL',
         name: 'Presupuestos',
         path: ['/estimate']
+    }, */
+    {
+        icon: 'bi bi-journals',
+        role: 'ALL',
+        name: 'Proyectos',
+        path: ['/projects']
     },
     {
         icon: 'bi bi-gear',
@@ -90,31 +125,31 @@ export const MENU = [
                 name: 'Moneda',
                 path: ['/trxcurrency'],
             },
+            {
+                icon: 'bi bi-building',
+                role: 'ALL',
+                name: 'Proveedores',
+                path: ['/provider']
+            },
+            {
+                icon: 'bi bi-tags',
+                role: 'ALL',
+                name: 'Categorias',
+                path: ['/category']
+            },
+            {
+                icon: 'bi bi-tag',
+                role: 'ALL',
+                name: 'SubCategoria',
+                path: ['/subcategory']
+            },
+            {
+                icon: 'bi bi-tag',
+                role: 'ALL',
+                name: 'SubCategoria2',
+                path: ['/subcategory2']
+            },
         ]
-    },
-    {
-        icon: 'bi bi-building',
-        role: 'ALL',
-        name: 'Proveedores',
-        path: ['/provider']
-    },
-    {
-        icon: 'bi bi-tags',
-        role: 'ALL',
-        name: 'Categorias',
-        path: ['/category']
-    },
-    {
-        icon: 'bi bi-tag',
-        role: 'ALL',
-        name: 'SubCategoria',
-        path: ['/subcategory']
-    },
-    {
-        icon: 'bi bi-tag',
-        role: 'ALL',
-        name: 'SubCategoria2',
-        path: ['/subcategory2']
     },
     {
         icon: 'bi bi-journal-richtext',
@@ -122,4 +157,5 @@ export const MENU = [
         name: 'Reportes',
         path: ['/reports']
     },
+    
 ];
