@@ -1,5 +1,13 @@
-import {Component, OnInit, AfterViewInit } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
+import {Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { 
+    Chart, 
+    registerables,
+    ChartDataset,
+    ChartOptions,
+    ChartConfiguration,
+    ChartEvent,
+    ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 import moment, { Moment } from 'moment';
 
 import { UserService } from '@services/user.service';
@@ -26,6 +34,67 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     public datax: any[] = [];
     public datay: any[] = [];
 
+
+    /*  Data para prueba **/
+    public lineChartData: ChartConfiguration['data'] = {
+        datasets: [
+            {
+                data: [25,25,14,2558,14,0],
+                label: 'Gastos',
+                borderColor: 'rgba(148,159,177,1)',
+                pointBackgroundColor: 'rgba(148,159,177,1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+                fill: 'origin',
+            },
+            {
+                data: [0,254,369,144,154,0],
+                label: 'Abonos',
+                borderColor: 'rgba(77,83,96,1)',
+                pointBackgroundColor: 'rgba(77,83,96,1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(77,83,96,1)',
+                fill: 'origin',
+            }
+        ],
+        labels: [ 'January', 'February', 'March', 'April', 'May', 'June' ]
+    }
+
+    public lineChartOptions: ChartConfiguration['options'] = {
+        elements: {
+          line: {
+            tension: 0.5
+          }
+        },
+        scales: {
+          // We use this empty structure as a placeholder for dynamic theming.
+          x: {},
+          'y-axis-0':
+            {
+              position: 'left',
+            },
+          'y-axis-1': {
+            position: 'right',
+            grid: {
+              color: 'rgba(255,0,0,0.3)',
+            },
+            ticks: {
+              color: 'red'
+            }
+          }
+        },
+    
+        plugins: {
+          legend: { display: true },
+        }
+    };
+
+    public lineChartType: ChartType = 'line';
+
+    @ViewChild(BaseChartDirective) chartx?: BaseChartDirective;
+
     public ceco: number = parseInt(localStorage.getItem('ceco'));
     public today: any;
     public totexp: any;
@@ -33,7 +102,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     public cecoName: string = '';
 
-   constructor(
+    constructor(
         private _userService: UserService,
         private _cecoService: CecoService,
         private _expenseService: ExpenseService,
@@ -53,11 +122,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.getCecos();
         this.totales();
         this.getCeco();
-        this.datagastos();
-        this.getChart();
+        //this.getChart();
     }
     
     async ngAfterViewInit(): Promise<void> {
+        await this.datagastos();
+        await this.dataabonos();
     }
 
    datagastos() { //TODO
@@ -72,6 +142,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                    }
 
                }
+
+               this.lineChartData.datasets[0].data = this.datax;
+               this.chartx?.update();
             }
         );
    }
@@ -88,77 +161,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                    }
                }
 
+               this.lineChartData.datasets[1].data = this.datay;
+               this.chartx?.update();
             }
         );
-    }
-
-    private async getChart(): Promise<void>{
-
-        this.datagastos();
-
-        this.dataabonos();
-
-        this.chart = new Chart('canvas', await {
-            type: 'line',
-            data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Gastos',
-                    data: this.datax,
-                    //fill: false,
-                    /* backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 205, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(153, 102, 255, 0.2)'
-                    ], */
-                    /* borderColor: [
-                      'rgb(255, 99, 132)',
-                      'rgb(255, 159, 64)',
-                      'rgb(255, 205, 86)',
-                      'rgb(75, 192, 192)',
-                      'rgb(54, 162, 235)',
-                      'rgb(153, 102, 255)'
-                    ], */
-                    borderColor: 'rgb(0,128,192)',
-                    tension: 0.1,
-                    /* borderWidth: 1 */
-                }, {
-                    label: 'Abonos',
-                    data: [this.datay],
-                    //fill: false,
-                    /* backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(255, 205, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(153, 102, 255, 0.2)'
-                    ], */
-                    /* borderColor: [
-                      'rgb(255, 99, 132)',
-                      'rgb(255, 159, 64)',
-                      'rgb(255, 205, 86)',
-                      'rgb(75, 192, 192)',
-                      'rgb(54, 162, 235)',
-                      'rgb(153, 102, 255)'
-                    ], */
-                    borderColor: 'rgb(0,128,0)',
-                    tension: 0.1,
-                    /* borderWidth: 1 */
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            },
-        });
-
     }
 
     getCountUsers(){
