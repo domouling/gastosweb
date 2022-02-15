@@ -137,7 +137,6 @@ export class PaymentEditComponent implements OnInit {
     this._cecoService.getId(this.ceco).subscribe(
     response => {
         if(response.ceco) {
-            console.log(response.ceco);
             this.cecoName = response.ceco.centrocosto;
             /* if(this.ceco.imagen){
                 this.first = this.ceco.imagen;

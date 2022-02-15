@@ -1,6 +1,6 @@
 import {Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { 
-    Chart, 
+import {
+    Chart,
     registerables,
     ChartDataset,
     ChartOptions,
@@ -11,11 +11,11 @@ import { BaseChartDirective } from 'ng2-charts';
 import moment, { Moment } from 'moment';
 
 import { UserService } from '@services/user.service';
-import { CecoService } from '@services/ceco.service'; 
+import { CecoService } from '@services/ceco.service';
 import { ExpenseService } from '@services/expense.service';
 import { PaymentService } from '@services/payment.service';
 import { global } from '@services/global';
- 
+
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
           }
         },
-    
+
         plugins: {
           legend: { display: true },
         }
@@ -124,7 +124,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.getCeco();
         //this.getChart();
     }
-    
+
     async ngAfterViewInit(): Promise<void> {
         await this.datagastos();
         await this.dataabonos();
@@ -134,12 +134,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this._expenseService.getExpenseMonth(this.ceco || 1).subscribe(
            response => {
                if (response.status == 'success') {
-                   //console.log(response.expenses);
-                   this.datax = response.expenses.map(res => parseInt(res.monto));
+                   //this.datax = response.expenses.map(res => parseInt(res.monto));
 
-                   for (let i = response.expenses.length; i < 6; i++) {
-                       this.datax[i] = 0;
-                   }
+                   this.datax = [0,0,0,0,0,0];
+
+                   for (let i = 0; i < response.expenses.length; i++) {
+                    this.datax[response.expenses[i].mes - 1] = parseInt(response.expenses[i].monto);
+                  }
 
                }
 
@@ -148,17 +149,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
         );
    }
-   
+
    dataabonos() {
        this._paymentService.getPaymentMonth(this.ceco || 1).subscribe(
            response => {
                if(response.status == 'success'){
+                    //this.datay = response.payments.map(res => parseInt(res.monto));
+                    this.datay = [0,0,0,0,0,0];
 
-                   this.datay = response.payments.map(res => parseInt(res.monto));
-                   
-                   for (let i = response.payments.length; i < 6; i++) {
+                    //console.log(response)
+                    for (let i = 0; i < response.payments.length; i++) {
+                      this.datay[response.payments[i].mes - 1] = parseInt(response.payments[i].monto);
+                    }
+
+                   /* for (let i = response.payments.length; i < 6; i++) {
                        this.datay[i] = 0;
-                   }
+                   } */
                }
 
                this.lineChartData.datasets[1].data = this.datay;
@@ -227,7 +233,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 console.log(error);
             }
         )
-        
+
 
     }
 
@@ -252,7 +258,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                         error => {
                         console.log(error);
                     });
-                
+
                     this._paymentService.totalCeco(body).subscribe(
                         response => {
                         if(response.status == 'success'){
