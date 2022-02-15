@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import moment, { Moment } from 'moment';
+import { Subject } from 'rxjs';
 
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { NewproviderComponent } from '@pages/expense/modal/newprovider/newprovider.component';
 import { UserService } from '@services/user.service';
 import { ProviderService } from '@services/provider.service';
 import { ProjectService } from '@services/project.service';
@@ -38,6 +41,8 @@ export class ProjectNewComponent implements OnInit {
   public ceco: number;
   public cecoName: string = '';
 
+  public bsModalRef: BsModalRef;
+
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -45,8 +50,9 @@ export class ProjectNewComponent implements OnInit {
     private _userService: UserService,
     private _providerService: ProviderService,
     private _projectService: ProjectService,
-    private _cecoService: CecoService
-    
+    private _cecoService: CecoService,
+    private _modalService: BsModalService
+
   ) {
 
     this.today = moment().format('YYYY-MM-DD');
@@ -54,7 +60,7 @@ export class ProjectNewComponent implements OnInit {
 
     this.ceco =  parseInt(localStorage.getItem('ceco'));
 
-    this.project = new Project(null,'',this.today,this.tomorrow,0,0,1,this.ceco,1,'','');
+    this.project = new Project(null,'',this.today,this.tomorrow,0,0,0,this.ceco,1,'','');
     this.title = 'Proyectos';
     this.subtitle = 'Proyecto Nuevo';
     this.url = global.url;
@@ -134,6 +140,20 @@ export class ProjectNewComponent implements OnInit {
     error => {
         console.log(error);
     });
+  }
+
+  newProveedor(e: Event){
+    e.preventDefault();
+    this.bsModalRef = this._modalService.show(NewproviderComponent);
+
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.providers = result.data;
+        this.project.proveedor_id = result.newId;
+      }
+    })
+
   }
 
 }

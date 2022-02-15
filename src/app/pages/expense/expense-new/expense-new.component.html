@@ -100,7 +100,7 @@
                                     <span class="input-group-text"><b>Categoria</b></span>
                                     <select class="form-select" name="categoria_id" id="categoria_id" #categoria_id="ngModel"
                                     [(ngModel)]="expense.categoria_id" (change)="onChgSubc(expense.categoria_id)">
-                                        <!-- <option value="0" selected>Elegir Categoria...</option> -->
+                                        <option value="0" selected>Elegir Categoria...</option>
                                         <option *ngFor="let category of categories" [value]=category.id>{{ category.nombre }}</option>
                                     </select>
                                     <button (click)="newCategoria($event)" class="btn btn-success"><b>+</b></button>
@@ -112,6 +112,7 @@
                                     <span class="input-group-text"><b>Concepto</b></span>
                                     <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
                                     [(ngModel)]="expense.subcategoria_id" (change)="onChgSubc2(expense.subcategoria_id)">
+                                        <option value="0">Elegir Concepto...</option>
                                         <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>
                                     </select>
                                     <button (click)="newSubCategoria($event)" class="btn btn-success"><b>+</b></button>
@@ -120,6 +121,7 @@
                                     <span class="input-group-text"><b>Concepto</b></span>
                                     <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
                                     [(ngModel)]="expense.subcategoria_id" (change)="onChgSubc2(expense.subcategoria_id)">
+                                        <option value="0">Elegir Concepto...</option>
                                         <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>
                                     </select>
                                     <button (click)="newSubCategoria($event)" class="btn btn-success"><b>+</b></button>
@@ -130,7 +132,8 @@
                                 <div *ngIf="is_edit == false" class="input-group">
                                     <span class="input-group-text"><b>Detalle</b></span>
                                     <select class="form-select" name="subcategoria2_id" id="subcategoria2_id" #subcategoria2_id="ngModel"
-                                    [(ngModel)]="expense.subcategoria2_id" disabled>
+                                    [(ngModel)]="expense.subcategoria2_id">
+                                        <option value="0">Elegir Detalle...</option>
                                         <option *ngFor="let subcategory2 of subcategories2" [value]=subcategory2.id>{{ subcategory2.nombre }}</option>
                                     </select>
                                     <button (click)="newSubCategoria2($event)" class="btn btn-success" ><b>+</b></button>
@@ -139,6 +142,7 @@
                                     <span class="input-group-text"><b>Detalle</b></span>
                                     <select class="form-select" name="subcategoria2_id" id="subcategoria2_id" #subcategoria2_id="ngModel"
                                     [(ngModel)]="expense.subcategoria2_id">
+                                        <option value="0">Elegir Detalle...</option>
                                         <option *ngFor="let subcategory2 of subcategories2" [value]=subcategory2.id>{{ subcategory2.nombre }}</option>
                                     </select>
                                     <button (click)="newSubCategoria2($event)" class="btn btn-success"><b>+</b></button>

@@ -112,7 +112,7 @@ export class ExpenseNewComponent implements OnInit {
 
     this.ceco = parseInt(localStorage.getItem('ceco'));
 
-    this.expense = new Expense(null,1,0,null,null,null,null,this.today,null,0,null,null,1,0,0,0,null,1,1,1,this.ceco,1,1,1,null,1,'','');
+    this.expense = new Expense(null,0,0,null,null,null,null,this.today,null,0,null,null,1,0,0,0,null,1,1,1,this.ceco,1,0,0,null,1,'','');
     this.expenseImage = new ExpenseImage(1,'');
     this.title = 'Movimientos';
     this.subtitle = 'Nuevo Cargo';
@@ -141,22 +141,23 @@ export class ExpenseNewComponent implements OnInit {
     this.getMonedas();
   }
 
-  async onChgSubc(data: any){
-    let subc :any = document.getElementById('subcategoria_id');
-    let subc2 :any = document.getElementById('subcategoria2_id');
-    subc.disabled = false;
-    subc2.disabled = 'disabled';
-    await this.getSubCatId(data);
-    subc.selectedIndex = 0;
-    subc2.selectedIndex = 0;
-    this.subcategories2 = [];
+  onChgSubc(data: any){
+    let subc :any = (<HTMLInputElement>document.getElementById('subcategoria_id'));
+    let subc2 :any = (<HTMLInputElement>document.getElementById('subcategoria2_id'));
+    let catx :any = (<HTMLInputElement>document.getElementById('categoria_id'));
+
+    this.getSubCatId(data);
+    this.expense.subcategoria_id = 0;
+    this.expense.subcategoria2_id = 0;
+    subc.value = 0;
+    subc2.value = 0;
   }
 
-  async onChgSubc2(data: any){
-    let subc2 :any = document.getElementById('subcategoria2_id');
-    subc2.disabled = false;
-    await this.getSubCat2Id(data);
-    subc2.selectedIndex = 0;
+  onChgSubc2(data: any){
+    let subc2 :any = (<HTMLInputElement>document.getElementById('subcategoria2_id'));
+    this.getSubCat2Id(data);
+    this.expense.subcategoria2_id = 0;
+    subc2.value = 0;
   }
 
   async onChgMonto(data: any) {
@@ -169,7 +170,7 @@ export class ExpenseNewComponent implements OnInit {
       proy.classList.replace('d-none','d-block');
     } else {
       proy.classList.replace('d-block','d-none');
-    } 
+    }
   }
 
   async onChgMetod(data: any){
@@ -189,7 +190,7 @@ export class ExpenseNewComponent implements OnInit {
         this.tipocta = 'Linea Credito';
         this.montopresupuesto = this.estimates[0].totlineacredito;
         break;
-    
+
       default:
         this.tipocta = 'Global';
         this.montopresupuesto = this.estimates[0].total;
@@ -204,7 +205,7 @@ export class ExpenseNewComponent implements OnInit {
       response => {
         if(response.status = 'success'){
           this.expense.proveedor_id = response.project.proveedor_id;
-        } 
+        }
       },
       error => {
         console.log(error);
@@ -239,7 +240,7 @@ export class ExpenseNewComponent implements OnInit {
       }
     )
   }
-  
+
 
   onSubmit(form:any){
     let imagen = this.expense.imagen;
@@ -274,7 +275,7 @@ export class ExpenseNewComponent implements OnInit {
                 error => {
                   console.log(error);
                 }
-              ); 
+              );
             }
           }
           /* if(proyecto != 0){
@@ -509,8 +510,8 @@ export class ExpenseNewComponent implements OnInit {
     response => {
         if(response.ceco) {
             this.cecoName = response.ceco.centrocosto;
-            
-        } 
+
+        }
     },
     error => {
         console.log(error);
@@ -520,7 +521,7 @@ export class ExpenseNewComponent implements OnInit {
   newCategoria(e: Event){
     e.preventDefault();
     this.bsModalRef = this._modalService.show(NewcategoryComponent);
-    
+
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
       if(result !== null){
@@ -544,7 +545,7 @@ export class ExpenseNewComponent implements OnInit {
           };
 
           this.bsModalRef = this._modalService.show(NewsubcategoryComponent, {initialState});
- 
+
           this.bsModalRef.content.onClose = new Subject<boolean>();
           this.bsModalRef.content.onClose.subscribe(result => {
             if(result !== null){
@@ -572,7 +573,7 @@ export class ExpenseNewComponent implements OnInit {
           };
 
           this.bsModalRef = this._modalService.show(Newsubcategory2Component, {initialState});
- 
+
           this.bsModalRef.content.onClose = new Subject<boolean>();
           this.bsModalRef.content.onClose.subscribe(result => {
             if(result !== null){
@@ -588,15 +589,18 @@ export class ExpenseNewComponent implements OnInit {
   newProveedor(e: Event){
     e.preventDefault();
     this.bsModalRef = this._modalService.show(NewproviderComponent);
-    
+
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
       if(result !== null){
-        this.providers = result.data;
+        console.log(result);
+        this.providers = result;
+        console.log(this.providers);
         this.expense.proveedor_id = result.newId;
+        console.log(this.expense.proveedor_id)
       }
     })
-    
+
   }
 
   newProject(e: Event){
@@ -617,10 +621,10 @@ export class ExpenseNewComponent implements OnInit {
         this.expense.proveedor_id = result.prov;
       }
     })
-        
-      
+
+
 
   }
-  
+
 
 }

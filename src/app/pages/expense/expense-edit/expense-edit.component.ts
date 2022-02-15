@@ -169,9 +169,9 @@ export class ExpenseEditComponent implements OnInit {
     } else {
       proy.classList.replace('d-block','d-none');
     }
-    
+
   }
-  
+
 
   onChgMetod(data: any){
     console.log('el metodo es ',this.expense.metodo);
@@ -190,7 +190,7 @@ export class ExpenseEditComponent implements OnInit {
         this.tipocta = 'Linea Credito';
         this.montopresupuesto = this.estimates[0].totlineacredito;
         break;
-    
+
       default:
         this.tipocta = 'Global';
         this.montopresupuesto = this.estimates[0].total;
@@ -256,9 +256,9 @@ export class ExpenseEditComponent implements OnInit {
             this.fileName = this.expense.imagen;
             this.montonvogasto = this.expense.monto;
             let caso = this.expense.metodo;
-            
+
             this.getEstTotal();
-            
+
             if(caso == '1') {
               this.tipocta = 'Cta. Corriente';
               //console.log(this.tipocta);
@@ -295,7 +295,7 @@ export class ExpenseEditComponent implements OnInit {
       )
     })
   }
-  
+
 
   onSubmit(form:any){
     let imagen = this.fileName;
@@ -338,7 +338,7 @@ export class ExpenseEditComponent implements OnInit {
                 error => {
                   console.log(error);
                 }
-              ); 
+              );
             }
           } else {
             if(this.first){
@@ -599,7 +599,7 @@ export class ExpenseEditComponent implements OnInit {
   newCategoria(e: Event){
     e.preventDefault();
     this.bsModalRef = this._modalService.show(NewcategoryComponent);
-    
+
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
       if(result !== null){
@@ -611,7 +611,7 @@ export class ExpenseEditComponent implements OnInit {
   newSubCategoria(e: Event){
     e.preventDefault();
     this.bsModalRef = this._modalService.show(NewsubcategoryComponent);
-    
+
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
       if(result !== null){
@@ -623,7 +623,7 @@ export class ExpenseEditComponent implements OnInit {
   newSubCategoria2(e: Event){
     e.preventDefault();
     this.bsModalRef = this._modalService.show(Newsubcategory2Component);
-    
+
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
       if(result !== null){
@@ -635,11 +635,12 @@ export class ExpenseEditComponent implements OnInit {
   newProveedor(e: Event){
     e.preventDefault();
     this.bsModalRef = this._modalService.show(NewproviderComponent);
-    
+
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
       if(result !== null){
-        this.categories = result;
+        this.providers = result.data;
+        this.expense.proveedor_id = result.newId;
       }
     })
   }
@@ -660,7 +661,7 @@ export class ExpenseEditComponent implements OnInit {
           };
 
           this.bsModalRef = this._modalService.show(NewsubcategoryComponent, {initialState});
- 
+
           this.bsModalRef.content.onClose = new Subject<boolean>();
           this.bsModalRef.content.onClose.subscribe(result => {
             if(result !== null){
