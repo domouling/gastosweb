@@ -34,3 +34,19 @@
 .resumen {
     box-shadow: 1px 1px 5px #444;
 }
+
+.input-group-text {
+  width: 90px;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .input-group {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  .file-upload {
+    margin-top: 10px;
+  }
+}

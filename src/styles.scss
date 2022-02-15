@@ -135,6 +135,18 @@ body {
 }
 
 
+.input-group-text {
+  width: 90px;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .input-group {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+}
+
 /* Clases Botones DataTables */
 .dt-buttons {
     float: left;

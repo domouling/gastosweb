@@ -34,21 +34,21 @@
                                 <div class="input-group">
                                     <input type="text" name="nombre" id="nombre" #nombre="ngModel"
                                     [(ngModel)]="subcategory2.nombre" class="form-control" required
-                                    placeholder="Nombre SubCategoria2"  data-toggle="tooltip" title='Nombre SubCategoria2'>
+                                    placeholder="Nombre Detalle"  data-toggle="tooltip" title='Nombre Detalle'>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <span class="fas fa-tag"></span>
                                         </div>
                                     </div>
                                     <small *ngIf="!nombre.valid && nombre.touched" class="invalid-feedback d-block">
-                                        Nombre SubCategoria2 es requerido
+                                        Nombre es requerido
                                     </small>
                                 </div>
                             </div>
 
                             <div class="col-md">
                                 <div class="input-group">
-                                    <span class="input-group-text"><b>SubCategoria</b></span>
+                                    <span class="input-group-text"><b>Concepto</b></span>
                                     <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
                                     [(ngModel)]="subcategory2.subcategoria_id">
                                         <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>

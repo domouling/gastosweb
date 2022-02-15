@@ -43,7 +43,7 @@
 
                             <div class="col-md">
                                 <div class="input-group">
-                                    <span class="input-group-text"><b>Tipo Movimiento</b></span>
+                                    <span class="input-group-text"><b>Tipo Mov.</b></span>
                                     <select class="form-select" name="tipogasto_id" id="tipogasto_id" #tipogasto_id="ngModel"
                                     [(ngModel)]="expense.tipogasto_id" (change)="onMetodChange(expense.tipogasto_id)">
                                         <option *ngFor="let tipogasto of tipogastos" [value]=tipogasto.id>{{ tipogasto.nombre }}</option>

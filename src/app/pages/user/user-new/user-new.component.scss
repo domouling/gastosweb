@@ -22,3 +22,15 @@
     height: 150px;
     object-fit: cover;
 }
+
+.input-group-text {
+  width: 90px;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .input-group {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+}
