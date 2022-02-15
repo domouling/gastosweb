@@ -41,8 +41,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
-                id="usuarios" class="table table-bordered table-striped usuarios">
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions"
+                id="cecos" class="table table-bordered table-striped usuarios">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -67,15 +67,15 @@
                             <td *ngIf="ceco.status == 1"><span class="badge badge-success">Activo</span></td>
                             <td *ngIf="ceco.status == 0"><span class="badge badge-danger">Inactivo</span></td>
                             <td>
-                                <a [routerLink]="['/ceco/edit/' + ceco.id]" class="btn btn-primary btn-sm mr-1" 
+                                <a [routerLink]="['/ceco/edit/' + ceco.id]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
-                                
+
                                 <button type="button" class="btn btn-sm btn-danger"
                                 data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+ceco.id">
                                 <i class="fa fa-trash"></i>
                                 </button>
 
-                                <!-- /* Modal */ -->                                
+                                <!-- /* Modal */ -->
                                 <div class="modal fade" id="{{'modal' + ceco.id}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">

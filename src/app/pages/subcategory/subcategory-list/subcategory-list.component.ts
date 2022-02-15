@@ -32,7 +32,7 @@ export class SubcategoryListComponent implements OnInit, OnDestroy {
     private _userService: UserService,
     private _subcategoryService: SubCategoryService
   ) {
-    this.title = 'SubCategorias';
+    this.title = 'Concepto';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -43,7 +43,7 @@ export class SubcategoryListComponent implements OnInit, OnDestroy {
       destroy: true,
       pagingType: 'full_numbers',
       pageLength: 10,
-      scrollX: false,
+      scrollX: true,
       scrollY: "385px",
       scrollCollapse: true,
       responsive: true,
@@ -54,7 +54,7 @@ export class SubcategoryListComponent implements OnInit, OnDestroy {
         }
       ],
       dom: 'lBfrtip',
-        buttons: [ 
+        buttons: [
           {
             extend: 'excel',
             text: '<i class="far fa-file-excel"></i>',
@@ -90,7 +90,7 @@ export class SubcategoryListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();  
+    this.dtTrigger.unsubscribe();
   }
 
   getSubcategories() {

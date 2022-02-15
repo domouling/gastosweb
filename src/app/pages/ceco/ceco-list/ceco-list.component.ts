@@ -43,18 +43,18 @@ export class CecoListComponent implements OnInit, OnDestroy {
       destroy: true,
       pagingType: 'full_numbers',
       pageLength: 10,
-      scrollX: false,
+      scrollX: true,
       scrollY: "385px",
       scrollCollapse: true,
       responsive: true,
       language: {url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json'},
     }
 
-    this.getCecos();  
+    this.getCecos();
   }
 
   ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();  
+    this.dtTrigger.unsubscribe();
   }
 
   getCecos() {

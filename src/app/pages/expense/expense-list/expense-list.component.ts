@@ -65,7 +65,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
-      scrollX: false,
+      scrollX: true,
       scrollY: "385px",
       scrollCollapse: true,
       responsive: true,
@@ -76,7 +76,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
         }
       ],
       dom: 'lBfrtip',
-      buttons: [ 
+      buttons: [
         {
           extend: 'excel',
           text: '<i class="far fa-file-excel"></i>',
@@ -129,7 +129,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();  
+    this.dtTrigger.unsubscribe();
   }
 
   getExpenses(ceco: number) {
@@ -260,13 +260,13 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     let desde = (<HTMLInputElement>document.getElementById('fechaini')).value;
     let hasta = (<HTMLInputElement>document.querySelector('#fechafin')).value;
     let body;
-    if(desde <= hasta) { 
+    if(desde <= hasta) {
       body = {
         desde: (<HTMLInputElement>document.getElementById('fechaini')).value,
         hasta: (<HTMLInputElement>document.getElementById('fechafin')).value
       }
     } else {
-      
+
       body = {
         desde: '2022-01-01',
         hasta: '2022-12-31'
@@ -289,7 +289,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
           this.totales();
           //this.dtTrigger.next(null);
-          //this.dtTrigger.unsubscribe(); 
+          //this.dtTrigger.unsubscribe();
         }
       },
       error => {

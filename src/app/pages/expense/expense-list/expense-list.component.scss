@@ -2,6 +2,18 @@ table.dataTable {
     font-size: 0.90rem !important;
 }
 
+#gastos {
+  width: 100% !important;
+}
+
+#fechas {
+  float: left;
+}
+
+.input-group-text {
+  width: 80px;
+}
+
 .consw {
     align-items: center;
 }
@@ -18,8 +30,29 @@ table.dataTable {
     color: green !important;
 }
 
+
+@media (max-width: 900px) {
+  .card-header {
+    text-align: center;
+  }
+
+  #fechas {
+    float: none;
+  }
+
+  .card-header > .card-tools {
+    float: none;
+    margin-top: 10px;
+  }
+}
+
 @media (max-width: 768px) {
     .totales {
         margin: 5px;
+    }
+
+    .input-group {
+      margin-bottom: 5px;
+      margin-top: 5px;
     }
 }

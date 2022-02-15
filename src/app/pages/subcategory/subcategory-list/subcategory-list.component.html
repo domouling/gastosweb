@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">SubCategorias</h3>
+                <h3 class="card-title">Concepto</h3>
 
                 <div class="card-tools">
                     <!-- <button
@@ -41,16 +41,16 @@
                 </div>
             </div>
             <div class="card-body">
-                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions"
                 id="subcategoria" class="table table-bordered table-striped subcategoria">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Categoria</th>
-                            <th>JerarquiaSubCatPcpal</th>
+                            <!-- <th>JerarquiaSubCatPcpal</th>
                             <th>JerarquiaSubCat</th>
-                            <th>Numjerarsubcat</th>
+                            <th>Numjerarsubcat</th> -->
                             <th>Estatus</th>
                             <th class="notexport nosort">Acciones</th>
                         </tr>
@@ -60,21 +60,21 @@
                             <td>{{ subcategory.id }}</td>
                             <td>{{ subcategory.nombre }}</td>
                             <td>{{ subcategory.categoria.nombre }}</td>
-                            <td>{{ subcategory.jerarquiasubcatpcpal }}</td>
+                            <!-- <td>{{ subcategory.jerarquiasubcatpcpal }}</td>
                             <td>{{ subcategory.jerarquiasubcat }}</td>
-                            <td>{{ subcategory.numjerarsubcat }}</td>
+                            <td>{{ subcategory.numjerarsubcat }}</td> -->
                             <td *ngIf="subcategory.status == 1"><span class="badge badge-success">Activo</span></td>
                             <td *ngIf="subcategory.status == 0"><span class="badge badge-danger">Inactivo</span></td>
                             <td>
-                                <a [routerLink]="['/subcategory/edit/' + subcategory.id]" class="btn btn-primary btn-sm mr-1" 
+                                <a [routerLink]="['/subcategory/edit/' + subcategory.id]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
-                                
+
                                 <button type="button" class="btn btn-sm btn-danger"
                                 data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+subcategory.id">
                                 <i class="fa fa-trash"></i>
                                 </button>
 
-                                <!-- /* Modal */ -->                                
+                                <!-- /* Modal */ -->
                                 <div class="modal fade" id="{{'modal' + subcategory.id}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">

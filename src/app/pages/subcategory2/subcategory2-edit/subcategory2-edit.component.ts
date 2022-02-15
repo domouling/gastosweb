@@ -38,8 +38,8 @@ export class Subcategory2EditComponent implements OnInit {
     private _subcategoryService2: SubCategoryService2
   ) {
     this.subcategory2 = new SubCategory2(null,'',0,0,0,1,null,1,'','');
-    this.title = 'SubCategoria2';
-    this.subtitle = 'Editar SubCategoria2';
+    this.title = 'Detalle';
+    this.subtitle = 'Editar Detalle';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -84,7 +84,7 @@ export class Subcategory2EditComponent implements OnInit {
         },
         error => {
           console.log(error);
-          this._router.navigate(['/subcategory2']);  
+          this._router.navigate(['/subcategory2']);
         }
       );
     })

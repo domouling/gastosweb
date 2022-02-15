@@ -37,8 +37,8 @@ export class SubcategoryNewComponent implements OnInit {
     private _subcategoryService: SubCategoryService
   ) {
     this.subcategory = new SubCategory(null,'',1,0,0,0,null,1,'','');
-    this.title = 'SubCategoria';
-    this.subtitle = 'SubCategoria Nueva';
+    this.title = 'Concepto';
+    this.subtitle = 'Concepto Nuevo';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -54,7 +54,7 @@ export class SubcategoryNewComponent implements OnInit {
       response => {
         if(response.status == 'success'){
           this.status = 'success';
-          this.msg = 'SubCategoria creada con exito!';
+          this.msg = 'Concepto creado con exito!';
           this.toastr.success(this.msg);
           this._router.navigate(['/subcategory']);
         }

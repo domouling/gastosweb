@@ -48,7 +48,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       destroy: true,
       pagingType: 'full_numbers',
       pageLength: 10,
-      scrollX: false,
+      scrollX: true,
       scrollY: "385px",
       scrollCollapse: true,
       responsive: true,
@@ -59,7 +59,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
         }
       ],
       dom: 'lBfrtip',
-        buttons: [ 
+        buttons: [
           {
             extend: 'excel',
             text: '<i class="far fa-file-excel"></i>',
@@ -96,7 +96,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();  
+    this.dtTrigger.unsubscribe();
   }
 
   getProjects(ceco: number) {

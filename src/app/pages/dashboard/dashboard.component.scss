@@ -2,3 +2,18 @@
     max-height: 500px !important;
     width: 100% !important;
 }
+
+.small-box sup {
+  font-size: 1.25rem;
+}
+
+
+@media (max-width: 480px) {
+  .small-box h3 {
+    font-size: 1.5rem;
+  }
+
+  .small-box sup {
+    font-size: 0.8rem;
+  }
+}

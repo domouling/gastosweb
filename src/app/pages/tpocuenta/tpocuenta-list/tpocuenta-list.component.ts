@@ -43,7 +43,7 @@ export class TpocuentaListComponent implements OnInit, OnDestroy {
       destroy: true,
       pagingType: 'full_numbers',
       pageLength: 10,
-      scrollX: false,
+      scrollX: true,
       scrollY: "385px",
       scrollCollapse: true,
       responsive: true,
@@ -54,7 +54,7 @@ export class TpocuentaListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();  
+    this.dtTrigger.unsubscribe();
   }
 
   getTpocuentas() {

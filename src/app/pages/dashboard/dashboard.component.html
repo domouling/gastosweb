@@ -28,7 +28,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{ totpay | mask: 'separator':',' }}<sup class="fs-5">$CLP</sup></h3>
+                        <h3>{{ totpay | mask: 'separator':',' }}<sup>$CLP</sup></h3>
                         <p>Abonos al {{ today }}</p>
                     </div>
                     <div class="icon">
@@ -44,7 +44,7 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{ totexp | mask: 'separator':',' }}<sup class="fs-5">$CLP</sup></h3>
+                        <h3>{{ totexp | mask: 'separator':',' }}<sup>$CLP</sup></h3>
                         <p>Cargos al {{ today }}</p>
                     </div>
                     <div class="icon">
@@ -64,7 +64,7 @@
                     'bg-success': totpay - totexp >= 0
                 }">
                     <div class="inner">
-                        <h3>{{ totpay - totexp | mask: 'separator':',' }}<sup class="fs-5">$CLP</sup></h3>
+                        <h3>{{ totpay - totexp | mask: 'separator':',' }}<sup>$CLP</sup></h3>
                         <p>Saldo al {{ today }}</p>
                     </div>
                     <div class="icon">
@@ -78,14 +78,14 @@
             <!-- ./col -->
 
             <!-- ./col -->
-            
+
         </div>
-        
+
         <div class="row-mt-2">
             <div class="card card-success">
                 <div class="card-header">
                   <h3 class="card-title">Graficas</h3>
-  
+
                   <div class="card-tools">
                     <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -101,8 +101,8 @@
                     <!-- <canvas id="canvas">
                        {{ chart }}
                     </canvas> -->
-                    <canvas 
-                        baseChart height="80"
+                    <canvas
+                        baseChart height="100"
                         [data]="lineChartData"
                         [options]="lineChartOptions"
                         [type]="lineChartType"

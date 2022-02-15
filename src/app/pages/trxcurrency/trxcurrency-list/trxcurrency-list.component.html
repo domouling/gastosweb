@@ -41,8 +41,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
-                id="tpocuenta" class="table table-bordered table-striped tpocuenta">
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions"
+                id="tpocurrency" class="table table-bordered table-striped tpocuenta">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -62,15 +62,15 @@
                             <td *ngIf="trxcurrency.status == 1"><span class="badge badge-success">Activo</span></td>
                             <td *ngIf="trxcurrency.status == 0"><span class="badge badge-danger">Inactivo</span></td>
                             <td>
-                                <a [routerLink]="['/trxcurrency/edit/' + trxcurrency.id]" class="btn btn-primary btn-sm mr-1" 
+                                <a [routerLink]="['/trxcurrency/edit/' + trxcurrency.id]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
-                                
+
                                 <button type="button" class="btn btn-sm btn-danger"
                                 data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+trxcurrency.id">
                                 <i class="fa fa-trash"></i>
                                 </button>
 
-                                <!-- /* Modal */ -->                                
+                                <!-- /* Modal */ -->
                                 <div class="modal fade" id="{{'modal' + trxcurrency.id}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">

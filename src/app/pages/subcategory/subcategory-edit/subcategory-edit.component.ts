@@ -38,8 +38,8 @@ export class SubcategoryEditComponent implements OnInit {
     private _subcategoryService: SubCategoryService
   ) {
     this.subcategory = new SubCategory(null,'',1,0,0,0,null,1,'','');
-    this.title = 'SubCategoria';
-    this.subtitle = 'Editar SubCategoria';
+    this.title = 'Concepto';
+    this.subtitle = 'Editar Concepto';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -56,7 +56,7 @@ export class SubcategoryEditComponent implements OnInit {
       response => {
         if(response.status == 'success'){
           this.status = 'success';
-          this.msg = 'SubCategoria Editada con exito!';
+          this.msg = 'Concepto Editado con exito!';
           this.toastr.success(this.msg);
           this._router.navigate(['/subcategory']);
         }

@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="row float-left consw">
+                <div class="row consw" id="fechas">
                     <div class="col-md-2">
                         <h3 class="card-title">Movimientos</h3>
                     </div>
@@ -31,7 +31,7 @@
                         <div class="input-group">
                             <span class="input-group-text"><b>Desde</b></span>
                             <input type="date" name="fechaini" id="fechaini"
-                            class="form-control" 
+                            class="form-control"
                             placeholder="Fecha Inicio" data-toggle="tooltip" title='Fecha'
                             value={{desde}} (change)="onInitChange()">
                         </div>
@@ -40,16 +40,16 @@
                         <div class="input-group">
                             <span class="input-group-text"><b>Hasta</b></span>
                             <input type="date" name="fechafin" id="fechafin"
-                            class="form-control" 
+                            class="form-control"
                             placeholder="Fecha Inicio" data-toggle="tooltip" title='Fecha'
                             value={{hasta}} (change)="onInitChange()">
                         </div>
 
                     </div>
                 </div>
-                
+
                 <div class="card-tools">
-                   
+
                     <a [routerLink]="['/expense/new']" class="btn btn-danger btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
                         <i class="fa fa-plus"></i> Nuevo Cargo
                     </a>
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions"
                 id="gastos" class="table table-bordered table-striped gastos">
                     <thead>
                         <tr>
@@ -93,18 +93,18 @@
                             </td>
                             <!-- <td>{{ expense.fechainicio | date: 'dd/MM/yyyy' }}</td> -->
                             <td>
-                                <a  *ngIf="expense.tabla == 'cargo'"  [routerLink]="['/expense/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1" 
+                                <a  *ngIf="expense.tabla == 'cargo'"  [routerLink]="['/expense/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
 
-                                <a  *ngIf="expense.tabla == 'abono'"  [routerLink]="['/payments/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1" 
+                                <a  *ngIf="expense.tabla == 'abono'"  [routerLink]="['/payments/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
-                               
+
                                 <button type="button" class="btn btn-sm btn-danger"
                                     data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+expense.idreg">
                                     <i class="fa fa-trash"></i>
                                 </button>
 
-                                <!-- /* Modal */ -->                                
+                                <!-- /* Modal */ -->
                                 <div *ngIf="expense.tabla=='cargo'" class="modal fade" id="{{'modal' + expense.idreg}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">

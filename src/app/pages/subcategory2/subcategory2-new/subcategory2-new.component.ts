@@ -38,8 +38,8 @@ export class Subcategory2NewComponent implements OnInit {
     private _subcategoryService2: SubCategoryService2
   ) {
     this.subcategory2 = new SubCategory2(null,'',0,0,0,1,null,1,'','');
-    this.title = 'SubCategoria2';
-    this.subtitle = 'SubCategoria2 Nueva';
+    this.title = 'Detalle';
+    this.subtitle = 'Detalle Nuevo';
     this.url = global.url;
     this.status = '';
     this.msg = '';
@@ -55,7 +55,7 @@ export class Subcategory2NewComponent implements OnInit {
       response => {
         if(response.status == 'success'){
           this.status = 'success';
-          this.msg = 'SubCategoria2 creada con exito!';
+          this.msg = 'Detalle creado con exito!';
           this.toastr.success(this.msg);
           this._router.navigate(['/subcategory2']);
         }

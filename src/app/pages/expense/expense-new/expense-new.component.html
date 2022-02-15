@@ -29,7 +29,7 @@
                     <h3 class="card-title">{{subtitle}}</h3>
                 </div>
                 <div class="card-body">
-                    
+
                         <div class="row mb-3">
                             <div class="col-md">
                                 <div class="input-group">
@@ -90,7 +90,7 @@
                                         Fecha Inicio es requerido
                                     </small>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
 
                         <div class="row mb-3">
@@ -109,7 +109,7 @@
 
                             <div class="col-md">
                                 <div *ngIf="is_edit == false" class="input-group">
-                                    <span class="input-group-text"><b>Subcategoria</b></span>
+                                    <span class="input-group-text"><b>Concepto</b></span>
                                     <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
                                     [(ngModel)]="expense.subcategoria_id" (change)="onChgSubc2(expense.subcategoria_id)">
                                         <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>
@@ -117,7 +117,7 @@
                                     <button (click)="newSubCategoria($event)" class="btn btn-success"><b>+</b></button>
                                 </div>
                                 <div *ngIf="is_edit == true" class="input-group">
-                                    <span class="input-group-text"><b>Subcategoria</b></span>
+                                    <span class="input-group-text"><b>Concepto</b></span>
                                     <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
                                     [(ngModel)]="expense.subcategoria_id" (change)="onChgSubc2(expense.subcategoria_id)">
                                         <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>
@@ -128,7 +128,7 @@
 
                             <div class="col-md">
                                 <div *ngIf="is_edit == false" class="input-group">
-                                    <span class="input-group-text"><b>Descripción</b></span>
+                                    <span class="input-group-text"><b>Detalle</b></span>
                                     <select class="form-select" name="subcategoria2_id" id="subcategoria2_id" #subcategoria2_id="ngModel"
                                     [(ngModel)]="expense.subcategoria2_id" disabled>
                                         <option *ngFor="let subcategory2 of subcategories2" [value]=subcategory2.id>{{ subcategory2.nombre }}</option>
@@ -136,7 +136,7 @@
                                     <button (click)="newSubCategoria2($event)" class="btn btn-success" ><b>+</b></button>
                                 </div>
                                 <div *ngIf="is_edit == true" class="input-group">
-                                    <span class="input-group-text"><b>Descripción</b></span>
+                                    <span class="input-group-text"><b>Detalle</b></span>
                                     <select class="form-select" name="subcategoria2_id" id="subcategoria2_id" #subcategoria2_id="ngModel"
                                     [(ngModel)]="expense.subcategoria2_id">
                                         <option *ngFor="let subcategory2 of subcategories2" [value]=subcategory2.id>{{ subcategory2.nombre }}</option>
@@ -148,7 +148,7 @@
 
                         <div class="row mb-3">
 
-                            <div class="col-md">
+                            <div class="col-md-4">
                                 <!-- <label class="montos" for="monto">Monto</label> -->
                                 <div class="input-group">
                                     <input type="text" name="monto" id="monto" #monto="ngModel"
@@ -168,7 +168,7 @@
                                 <div class="input-group">
                                     <input type="text" name="descripcion" id="descripcion" #descripcion="ngModel"
                                     [(ngModel)]="expense.descripcion" class="form-control"
-                                    placeholder="Detalle" data-toggle="tooltip" title='Detalle' required>
+                                    placeholder="Descripción" data-toggle="tooltip" title='Descripción' required>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <span class="fas fa-pen"></span>
@@ -180,6 +180,10 @@
                                 </div>
                             </div>
 
+                          </div>
+
+                          <div class="row mb-3 consw">
+
                             <div class="col-md">
                                 <div class="input-group">
                                     <span class="input-group-text"><b>Metodo</b></span>
@@ -189,10 +193,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row mb-3 consw">
-                            
                             <div class="col-md">
                                 <div class="input-group">
                                     <span class="input-group-text"><b>Proveedor</b></span>
@@ -204,7 +205,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8 text-center" *ngIf="is_edit == false">
+                            <div class="col-md text-center" *ngIf="is_edit == false">
                                 <input type="file" name="imagen" id="imagen" class="file-input" accept="image/*"
                                 (change)="onFileSelected($event)" #imagen="ngModel" #fileUpload
                                 [(ngModel)]="expense.imagen">
@@ -224,11 +225,11 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8" *ngIf="is_edit == true">
+                            <div class="col-md" *ngIf="is_edit == true">
                                 <input type="file" name="imagen" id="imagen" class="file-input" accept="image/*"
                                 (change)="onFileSelected($event)" #fileUpload
                                 >
-                                
+
                                 <div class="file-upload">
                                     {{ fileName || "Elija Imagen" }}
                                     <button class="btn btn-primary btn-circle ml-2" type="button" (click)="fileUpload.click()"
@@ -251,7 +252,7 @@
                             <div class="col-md">
                                 div class="input-group">
                                     <input type="text" name="nombrecuenta" id="nombrecuenta" #nombrecuenta="ngModel"
-                                    [(ngModel)]="expense.nombrecuenta" class="form-control" 
+                                    [(ngModel)]="expense.nombrecuenta" class="form-control"
                                     placeholder="Nombre Cuenta" data-toggle="tooltip" title='Nombre Cuenta'>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
@@ -298,15 +299,15 @@
                             </div>
 
                         </div>-->
-                    
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <div class="float-end">
                         <a [routerLink]="['/expense']" class="btn btn-danger btn-sm me-2">Cancelar</a>
-                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm"
                         [disabled]="cajaForm.invalid"> -->
-                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm"
                         [disabled]="newExpense.invalid">
                     </div>
                 </div>

@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { UserService } from '@services/user.service'; 
+import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-menu-sidebar',
@@ -140,13 +140,13 @@ export const MENU = [
             {
                 icon: 'bi bi-tag',
                 role: 'ALL',
-                name: 'SubCategoria',
+                name: 'Concepto',
                 path: ['/subcategory']
             },
             {
                 icon: 'bi bi-tag',
                 role: 'ALL',
-                name: 'SubCategoria2',
+                name: 'Detalle',
                 path: ['/subcategory2']
             },
         ]
@@ -157,5 +157,5 @@ export const MENU = [
         name: 'Reportes',
         path: ['/reports']
     },
-    
+
 ];
