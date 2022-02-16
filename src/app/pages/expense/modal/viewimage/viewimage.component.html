@@ -1,0 +1,21 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h6 class="circularBold signUpHeading">{{ title }}</h6>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"
+      aria-label="Close" (click)="bsModalRef.hide()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md">
+        <img src="{{ list[1] + 'expenses/file/' + list[0] }}" alt="" class="w-100">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" (click)="bsModalRef.hide()">
+      Cerrar
+  </button>
+  </div>
+</div>

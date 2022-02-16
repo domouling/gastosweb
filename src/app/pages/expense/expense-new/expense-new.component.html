@@ -245,7 +245,7 @@
                                         <i class="bi bi-x-lg"></i>
                                     </button>
                                     <img *ngIf="!srcFile && !expense.imagen" class="img-bill mt-1" src="assets/img/bill.png" alt="">
-                                    <img *ngIf="!srcFile && expense.imagen" class="img-bill mt-1" src="{{ url + 'expenses/file/' + fileName }}" alt="">
+                                    <img *ngIf="!srcFile && expense.imagen" class="img-bill mt-1" src="{{ url + 'expenses/file/' + fileName }}" alt="" (click)="viewImage($event)">
                                     <img *ngIf="srcFile && srcFile.length > 0" class="img-bill mt-1" [src]="srcFile">
                                 </div>
                             </div>

@@ -23,6 +23,7 @@ import { ProjectService } from '@services/project.service';
 import { TrxCurrencyService } from '@services/trxcurrency.service';
 import { SubCategoryService2 } from '@services/subcategory2.service';
 import { SubCategoryService } from '@services/subcategory.service';
+import { ViewimageComponent } from '../modal/viewimage/viewimage.component';
 
 
 import { User } from '@/models/user';
@@ -622,7 +623,16 @@ export class ExpenseNewComponent implements OnInit {
       }
     })
 
+  }
 
+  viewImage(e: Event) {
+    e.preventDefault();
+    const initialState = {
+      list: [this.fileName,this.url],
+      title: 'Imagen',
+    }
+
+    this.bsModalRef = this._modalService.show(ViewimageComponent, {initialState, class: 'modal-xl'});
 
   }
 

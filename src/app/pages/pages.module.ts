@@ -55,6 +55,7 @@ import { NewsubcategoryComponent } from './expense/modal/newsubcategory/newsubca
 import { NewproviderComponent } from './expense/modal/newprovider/newprovider.component';
 import { Newsubcategory2Component } from './expense/modal/newsubcategory2/newsubcategory2.component';
 import { NewprojectComponent } from './expense/modal/newproject/newproject.component';
+import { ViewimageComponent } from './expense/modal/viewimage/viewimage.component';
 
 /* registerLocaleData(localeEs, 'es-ES'); */
 
@@ -108,7 +109,8 @@ import { NewprojectComponent } from './expense/modal/newproject/newproject.compo
         NewsubcategoryComponent,
         NewproviderComponent,
         Newsubcategory2Component,
-        NewprojectComponent
+        NewprojectComponent,
+        ViewimageComponent
     ],
     exports: [
         BlankComponent,

@@ -7,8 +7,10 @@ import moment, { Moment } from 'moment';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { NewcategoryComponent } from '../modal/newcategory/newcategory.component';
 import { NewproviderComponent } from '../modal/newprovider/newprovider.component';
+import { NewprojectComponent } from '../modal/newproject/newproject.component';
 import { NewsubcategoryComponent } from '../modal/newsubcategory/newsubcategory.component';
 import { Newsubcategory2Component } from '../modal/newsubcategory2/newsubcategory2.component';
+import { ViewimageComponent } from '../modal/viewimage/viewimage.component';
 
 import { UserService } from '@services/user.service';
 import { ExpenseService } from '@services/expense.service';
@@ -647,32 +649,33 @@ export class ExpenseEditComponent implements OnInit {
 
   newProject(e: Event){
     e.preventDefault();
+    const cecoid = localStorage.getItem('ceco');
+    const initialState = {
+      list: [cecoid],
+      title: 'Nuevo Proyecto',
+    };
 
-    console.log(localStorage.getItem('ceco'));
+    this.bsModalRef = this._modalService.show(NewprojectComponent, {initialState});
 
-    /* this._categoryService.getId(this.expense.categoria_id).subscribe(
-      response => {
-        if(response.category){
-          const nombre = response.category.nombre;
-          const initialState = {
-              list: [nombre],
-              title: 'Nueva Subcategoria',
-              id: response.category.id
-          };
-
-          this.bsModalRef = this._modalService.show(NewsubcategoryComponent, {initialState});
-
-          this.bsModalRef.content.onClose = new Subject<boolean>();
-          this.bsModalRef.content.onClose.subscribe(result => {
-            if(result !== null){
-              this.subcategories = result.data;
-              this.expense.subcategoria_id = result.newId;
-              this.onChgSubc(result.newId);
-            }
-          })
-        }
+    this.bsModalRef.content.onClose = new Subject<boolean>();
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if(result !== null){
+        this.projects = result.data;
+        this.expense.proyecto_id = result.newId;
+        this.expense.proveedor_id = result.prov;
       }
-    ) */
+    })
+  }
+
+  viewImage(e: Event) {
+    e.preventDefault();
+    const initialState = {
+      list: [this.fileName,this.url],
+      title: 'Imagen',
+    }
+
+    this.bsModalRef = this._modalService.show(ViewimageComponent, {initialState, class: 'modal-xl'});
+
   }
 
 

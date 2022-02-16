@@ -82,6 +82,7 @@ import { NewsubcategoryComponent } from './pages/expense/modal/newsubcategory/ne
 import { Newsubcategory2Component } from './pages/expense/modal/newsubcategory2/newsubcategory2.component';
 import { NewproviderComponent } from './pages/expense/modal/newprovider/newprovider.component';
 import { NewprojectComponent } from './pages/expense/modal/newproject/newproject.component';
+import { ViewimageComponent } from '@pages/expense/modal/viewimage/viewimage.component';
 import { UserService } from '@services/user.service';
 
 /* registerLocaleData(localeEs, 'es-ES'); */
@@ -155,7 +156,8 @@ import { UserService } from '@services/user.service';
         NewsubcategoryComponent,
         Newsubcategory2Component,
         NewproviderComponent,
-        NewprojectComponent
+        NewprojectComponent,
+        ViewimageComponent
     ],
     imports: [
         BrowserModule,
