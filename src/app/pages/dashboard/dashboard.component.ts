@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     public lineChartData: ChartConfiguration['data'] = {
         datasets: [
             {
-                data: [25,25,14,2558,14,0],
+                data: [10,10,10,10,10,10],
                 label: 'Gastos',
                 borderColor: 'rgba(148,159,177,1)',
                 pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 fill: 'origin',
             },
             {
-                data: [0,254,369,144,154,0],
+                data: [10,10,10,10,10,10],
                 label: 'Abonos',
                 borderColor: 'rgba(77,83,96,1)',
                 pointBackgroundColor: 'rgba(77,83,96,1)',
@@ -126,8 +126,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
     async ngAfterViewInit(): Promise<void> {
-        await this.datagastos();
-        await this.dataabonos();
+        this.datagastos();
+        this.dataabonos();
     }
 
    datagastos() { //TODO

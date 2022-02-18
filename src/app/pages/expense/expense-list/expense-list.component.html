@@ -63,7 +63,6 @@
                 id="gastos" class="table table-bordered table-striped gastos">
                     <thead>
                         <tr>
-                            <th>CECO</th>
                             <th>Tipo</th>
                             <th>Descripción</th>
                             <th>Tipo Cargo</th>
@@ -76,7 +75,6 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let expense of expenses">
-                            <td>{{ expense.ceconame }}</td>
                             <td>{{ expense.tabla }}</td>
                             <td *ngIf="expense.imagen"><i class="fas fa-paperclip"></i>&nbsp;{{ expense.descripcion }}</td>
                             <td *ngIf="!expense.imagen">{{ expense.descripcion }}</td>

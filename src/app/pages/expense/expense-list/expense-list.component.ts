@@ -141,23 +141,25 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     }
 
     /* console.log(body); */
+    if(ceco){
+      this._expenserService.getMovements(ceco,body).subscribe(
+        response => {
+          if(response.status == 'success') {
+            this.expenses = response.expenses;
+            this.dtTrigger.next(null);
+          }
+        },
+        error => {
+          this.toastr.error(error.error.msg);
+          this.status = 'error';
+          if(error.status == 419){
+            this._userService.logout();
+            setTimeout(() => this._router.navigate(['/login']), 1500);
+          }
+        }
+      )
 
-    this._expenserService.getMovements(ceco,body).subscribe(
-      response => {
-        if(response.status == 'success') {
-          this.expenses = response.expenses;
-          this.dtTrigger.next(null);
-        }
-      },
-      error => {
-        this.toastr.error(error.error.msg);
-        this.status = 'error';
-        if(error.status == 419){
-          this._userService.logout();
-          setTimeout(() => this._router.navigate(['/login']), 1500);
-        }
-      }
-    )
+    }
   }
 
   deleteExpense(id:number){
@@ -233,26 +235,28 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
       desde: desde,
       hasta: hasta
     }
+    if(this.ceco){
+      this._expenserService.totalCeco(body).subscribe(
+        response => {
+          if(response.status == 'success'){
+            this.totexp = response.expenses[0].montotot;
+          }
+        },
+        error => {
+          console.log(error);
+      });
 
-    this._expenserService.totalCeco(body).subscribe(
-      response => {
-        if(response.status == 'success'){
-          this.totexp = response.expenses[0].montotot;
-        }
-      },
-      error => {
-        console.log(error);
-    });
+      this._paymentService.totalCeco(body).subscribe(
+        response => {
+          if(response.status == 'success'){
+            this.totpay = response.payments[0].montotot;
+          }
+        },
+        error => {
+          console.log(error);
+      });
 
-    this._paymentService.totalCeco(body).subscribe(
-      response => {
-        if(response.status == 'success'){
-          this.totpay = response.payments[0].montotot;
-        }
-      },
-      error => {
-        console.log(error);
-    });
+    }
 
   }
 

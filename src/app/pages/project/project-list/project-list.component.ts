@@ -100,38 +100,25 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   }
 
   getProjects(ceco: number) {
-    /* this._projectService.getAll(ceco).subscribe(
-      response => {
-        if(response.status == 'success') {
-          this.projects = response.projects;
-          this.dtTrigger.next(null);
+    if(ceco) {
+      this._projectService.getAllExpense(ceco).subscribe(
+        response => {
+          if(response.status == 'success') {
+            this.projects = response.projects;
+            this.dtTrigger.next(null);
+          }
+        },
+        error => {
+          this.toastr.error(error.error.msg);
+          this.status = 'error';
+          if(error.status == 419){
+            this._userService.logout();
+            setTimeout(() => this._router.navigate(['/login']), 1500);
+          }
         }
-      },
-      error => {
-        this.toastr.error(error.error.msg);
-        this.status = 'error';
-        if(error.status == 419){
-          this._userService.logout();
-          setTimeout(() => this._router.navigate(['/login']), 1500);
-        }
-      }
-    ) */
-    this._projectService.getAllExpense(ceco).subscribe(
-      response => {
-        if(response.status == 'success') {
-          this.projects = response.projects;
-          this.dtTrigger.next(null);
-        }
-      },
-      error => {
-        this.toastr.error(error.error.msg);
-        this.status = 'error';
-        if(error.status == 419){
-          this._userService.logout();
-          setTimeout(() => this._router.navigate(['/login']), 1500);
-        }
-      }
-    )
+      )
+
+    }
   }
 
   deleteProject(id:number){
