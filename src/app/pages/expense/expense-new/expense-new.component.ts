@@ -13,6 +13,7 @@ import { NewprojectComponent } from '../modal/newproject/newproject.component';
 
 import { UserService } from '@services/user.service';
 import { ExpenseService } from '@services/expense.service';
+import { PaymentService } from '@services/payment.service';
 import { EstimateService } from '@services/estimate.service';
 import { CategoryService } from '@services/category.service';
 import { ProviderService } from '@services/provider.service';
@@ -41,6 +42,7 @@ import { Subject } from 'rxjs';
   providers: [
     UserService,
     ExpenseService,
+    PaymentService,
     EstimateService,
     CategoryService,
     ProviderService,
@@ -88,6 +90,9 @@ export class ExpenseNewComponent implements OnInit {
   public ceco:number;
   public cecoName: string = '';
 
+  public totexp: any;
+  public totpay: any;
+
   public bsModalRef: BsModalRef;
 
   constructor(
@@ -96,6 +101,7 @@ export class ExpenseNewComponent implements OnInit {
     private toastr: ToastrService,
     private _userService: UserService,
     private _expenseService: ExpenseService,
+    private _paymentService: PaymentService,
     private _estimateService: EstimateService,
     private _categoryService: CategoryService,
     private _subcategoryService: SubCategoryService,
@@ -140,6 +146,52 @@ export class ExpenseNewComponent implements OnInit {
     this.getProjects();
     //this.getCeco();
     this.getMonedas();
+    this.refreshData();
+  }
+
+  refreshData(){
+
+    let body = {
+      ceco: this.ceco || 1,
+      desde: '2000-01-01',
+      hasta: '2050-12-31'
+    }
+
+    this._expenseService.totalCeco(body).subscribe(
+      response => {
+      if(response.status == 'success'){
+          this.totexp = response.expenses[0].montotot;
+          this._paymentService.totalCeco(body).subscribe(
+            response => {
+              if(response.status == 'success'){
+                this.totpay = response.payments[0].montotot;
+                let total:any = this.totpay - this.totexp;
+
+                let tot = total;
+                total = total.toLocaleString('en') || '0';
+
+                if(tot < 0 ) {
+
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.remove('bg-success');
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.add('bg-danger');
+
+                } else {
+
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.remove('bg-danger');
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.add('bg-success');
+
+                }
+                (<HTMLInputElement>document.getElementById('cecox2')).innerHTML = 'SALDO ACTUAL: $CLP '+total;
+              }
+            },
+            error => {
+              console.log(error);
+          })
+        }
+      },
+      error => {
+        console.log(error);
+      });
   }
 
   onChgSubc(data: any){

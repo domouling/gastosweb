@@ -46,7 +46,7 @@ export class ExpenseService {
         formParams.append('image', file);
 
         let headers = new HttpHeaders().set('auth-token', this.getToken());
-        
+
         return this._http.post(this.url + 'expenses/archivo/upload', formParams, {headers: headers});
     }
 
@@ -54,13 +54,13 @@ export class ExpenseService {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
-        return this._http.get(this.url + 'expenses/file/' + filename, {headers: headers}); 
+        return this._http.get(this.url + 'expenses/file/' + filename, {headers: headers});
     }
 
 
     deleteAvatar(filename: string){
         let headers = new HttpHeaders().set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'expenses/delete-avatar/' + filename, {headers: headers});
     }
 
@@ -76,14 +76,14 @@ export class ExpenseService {
     getAll(ceco: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'expenses/all/' + ceco, {headers: headers});
     }
 
     getMovements(ceco: number, data: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.post(this.url + 'expenses/movements/all/' + ceco, data, {headers: headers});
     }
 
@@ -98,21 +98,21 @@ export class ExpenseService {
     getExpense(id: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'expenses/' + id, {headers: headers});
     }
 
     getExpenseMonth(ceco: number):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'expenses/total/month/' + ceco, {headers: headers});
     }
 
     deleteExpense(id:number){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        
+
         return this._http.delete(this.url+'expenses/'+id, {headers: headers});
     }
 
@@ -128,10 +128,10 @@ export class ExpenseService {
     }
 
     async getIdentity():Promise<Observable<any>> {
-        
+
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
         return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
-    
+
 }

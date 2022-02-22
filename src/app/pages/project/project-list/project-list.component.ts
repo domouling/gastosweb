@@ -7,13 +7,15 @@ import { Subject } from 'rxjs';
 import { UserService } from '@services/user.service';
 import { CecoService } from '@services/ceco.service';
 import { ProjectService } from '@services/project.service';
+import { ExpenseService } from '@services/expense.service';
+import { PaymentService } from '@services/payment.service';
 import { global } from '@services/global';
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],
-  providers: [UserService, ProjectService, CecoService]
+  providers: [UserService, ProjectService, CecoService, ExpenseService, PaymentService]
 })
 export class ProjectListComponent implements OnInit, OnDestroy {
 
@@ -26,6 +28,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public ceco: number;
   //public cecoName: string = '';
 
+  public totexp: any;
+  public totpay: any;
+
   public dtOptions: any;
   public dtTrigger: Subject<any> = new Subject<any>();
 
@@ -34,7 +39,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private _userService: UserService,
     private _projectService: ProjectService,
-    private _cecoService: CecoService
+    private _cecoService: CecoService,
+    private _expenseService: ExpenseService,
+    private _paymentService: PaymentService
   ) {
     this.title = 'Proyectos';
     this.url = global.url;
@@ -92,7 +99,53 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     }
 
     this.getProjects(this.ceco);
+    this.refreshData();
     //this.getCeco();
+  }
+
+  refreshData(){
+
+    let body = {
+      ceco: this.ceco || 1,
+      desde: '2000-01-01',
+      hasta: '2050-12-31'
+    }
+
+    this._expenseService.totalCeco(body).subscribe(
+      response => {
+      if(response.status == 'success'){
+          this.totexp = response.expenses[0].montotot;
+          this._paymentService.totalCeco(body).subscribe(
+            response => {
+              if(response.status == 'success'){
+                this.totpay = response.payments[0].montotot;
+                let total:any = this.totpay - this.totexp;
+
+                let tot = total;
+                total = total.toLocaleString('en') || '0';
+
+                if(tot < 0 ) {
+
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.remove('bg-success');
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.add('bg-danger');
+
+                } else {
+
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.remove('bg-danger');
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.add('bg-success');
+
+                }
+                (<HTMLInputElement>document.getElementById('cecox2')).innerHTML = 'SALDO ACTUAL: $CLP '+total;
+              }
+            },
+            error => {
+              console.log(error);
+          })
+        }
+      },
+      error => {
+        console.log(error);
+      });
   }
 
   ngOnDestroy(): void{

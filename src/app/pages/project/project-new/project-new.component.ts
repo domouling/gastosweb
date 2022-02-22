@@ -11,6 +11,8 @@ import { UserService } from '@services/user.service';
 import { ProviderService } from '@services/provider.service';
 import { ProjectService } from '@services/project.service';
 import { CecoService } from '@services/ceco.service';
+import { ExpenseService } from '@services/expense.service';
+import { PaymentService } from '@services/payment.service';
 
 import { Project } from '@/models/project';
 
@@ -20,7 +22,7 @@ import { global } from '@services/global';
   selector: 'app-project-edit',
   templateUrl: './project-new.component.html',
   styleUrls: ['./project-new.component.scss'],
-  providers: [UserService, ProviderService, ProjectService, CecoService]
+  providers: [UserService, ProviderService, ProjectService, CecoService, ExpenseService, PaymentService]
 })
 export class ProjectNewComponent implements OnInit {
 
@@ -41,6 +43,9 @@ export class ProjectNewComponent implements OnInit {
   public ceco: number;
   //public cecoName: string = '';
 
+  public totexp: any;
+  public totpay: any;
+
   public bsModalRef: BsModalRef;
 
   constructor(
@@ -51,6 +56,8 @@ export class ProjectNewComponent implements OnInit {
     private _providerService: ProviderService,
     private _projectService: ProjectService,
     private _cecoService: CecoService,
+    private _expenseService: ExpenseService,
+    private _paymentService: PaymentService,
     private _modalService: BsModalService
 
   ) {
@@ -73,6 +80,52 @@ export class ProjectNewComponent implements OnInit {
     this.getProviders();
     this.getCecos();
     //this.getCeco();
+    this.refreshData();
+  }
+
+  refreshData(){
+
+    let body = {
+      ceco: this.ceco || 1,
+      desde: '2000-01-01',
+      hasta: '2050-12-31'
+    }
+
+    this._expenseService.totalCeco(body).subscribe(
+      response => {
+      if(response.status == 'success'){
+          this.totexp = response.expenses[0].montotot;
+          this._paymentService.totalCeco(body).subscribe(
+            response => {
+              if(response.status == 'success'){
+                this.totpay = response.payments[0].montotot;
+                let total:any = this.totpay - this.totexp;
+
+                let tot = total;
+                total = total.toLocaleString('en') || '0';
+
+                if(tot < 0 ) {
+
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.remove('bg-success');
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.add('bg-danger');
+
+                } else {
+
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.remove('bg-danger');
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.add('bg-success');
+
+                }
+                (<HTMLInputElement>document.getElementById('cecox2')).innerHTML = 'SALDO ACTUAL: $CLP '+total;
+              }
+            },
+            error => {
+              console.log(error);
+          })
+        }
+      },
+      error => {
+        console.log(error);
+      });
   }
 
   onSubmit(form:any){

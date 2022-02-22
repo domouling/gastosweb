@@ -126,11 +126,58 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     this.getExpenses(this.ceco);
     //this.getCeco();
     this.totales();
+    this.refreshData();
   }
 
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();
   }
+
+  refreshData(){
+
+    let body = {
+      ceco: this.ceco || 1,
+      desde: '2000-01-01',
+      hasta: '2050-12-31'
+    }
+
+    this._expenserService.totalCeco(body).subscribe(
+      response => {
+      if(response.status == 'success'){
+          this.totexp = response.expenses[0].montotot;
+          this._paymentService.totalCeco(body).subscribe(
+            response => {
+              if(response.status == 'success'){
+                this.totpay = response.payments[0].montotot;
+                let total:any = this.totpay - this.totexp;
+
+                let tot = total;
+                total = total.toLocaleString('en') || '0';
+
+                if(tot < 0 ) {
+
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.remove('bg-success');
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.add('bg-danger');
+
+                } else {
+
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.remove('bg-danger');
+                  (<HTMLInputElement>document.getElementById('cecox2')).classList.add('bg-success');
+
+                }
+                (<HTMLInputElement>document.getElementById('cecox2')).innerHTML = 'SALDO ACTUAL: $CLP '+total;
+              }
+            },
+            error => {
+              console.log(error);
+          })
+        }
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
 
   getExpenses(ceco: number) {
     let desde = (<HTMLInputElement>document.getElementById('fechaini')).value || '2022-01-01';
