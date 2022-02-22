@@ -35,13 +35,13 @@
                     >
                         <i class="fa fa-plus"></i>
                     </button> -->
-                    <a [routerLink]="['/provider/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
+                    <a [routerLink]="['/admin/provider/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
             </div>
             <div class="card-body">
-                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions"
                 id="provider" class="table table-bordered table-striped provider">
                     <thead>
                         <tr>
@@ -60,15 +60,15 @@
                             <td *ngIf="provider.status == 1"><span class="badge badge-success">Activo</span></td>
                             <td *ngIf="provider.status == 0"><span class="badge badge-danger">Inactivo</span></td>
                             <td>
-                                <a [routerLink]="['/provider/edit/' + provider.id]" class="btn btn-primary btn-sm mr-1" 
+                                <a [routerLink]="['/admin/provider/edit/' + provider.id]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
-                                
+
                                 <button type="button" class="btn btn-sm btn-danger"
                                 data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+provider.id">
                                 <i class="fa fa-trash"></i>
                                 </button>
 
-                                <!-- /* Modal */ -->                                
+                                <!-- /* Modal */ -->
                                 <div class="modal fade" id="{{'modal' + provider.id}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">

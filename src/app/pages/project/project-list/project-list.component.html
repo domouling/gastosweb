@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 badge badge-pill badge-primary">CECO: {{ cecoName }}</h1>
+                <!-- <h1 class="m-0 badge bg-primary">CECO: {{ cecoName }}</h1> -->
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" 
+                <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions"
                 id="proyecto" class="table table-bordered table-striped proyecto">
                     <thead>
                         <tr>
@@ -69,15 +69,15 @@
                             <td *ngIf="project.monto-project.pagado>=0" class="text-right">${{ project.monto - project.pagado | mask: 'separator':','}}</td>
                             <td>{{ project.proveedor }}</td>
                             <td>
-                                <a [routerLink]="['/projects/edit/' + project.id]" class="btn btn-primary btn-sm mr-1" 
+                                <a [routerLink]="['/projects/edit/' + project.id]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
-                                
+
                                 <button type="button" class="btn btn-sm btn-danger"
                                 data-bs-toggle="modal" [attr.data-bs-target] = "'#modal'+project.id">
                                 <i class="fa fa-trash"></i>
                                 </button>
 
-                                <!-- /* Modal */ -->                                
+                                <!-- /* Modal */ -->
                                 <div class="modal fade" id="{{'modal' + project.id}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">

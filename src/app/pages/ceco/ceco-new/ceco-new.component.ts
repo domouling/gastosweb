@@ -85,11 +85,11 @@ export class CecoNewComponent implements OnInit {
                 error => {
                   console.log(error);
                 }
-              ); 
+              );
             }
           }
           this.toastr.success(this.msg);
-          this._router.navigate(['/ceco']);
+          this._router.navigate(['/admin/ceco']);
         }
       },
       error => {

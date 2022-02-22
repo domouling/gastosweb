@@ -53,7 +53,7 @@ export class CategoryEditComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Categoria Editada con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/category']);
+          this._router.navigate(['/admin/category']);
         }
       },
       error => {
@@ -74,12 +74,12 @@ export class CategoryEditComponent implements OnInit {
           if(response.category) {
             this.category = response.category;
           } else {
-            this._router.navigate(['/category']);
+            this._router.navigate(['/admin/category']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/category']);  
+          this._router.navigate(['/admin/category']);
         }
       );
     })

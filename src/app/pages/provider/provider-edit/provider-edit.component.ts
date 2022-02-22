@@ -53,7 +53,7 @@ export class ProviderEditComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Proveedor Editado con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/provider']);
+          this._router.navigate(['/admin/provider']);
         }
       },
       error => {
@@ -74,12 +74,12 @@ export class ProviderEditComponent implements OnInit {
           if(response.provider) {
             this.provider = response.provider;
           } else {
-            this._router.navigate(['/provider']);
+            this._router.navigate(['/admin/provider']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/provider']);  
+          this._router.navigate(['/admin/provider']);
         }
       );
     })

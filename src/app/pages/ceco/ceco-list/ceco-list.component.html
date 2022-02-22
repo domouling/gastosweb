@@ -35,7 +35,7 @@
                     >
                         <i class="fa fa-plus"></i>
                     </button> -->
-                    <a [routerLink]="['/ceco/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
+                    <a [routerLink]="['/admin/ceco/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -55,11 +55,11 @@
                         <tr *ngFor="let ceco of cecos">
                             <td>{{ ceco.id }}</td>
                             <td>
-                                <a *ngIf="ceco.imagen" [routerLink]="['/ceco/edit/' + ceco.id]">
+                                <a *ngIf="ceco.imagen" [routerLink]="['/admin/ceco/edit/' + ceco.id]">
                                     <img class="img-avatar mr-2" src="{{ url + 'cecos/file/' + ceco.imagen }}">
                                 </a>
 
-                                <a *ngIf="!ceco.imagen" [routerLink]="['/ceco/edit/' + ceco.id]">
+                                <a *ngIf="!ceco.imagen" [routerLink]="['/admin/ceco/edit/' + ceco.id]">
                                     <img class="img-avatar mr-2" src="assets/img/default-avatar.jpg">
                                 </a>
                                 {{ ceco.centrocosto }}
@@ -67,7 +67,7 @@
                             <td *ngIf="ceco.status == 1"><span class="badge badge-success">Activo</span></td>
                             <td *ngIf="ceco.status == 0"><span class="badge badge-danger">Inactivo</span></td>
                             <td>
-                                <a [routerLink]="['/ceco/edit/' + ceco.id]" class="btn btn-primary btn-sm mr-1"
+                                <a [routerLink]="['/admin/ceco/edit/' + ceco.id]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
 
                                 <button type="button" class="btn btn-sm btn-danger"

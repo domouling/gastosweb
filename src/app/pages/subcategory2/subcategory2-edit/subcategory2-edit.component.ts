@@ -58,7 +58,7 @@ export class Subcategory2EditComponent implements OnInit {
           this.status = 'success';
           this.msg = 'SubCategoria2 Editada con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/subcategory2']);
+          this._router.navigate(['/admin/subcategory2']);
         }
       },
       error => {
@@ -79,12 +79,12 @@ export class Subcategory2EditComponent implements OnInit {
           if(response.subcategory2) {
             this.subcategory2 = response.subcategory2;
           } else {
-            this._router.navigate(['/subcategory2']);
+            this._router.navigate(['/admin/subcategory2']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/subcategory2']);
+          this._router.navigate(['/admin/subcategory2']);
         }
       );
     })

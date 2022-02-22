@@ -15,3 +15,42 @@
     background-color: #372FDB;
     color: white;
 }
+
+#cecox {
+  margin-top: 15px;
+  font-size: 26px;
+  float: left;
+}
+
+#cecox2 {
+  margin-left: -15px;
+  margin-top: 15px;
+  font-size: 26px;
+  float: left;
+}
+
+.band {
+  position: absolute;
+  display: flex !important;
+  float: left;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+
+/* @media (max-width: 750px){
+  .band {
+    display: block;
+    //float: none;
+    //position: relative;
+  }
+} */
+
+@media (max-width: 570px){
+  #cecox {
+    font-size: 18px;
+  }
+
+  #cecox2 {
+    font-size: 18px;
+  }
+}

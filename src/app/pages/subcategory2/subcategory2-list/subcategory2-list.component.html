@@ -35,7 +35,7 @@
                     >
                         <i class="fa fa-plus"></i>
                     </button> -->
-                    <a [routerLink]="['/subcategory2/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
+                    <a [routerLink]="['/admin/subcategory2/new']" class="btn btn-primary btn-sm" data-widget="nuevo" data-toggle="tooltip" title='Nuevo'>
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -66,7 +66,7 @@
                             <td *ngIf="subcategory2.status == 1"><span class="badge badge-success">Activo</span></td>
                             <td *ngIf="subcategory2.status == 0"><span class="badge badge-danger">Inactivo</span></td>
                             <td>
-                                <a [routerLink]="['/subcategory2/edit/' + subcategory2.id]" class="btn btn-primary btn-sm mr-1"
+                                <a [routerLink]="['/admin/subcategory2/edit/' + subcategory2.id]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
 
                                 <button type="button" class="btn btn-sm btn-danger"

@@ -56,7 +56,7 @@ export class SubcategoryNewComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Concepto creado con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/subcategory']);
+          this._router.navigate(['/admin/subcategory']);
         }
       },
       error => {

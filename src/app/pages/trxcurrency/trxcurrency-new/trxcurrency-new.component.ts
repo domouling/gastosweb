@@ -52,7 +52,7 @@ export class TrxcurrencyNewComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Tipo Moneda creada con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/trxcurrency']);
+          this._router.navigate(['/admin/trxcurrency']);
         }
       },
       error => {

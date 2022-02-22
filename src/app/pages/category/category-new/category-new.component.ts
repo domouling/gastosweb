@@ -52,7 +52,7 @@ export class CategoryNewComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Categoria creada con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/category']);
+          this._router.navigate(['/admin/category']);
         }
       },
       error => {

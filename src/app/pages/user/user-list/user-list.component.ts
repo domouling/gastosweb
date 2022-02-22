@@ -84,7 +84,7 @@ export class UserListComponent implements OnInit, OnDestroy {
         //window.location.reload();
         this._router.routeReuseStrategy.shouldReuseRoute = () => false;
         this._router.onSameUrlNavigation = 'reload';
-        this._router.navigate(['/users']);
+        this._router.navigate(['/admin/users']);
       },
       error => {
         this.msg = error.error.msg;

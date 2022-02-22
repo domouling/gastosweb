@@ -86,7 +86,7 @@ export class TpocuentaListComponent implements OnInit, OnDestroy {
         //window.location.reload();
         this._router.routeReuseStrategy.shouldReuseRoute = () => false;
         this._router.onSameUrlNavigation = 'reload';
-        this._router.navigate(['/tpocuenta']);
+        this._router.navigate(['/admin/tpocuenta']);
       },
       error => {
         this.msg = error.error.msg;

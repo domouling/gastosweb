@@ -73,17 +73,17 @@ const routes: Routes = [
                 component: ProfileComponent
             },
             {
-                path: 'users',
+                path: 'admin/users',
                 component: UserListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'users/new',
+                path: 'admin/users/new',
                 component: UserNewComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'users/edit/:id',
+                path: 'admin/users/edit/:id',
                 component: UserEditComponent,
                 canActivate: [AdminGuard]
             },
@@ -103,77 +103,77 @@ const routes: Routes = [
                 canActivate: [CecoSelectGuard]
             },
             {
-                path: 'provider',
+                path: 'admin/provider',
                 component: ProviderListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'provider/new',
+                path: 'admin/provider/new',
                 component: ProviderNewComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'provider/edit/:id',
+                path: 'admin/provider/edit/:id',
                 component: ProviderEditComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'category',
+                path: 'admin/category',
                 component: CategoryListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'category/new',
+                path: 'admin/category/new',
                 component: CategoryNewComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'category/edit/:id',
+                path: 'admin/category/edit/:id',
                 component: CategoryEditComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'subcategory',
+                path: 'admin/subcategory',
                 component: SubcategoryListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'subcategory/new',
+                path: 'admin/subcategory/new',
                 component: SubcategoryNewComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'subcategory/edit/:id',
+                path: 'admin/subcategory/edit/:id',
                 component: SubcategoryEditComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'subcategory2',
+                path: 'admin/subcategory2',
                 component: Subcategory2ListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'subcategory2/new',
+                path: 'admin/subcategory2/new',
                 component: Subcategory2NewComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'subcategory2/edit/:id',
+                path: 'admin/subcategory2/edit/:id',
                 component: Subcategory2EditComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'estimate',
+                path: 'admin/estimate',
                 component: BudgetListComponent,
                 canActivate: [CecoSelectGuard]
             },
             {
-                path: 'estimate/new',
+                path: 'admin/estimate/new',
                 component: BudgetNewComponent,
                 canActivate: [CecoSelectGuard]
             },
             {
-                path: 'estimate/edit/:id',
+                path: 'admin/estimate/edit/:id',
                 component: BudgetEditComponent,
                 canActivate: [CecoSelectGuard]
             },
@@ -182,62 +182,62 @@ const routes: Routes = [
                 component: ReportListComponent,
             },
             {
-                path: 'tpocuenta',
+                path: 'admin/tpocuenta',
                 component: TpocuentaListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'tpocuenta/edit/:id',
+                path: 'admin/tpocuenta/edit/:id',
                 component: TpocuentaEditComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'tpocuenta/new',
+                path: 'admin/tpocuenta/new',
                 component: TpocuentaNewComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'trxcurrency',
+                path: 'admin/trxcurrency',
                 component: TrxcurrencyListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'trxcurrency/edit/:id',
+                path: 'admin/trxcurrency/edit/:id',
                 component: TrxcurrencyEditComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'trxcurrency/new',
+                path: 'admin/trxcurrency/new',
                 component: TrxcurrencyNewComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'ceco',
+                path: 'admin/ceco',
                 component: CecoListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'ceco/edit/:id',
+                path: 'admin/ceco/edit/:id',
                 component: CecoEditComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'ceco/new',
+                path: 'admin/ceco/new',
                 component: CecoNewComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'tipogasto',
+                path: 'admin/tipogasto',
                 component: TipogastoListComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'tipogasto/edit/:id',
+                path: 'admin/tipogasto/edit/:id',
                 component: TipogastoEditComponent,
                 canActivate: [AdminGuard]
             },
             {
-                path: 'tipogasto/new',
+                path: 'admin/tipogasto/new',
                 component: TipogastoNewComponent,
                 canActivate: [AdminGuard]
             },

@@ -57,7 +57,7 @@ export class Subcategory2NewComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Detalle creado con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/subcategory2']);
+          this._router.navigate(['/admin/subcategory2']);
         }
       },
       error => {

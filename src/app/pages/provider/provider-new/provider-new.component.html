@@ -9,7 +9,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a [routerLink]="['/']"
                     >Home</a></li>
-                    <li class="breadcrumb-item"><a [routerLink]="['/provider']"
+                    <li class="breadcrumb-item"><a [routerLink]="['/admin/provider']"
                         routerLinkActive="router-link-active">Provedores</a></li>
                     <li class="breadcrumb-item active">{{subtitle}}</li>
                 </ol>
@@ -29,7 +29,7 @@
                     <h3 class="card-title">{{subtitle}}</h3>
                 </div>
                 <div class="card-body">
-                    
+
                         <div class="row mb-3 consw">
                             <div class="col-md">
                                 <div class="input-group">
@@ -46,25 +46,25 @@
                                         Tipo Cuenta es requerido
                                     </small>
                                 </div>
-                                
+
                             </div>
                             <div class="col-md">
                                 <div class="form-check form-switch text-center">
-                                    <input class="form-check-input" type="checkbox" id="status" name="status" #status="ngModel" 
+                                    <input class="form-check-input" type="checkbox" id="status" name="status" #status="ngModel"
                                     [(ngModel)]="provider.status">
                                     <label class="form-check-label" for="status">Estatus</label>
                                 </div>
                             </div>
                         </div>
-                    
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <div class="float-end">
-                        <a [routerLink]="['/provider']" class="btn btn-danger btn-sm me-2">Cancelar</a>
-                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        <a [routerLink]="['/admin/provider']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm"
                         [disabled]="cajaForm.invalid"> -->
-                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm"
                         [disabled]="newProvider.invalid">
                     </div>
                 </div>

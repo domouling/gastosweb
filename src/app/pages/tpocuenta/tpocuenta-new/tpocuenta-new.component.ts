@@ -52,7 +52,7 @@ export class TpocuentaNewComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Tipo Cuenta creada con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/tpocuenta']);
+          this._router.navigate(['/admin/tpocuenta']);
         }
       },
       error => {

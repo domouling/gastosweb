@@ -52,7 +52,7 @@ export class TipogastoNewComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Tipo Gasto creada con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/tipogasto']);
+          this._router.navigate(['/admin/tipogasto']);
         }
       },
       error => {

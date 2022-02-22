@@ -100,7 +100,7 @@ export class UserEditComponent implements OnInit {
                 error => {
                   console.log(error);
                 }
-              ); 
+              );
             }
           } else {
             if(this.first){
@@ -113,7 +113,7 @@ export class UserEditComponent implements OnInit {
             }
           }
           this.toastr.success(this.msg);
-          this._router.navigate(['/users']);
+          this._router.navigate(['/admin/users']);
         }
       },
       error => {
@@ -170,12 +170,12 @@ export class UserEditComponent implements OnInit {
             }
             this.fileName = this.user.imagen;
           } else {
-            this._router.navigate(['/users']);
+            this._router.navigate(['/admin/users']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/users']);  
+          this._router.navigate(['/admin/users']);
         }
       );
     })

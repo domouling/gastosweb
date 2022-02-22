@@ -39,7 +39,7 @@ export class ProjectNewComponent implements OnInit {
   public expense: any;
 
   public ceco: number;
-  public cecoName: string = '';
+  //public cecoName: string = '';
 
   public bsModalRef: BsModalRef;
 
@@ -72,7 +72,7 @@ export class ProjectNewComponent implements OnInit {
   ngOnInit(): void {
     this.getProviders();
     this.getCecos();
-    this.getCeco();
+    //this.getCeco();
   }
 
   onSubmit(form:any){
@@ -124,7 +124,7 @@ export class ProjectNewComponent implements OnInit {
     )
   }
 
-  getCeco(){
+  /* getCeco(){
     this._cecoService.getId(this.ceco).subscribe(
     response => {
         if(response.ceco) {
@@ -132,15 +132,15 @@ export class ProjectNewComponent implements OnInit {
             /* if(this.ceco.imagen){
                 this.first = this.ceco.imagen;
             }
-            this.fileName = this.ceco.imagen; */
+            this.fileName = this.ceco.imagen;
         } /* else {
             this._router.navigate(['/ceco']);
-        } */
+        }
     },
     error => {
         console.log(error);
     });
-  }
+  } */
 
   newProveedor(e: Event){
     e.preventDefault();

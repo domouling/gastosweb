@@ -53,7 +53,7 @@ export class TipogastoEditComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Tipo Gasto Editado con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/tipogasto']);
+          this._router.navigate(['/admin/tipogasto']);
         }
       },
       error => {
@@ -74,12 +74,12 @@ export class TipogastoEditComponent implements OnInit {
           if(response.tpogasto) {
             this.tipogasto = response.tpogasto;
           } else {
-            this._router.navigate(['/tipogasto']);
+            this._router.navigate(['/admin/tipogasto']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/tipogasto']);  
+          this._router.navigate(['/admin/tipogasto']);
         }
       );
     })

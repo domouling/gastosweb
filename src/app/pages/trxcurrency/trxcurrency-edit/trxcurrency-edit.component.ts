@@ -53,7 +53,7 @@ export class TrxcurrencyEditComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Tipo Moneda Editado con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/trxcurrency']);
+          this._router.navigate(['/admin/trxcurrency']);
         }
       },
       error => {
@@ -74,12 +74,12 @@ export class TrxcurrencyEditComponent implements OnInit {
           if(response.trxcurrency) {
             this.trxcurrency = response.trxcurrency;
           } else {
-            this._router.navigate(['/trxcurrency']);
+            this._router.navigate(['/admin/trxcurrency']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/trxcurrency']);  
+          this._router.navigate(['/admin/trxcurrency']);
         }
       );
     })

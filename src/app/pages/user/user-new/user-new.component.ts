@@ -89,11 +89,11 @@ export class UserNewComponent implements OnInit {
                 error => {
                   console.log(error);
                 }
-              ); 
+              );
             }
           }
           this.toastr.success(this.msg);
-          this._router.navigate(['/users']);
+          this._router.navigate(['/admin/users']);
         }
       },
       error => {

@@ -34,7 +34,7 @@ export class PaymentNewComponent implements OnInit {
   public is_edit: boolean;
 
   public ceco: number;
-  public cecoName: string = '';
+  //public cecoName: string = '';
 
   constructor(
     private _router: Router,
@@ -45,7 +45,7 @@ export class PaymentNewComponent implements OnInit {
     private _projectService: ProjectService,
     private _paymentService: PaymentService
   ) {
-    
+
     this.today = moment().format('YYYY-MM-DD');
     this.ceco =  parseInt(localStorage.getItem('ceco'));
 
@@ -57,12 +57,12 @@ export class PaymentNewComponent implements OnInit {
     this.status = '';
     this.msg = '';
     this.is_edit = false;
-    
+
   }
 
   ngOnInit(): void {
     this.getCecos();
-    this.getCeco();
+    //this.getCeco();
     this.getUsers();
     this.getProjects();
   }
@@ -113,7 +113,7 @@ export class PaymentNewComponent implements OnInit {
     )
   }
 
-  getCeco(){
+  /* getCeco(){
     this._cecoService.getId(this.ceco).subscribe(
     response => {
         if(response.ceco) {
@@ -121,15 +121,15 @@ export class PaymentNewComponent implements OnInit {
             /* if(this.ceco.imagen){
                 this.first = this.ceco.imagen;
             }
-            this.fileName = this.ceco.imagen; */
+            this.fileName = this.ceco.imagen;
         } /* else {
             this._router.navigate(['/ceco']);
-        } */
+        }
     },
     error => {
         console.log(error);
     });
-  }
+  } */
 
   getProjects(){
     this._projectService.getAll(this.ceco).subscribe(

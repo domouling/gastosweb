@@ -9,7 +9,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a [routerLink]="['/']"
                     >Home</a></li>
-                    <li class="breadcrumb-item"><a [routerLink]="['/users']"
+                    <li class="breadcrumb-item"><a [routerLink]="['/admin/users']"
                         routerLinkActive="router-link-active">Usuarios</a></li>
                     <li class="breadcrumb-item active">{{subtitle}}</li>
                 </ol>
@@ -29,7 +29,7 @@
                     <h3 class="card-title">{{subtitle}}</h3>
                 </div>
                 <div class="card-body">
-                    
+
                         <div class="row mb-3">
                             <div class="col-md">
                                 <div class="input-group">
@@ -46,7 +46,7 @@
                                         Nombre es requerido
                                     </small>
                                 </div>
-                                
+
                             </div>
                             <div class="col-md">
                                 <div class="input-group">
@@ -62,7 +62,7 @@
                                     </div>
                                     <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
                                         Correo es requerido
-                                    </small>  
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                                     </select>
                                 </div>
                             </div>
- 
+
                             <div class="col-md">
                                 <div class="input-group">
                                     <span class="input-group-text"><b>Rol</b></span>
@@ -140,7 +140,7 @@
                                     </select>
                                 </div>
                             </div>
-        
+
                         </div>
 
                         <div class="row mb-3">
@@ -168,7 +168,7 @@
                                 <input type="file" name="imagen" id="imagen" class="file-input" accept="image/*"
                                 (change)="onFileSelected($event)" #fileUpload
                                 >
-                                
+
                                 <div class="file-upload">
                                     {{ fileName || "Elija Imagen" }}
                                     <button class="btn btn-primary btn-circle ml-2" type="button" (click)="fileUpload.click()"
@@ -185,15 +185,15 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <div class="float-end">
-                        <a [routerLink]="['/users']" class="btn btn-danger btn-sm me-2">Cancelar</a>
-                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm" 
+                        <a [routerLink]="['/admin/users']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm"
                         [disabled]="cajaForm.invalid"> -->
-                        <input type="submit" value="Guardar" class="btn btn-success btn-sm" 
+                        <input type="submit" value="Guardar" class="btn btn-success btn-sm"
                         [disabled]="newUser.invalid">
                     </div>
                 </div>

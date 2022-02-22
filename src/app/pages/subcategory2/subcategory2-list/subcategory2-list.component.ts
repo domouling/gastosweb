@@ -121,7 +121,7 @@ export class Subcategory2ListComponent implements OnInit, OnDestroy {
         //window.location.reload();
         this._router.routeReuseStrategy.shouldReuseRoute = () => false;
         this._router.onSameUrlNavigation = 'reload';
-        this._router.navigate(['/subcategory2']);
+        this._router.navigate(['/admin/subcategory2']);
       },
       error => {
         this.msg = error.error.msg;

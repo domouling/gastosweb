@@ -30,7 +30,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   public msg: string;
   public prueba: any;
   public ceco: number;
-  public cecoName: string = '';
+  //public cecoName: string = '';
 
   public desde: any;
   public hasta: any;
@@ -124,7 +124,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     }
 
     this.getExpenses(this.ceco);
-    this.getCeco();
+    //this.getCeco();
     this.totales();
   }
 
@@ -208,7 +208,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     )
   }
 
-  getCeco(){
+  /*getCeco(){
     this._cecoService.getId(this.ceco).subscribe(
     response => {
         if(response.ceco) {
@@ -216,15 +216,15 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
             /* if(this.ceco.imagen){
                 this.first = this.ceco.imagen;
             }
-            this.fileName = this.ceco.imagen; */
+            this.fileName = this.ceco.imagen;
         } /* else {
             this._router.navigate(['/ceco']);
-        } */
+        }
     },
     error => {
         console.log(error);
     });
-  }
+  }*/
 
   totales(){
     let desde = (<HTMLInputElement>document.getElementById('fechaini')).value || '2022-01-01';
@@ -312,9 +312,9 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     let hasta = (<HTMLInputElement>document.querySelector('#fechafin')).value;
     if(desde <= hasta) {
       alert('Perfect');
-    } else {
+    } /* else {
       alert('POHOHOHO');
-    }
+    } */
   }
 
 

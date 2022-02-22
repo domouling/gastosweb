@@ -145,6 +145,12 @@ body {
     margin-bottom: 5px;
     margin-top: 5px;
   }
+
+  .content-header {
+    display: inline-block !important;
+    margin-top: 50px;
+    width: 100%;
+  }
 }
 
 /* Clases Botones DataTables */
@@ -157,4 +163,9 @@ body {
         float: none;
         text-align: center;
     }
+
+    //.content-header .breadcrumb {
+    //    float: right !important;
+        //visibility: hidden;
+    //}
 }

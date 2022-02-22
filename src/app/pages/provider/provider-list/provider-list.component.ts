@@ -86,7 +86,7 @@ export class ProviderListComponent implements OnInit, OnDestroy {
         //window.location.reload();
         this._router.routeReuseStrategy.shouldReuseRoute = () => false;
         this._router.onSameUrlNavigation = 'reload';
-        this._router.navigate(['/provider']);
+        this._router.navigate(['/admin/provider']);
       },
       error => {
         this.msg = error.error.msg;

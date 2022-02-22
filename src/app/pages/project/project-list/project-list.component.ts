@@ -24,7 +24,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public msg: string;
   public prueba: any;
   public ceco: number;
-  public cecoName: string = '';
+  //public cecoName: string = '';
 
   public dtOptions: any;
   public dtTrigger: Subject<any> = new Subject<any>();
@@ -92,7 +92,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     }
 
     this.getProjects(this.ceco);
-    this.getCeco();
+    //this.getCeco();
   }
 
   ngOnDestroy(): void{
@@ -144,7 +144,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     )
   }
 
-  getCeco(){
+  /* getCeco(){
     this._cecoService.getId(this.ceco).subscribe(
     response => {
         if(response.ceco) {
@@ -152,14 +152,14 @@ export class ProjectListComponent implements OnInit, OnDestroy {
             /* if(this.ceco.imagen){
                 this.first = this.ceco.imagen;
             }
-            this.fileName = this.ceco.imagen; */
+            this.fileName = this.ceco.imagen;
         } /* else {
             this._router.navigate(['/ceco']);
-        } */
+        }
     },
     error => {
         console.log(error);
     });
-  }
+  } */
 
 }

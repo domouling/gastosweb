@@ -99,55 +99,55 @@ export const MENU = [
                 icon: 'bi bi-people',
                 role: 'ROLE_ADMIN',
                 name: 'Usuarios',
-                path: ['/users'],
+                path: ['/admin/users'],
             },
             {
                 icon: 'bi bi-award',
                 role: 'ROLE_ADMIN',
                 name: 'Centro Costo',
-                path: ['/ceco'],
+                path: ['/admin/ceco'],
             },
             {
                 icon: 'bi bi-credit-card',
                 role: 'ROLE_ADMIN',
                 name: 'Tipo Cuenta',
-                path: ['/tpocuenta'],
+                path: ['/admin/tpocuenta'],
             },
             {
                 icon: 'bi bi-receipt',
                 role: 'ROLE_ADMIN',
                 name: 'Tipo Gasto',
-                path: ['/tipogasto'],
+                path: ['/admin/tipogasto'],
             },
             {
                 icon: 'bi bi-coin',
                 role: 'ROLE_ADMIN',
                 name: 'Moneda',
-                path: ['/trxcurrency'],
+                path: ['/admin/trxcurrency'],
             },
             {
                 icon: 'bi bi-building',
                 role: 'ALL',
                 name: 'Proveedores',
-                path: ['/provider']
+                path: ['/admin/provider']
             },
             {
                 icon: 'bi bi-tags',
                 role: 'ALL',
                 name: 'Categorias',
-                path: ['/category']
+                path: ['/admin/category']
             },
             {
                 icon: 'bi bi-tag',
                 role: 'ALL',
                 name: 'Concepto',
-                path: ['/subcategory']
+                path: ['/admin/subcategory']
             },
             {
                 icon: 'bi bi-tag',
                 role: 'ALL',
                 name: 'Detalle',
-                path: ['/subcategory2']
+                path: ['/admin/subcategory2']
             },
         ]
     },

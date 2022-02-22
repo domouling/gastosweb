@@ -9,7 +9,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a [routerLink]="['/']"
                     >Home</a></li>
-                    <li class="breadcrumb-item"><a [routerLink]="['/subcategory2']"
+                    <li class="breadcrumb-item"><a [routerLink]="['/admin/subcategory2']"
                         routerLinkActive="router-link-active">Detalle</a></li>
                     <li class="breadcrumb-item active">{{subtitle}}</li>
                 </ol>
@@ -115,7 +115,7 @@
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <div class="float-end">
-                        <a [routerLink]="['/subcategory2']" class="btn btn-danger btn-sm me-2">Cancelar</a>
+                        <a [routerLink]="['/admin/subcategory2']" class="btn btn-danger btn-sm me-2">Cancelar</a>
                         <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm"
                         [disabled]="cajaForm.invalid"> -->
                         <input type="submit" value="Guardar" class="btn btn-success btn-sm"

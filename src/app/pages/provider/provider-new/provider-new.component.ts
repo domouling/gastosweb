@@ -52,7 +52,7 @@ export class ProviderNewComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Proveedor creado con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/provider']);
+          this._router.navigate(['/admin/provider']);
         }
       },
       error => {

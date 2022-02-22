@@ -93,7 +93,7 @@ export class CecoEditComponent implements OnInit {
                 error => {
                   console.log(error);
                 }
-              ); 
+              );
             }
           } else {
             if(this.first){
@@ -106,7 +106,7 @@ export class CecoEditComponent implements OnInit {
             }
           }
           this.toastr.success(this.msg);
-          this._router.navigate(['/ceco']);
+          this._router.navigate(['/admin/ceco']);
         }
       },
       error => {
@@ -155,12 +155,12 @@ export class CecoEditComponent implements OnInit {
             }
             this.fileName = this.ceco.imagen;
           } else {
-            this._router.navigate(['/ceco']);
+            this._router.navigate(['/admin/ceco']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/ceco']);  
+          this._router.navigate(['/admin/ceco']);
         }
       );
     })

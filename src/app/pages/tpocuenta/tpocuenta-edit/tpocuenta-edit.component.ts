@@ -53,7 +53,7 @@ export class TpocuentaEditComponent implements OnInit {
           this.status = 'success';
           this.msg = 'Tipo Cuenta Editado con exito!';
           this.toastr.success(this.msg);
-          this._router.navigate(['/tpocuenta']);
+          this._router.navigate(['/admin/tpocuenta']);
         }
       },
       error => {
@@ -74,12 +74,12 @@ export class TpocuentaEditComponent implements OnInit {
           if(response.tpocuenta) {
             this.tpocuenta = response.tpocuenta;
           } else {
-            this._router.navigate(['/tpocuenta']);
+            this._router.navigate(['/admin/tpocuenta']);
           }
         },
         error => {
           console.log(error);
-          this._router.navigate(['/tpocuenta']);  
+          this._router.navigate(['/admin/tpocuenta']);
         }
       );
     })

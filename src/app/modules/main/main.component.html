@@ -5,6 +5,20 @@
 ></app-menu-sidebar>
 
 <div class="content-wrapper">
+    <div class="band">
+      <div class="col-md">
+        <h1 [ngStyle]="{'display': router.url === '/choice' || (router.url).includes('admin')   ? 'none' : 'block'}"
+          id="cecox" class="badge bg-primary">
+          CECO: {{ cecox }}
+        </h1>
+      </div>
+      <div class="col-md">
+        <h2 [ngStyle]="{'display': router.url === '/choice' || (router.url).includes('admin')   ? 'none' : 'block'}"
+          id="cecox2" class="badge bg-success">
+          SALDO ACTUAL: $CLP {{ total }}
+        </h2>
+      </div>
+    </div>
     <router-outlet></router-outlet>
 </div>
 

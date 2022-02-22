@@ -24,7 +24,7 @@ export class PaymentListComponent implements OnInit, OnDestroy {
   public msg: string;
   public prueba: any;
   public ceco: number;
-  public cecoName: string = '';
+  //public cecoName: string = '';
 
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject<any>();
@@ -56,11 +56,11 @@ export class PaymentListComponent implements OnInit, OnDestroy {
     }
 
     this.getPayments(this.ceco);
-    this.getCeco();
+    //this.getCeco();
   }
 
   ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();  
+    this.dtTrigger.unsubscribe();
   }
 
   getPayments(ceco:number) {
@@ -106,7 +106,7 @@ export class PaymentListComponent implements OnInit, OnDestroy {
     )
   }
 
-  getCeco(){
+  /* getCeco(){
     this._cecoService.getId(this.ceco).subscribe(
     response => {
         if(response.ceco) {
@@ -115,14 +115,14 @@ export class PaymentListComponent implements OnInit, OnDestroy {
             /* if(this.ceco.imagen){
                 this.first = this.ceco.imagen;
             }
-            this.fileName = this.ceco.imagen; */
+            this.fileName = this.ceco.imagen;
         } /* else {
             this._router.navigate(['/ceco']);
-        } */
+        }
     },
     error => {
         console.log(error);
     });
-  }
+  } */
 
 }

@@ -138,7 +138,7 @@ export class ExpenseNewComponent implements OnInit {
     this.getTipocuentas()
     this.getCecos();
     this.getProjects();
-    this.getCeco();
+    //this.getCeco();
     this.getMonedas();
   }
 
@@ -506,7 +506,7 @@ export class ExpenseNewComponent implements OnInit {
     this.expense.imagen = null;
   }
 
-  getCeco(){
+  /* getCeco(){
     this._cecoService.getId(this.ceco).subscribe(
     response => {
         if(response.ceco) {
@@ -517,7 +517,7 @@ export class ExpenseNewComponent implements OnInit {
     error => {
         console.log(error);
     });
-  }
+  } */
 
   newCategoria(e: Event){
     e.preventDefault();
