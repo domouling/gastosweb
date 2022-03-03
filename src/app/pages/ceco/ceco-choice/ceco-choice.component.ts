@@ -68,7 +68,7 @@ export class CecoChoiceComponent implements OnInit {
     (<HTMLInputElement>document.getElementById('cecox')).innerHTML = 'CECO: '+ceco;
 
     let body = {
-        ceco: id || 1,
+        ceco: id,
         desde: '2000-01-01',
         hasta: '2050-12-31'
     }
@@ -109,7 +109,7 @@ export class CecoChoiceComponent implements OnInit {
           console.log(error);
         });
 
-    this._userService.cambio(ceco);
+    //this._userService.cambio(ceco);
     this._router.navigate(['/']);
   }
 

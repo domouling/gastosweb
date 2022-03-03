@@ -113,7 +113,7 @@
                                     <span class="input-group-text"><b>Proveedor</b></span>
                                     <select class="form-select" name="proveedor_id" id="role" #proveedor_id="ngModel"
                                     [(ngModel)]="project.proveedor_id">
-                                        <option value="0">Elegir Proveedor...</option>
+                                        <option value="0" selected disabled hidden>Elegir Proveedor</option>
                                         <option *ngFor="let provider of providers" [value]=provider.id>{{ provider.nombre }}</option>
                                     </select>
                                     <button (click)="newProveedor($event)" class="btn btn-success"><b>+</b></button>

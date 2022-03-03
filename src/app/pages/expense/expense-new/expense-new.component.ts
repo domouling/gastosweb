@@ -65,7 +65,7 @@ export class ExpenseNewComponent implements OnInit {
   public estimates: any;
   public categories: any;
   public providers: any;
-  public tipogastos: any;
+  public tipogastos: any = [];
   public tipocuentas: any;
   public cecos: any;
   public projects: any;
@@ -87,7 +87,7 @@ export class ExpenseNewComponent implements OnInit {
   public srcFile: any;
   public is_edit: boolean;
 
-  public ceco:number;
+  public ceco: any;
   public cecoName: string = '';
 
   public totexp: any;
@@ -117,10 +117,10 @@ export class ExpenseNewComponent implements OnInit {
 
     this.today = moment().format('YYYY-MM-DD');
 
-    this.ceco = parseInt(localStorage.getItem('ceco'));
+    this.ceco = localStorage.getItem('ceco');
 
-    this.expense = new Expense(null,0,0,null,null,null,null,this.today,null,0,null,null,1,0,0,0,null,1,1,1,this.ceco,1,0,0,null,1,'','');
-    this.expenseImage = new ExpenseImage(1,'');
+    this.expense = new Expense(null,'0',0,null,null,null,null,this.today,null,0,null,null,'0',null,0,0,null,'0','0',null,this.ceco,null,'0','0',null,1,'','');
+    this.expenseImage = new ExpenseImage(null,'');
     this.title = 'Movimientos';
     this.subtitle = 'Nuevo Cargo';
     this.url = global.url;
@@ -134,6 +134,8 @@ export class ExpenseNewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.getIdentity();
     this.getCategories();
     /* this.getSubCats();
     this.getSubCats2(); */
@@ -147,12 +149,18 @@ export class ExpenseNewComponent implements OnInit {
     //this.getCeco();
     this.getMonedas();
     this.refreshData();
+
+    //let option = metod.options[metod.selectedIndex].text;
+    /* let method: any = (<HTMLInputElement>document.getElementById('tipogasto_id'));
+    method.selectedIndex = '0';
+    console.log(method.selectedIndex); */
   }
+
 
   refreshData(){
 
     let body = {
-      ceco: this.ceco || 1,
+      ceco: this.ceco,
       desde: '2000-01-01',
       hasta: '2050-12-31'
     }
@@ -207,8 +215,10 @@ export class ExpenseNewComponent implements OnInit {
   }
 
   onChgSubc2(data: any){
+
     let subc2 :any = (<HTMLInputElement>document.getElementById('subcategoria2_id'));
     this.getSubCat2Id(data);
+
     this.expense.subcategoria2_id = 0;
     subc2.value = 0;
   }
@@ -218,17 +228,21 @@ export class ExpenseNewComponent implements OnInit {
   }
 
   async onMetodChange(data:any){
-    let proy: any = document.getElementById('colproj');
-    if(data == 4){
+    let proy: any = (<HTMLInputElement>document.getElementById('colproj'));
+    let metod: any = (<HTMLInputElement>document.getElementById('tipogasto_id'));
+    let option = metod.options[metod.selectedIndex].text;
+
+    if(option.includes('Proyectos')){
       proy.classList.replace('d-none','d-block');
     } else {
       proy.classList.replace('d-block','d-none');
     }
+
   }
 
   async onChgMetod(data: any){
     //console.log(this.estimates);
-    switch (data) {
+    /* switch (data) {
       case '1':
         this.tipocta = 'Cta. Corriente';
         this.montopresupuesto = this.estimates[0].totctacorriente;
@@ -249,7 +263,7 @@ export class ExpenseNewComponent implements OnInit {
         this.montopresupuesto = this.estimates[0].total;
         break;
     }
-    this.total = this.montopresupuesto - this.montonvogasto || 0;
+    this.total = this.montopresupuesto - this.montonvogasto || 0; */
     //console.log(this.total);
   }
 
@@ -264,6 +278,19 @@ export class ExpenseNewComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.expense.user_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   getSubCatId(id: any){
@@ -296,10 +323,14 @@ export class ExpenseNewComponent implements OnInit {
 
 
   onSubmit(form:any){
+
     let imagen = this.expense.imagen;
-    if(this.expense.tipogasto_id != 4){
+
+    let proy: any = (<HTMLInputElement>document.getElementById('tipogasto_id'));
+    if((proy.options[proy.selectedIndex].text).includes('Proyecto') == false) {
       this.expense.proyecto_id = 0;
     }
+
     let proyecto = this.expense.proyecto_id;
     let monto = this.expense.monto;
 
@@ -367,7 +398,6 @@ export class ExpenseNewComponent implements OnInit {
         }
       },
       error => {
-        console.log(error.status);
         this.error = error.status;
         if(error.status == 419){
           this._userService.logout();
@@ -398,6 +428,7 @@ export class ExpenseNewComponent implements OnInit {
       response => {
         if(response.cecos){
           this.cecos = response.cecos;
+          (<HTMLInputElement>document.getElementById('ceco_id')).value = this.ceco;
         }
       },
       error => {
@@ -430,6 +461,7 @@ export class ExpenseNewComponent implements OnInit {
       response => {
         if(response.trxcurrencies){
           this.monedas = response.trxcurrencies;
+          this.expense.trxcurrency_id = this.monedas[0].id;
         }
       },
       error => {
@@ -537,6 +569,7 @@ export class ExpenseNewComponent implements OnInit {
 
 
   onFileSelected(data: any){
+
     this.fileName = data.target.files[0].name;
     this.filex = data.target.files[0];
     let file = (data.target as HTMLInputElement).files[0];
@@ -548,6 +581,7 @@ export class ExpenseNewComponent implements OnInit {
       reader.onload = (data) => {
         this.srcFile = data.target.result;
       }
+
     }
   }
 
@@ -587,70 +621,82 @@ export class ExpenseNewComponent implements OnInit {
   newSubCategoria(e: Event){
     e.preventDefault();
 
-    this._categoryService.getId(this.expense.categoria_id).subscribe(
-      response => {
-        if(response.category){
-          const nombre = response.category.nombre;
-          const initialState = {
-              list: [nombre],
-              title: 'Nueva Subcategoria',
-              id: response.category.id
-          };
+    if(this.expense.categoria_id !== '0' && this.expense.categoria_id) {
 
-          this.bsModalRef = this._modalService.show(NewsubcategoryComponent, {initialState});
+      this._categoryService.getId(this.expense.categoria_id).subscribe(
+        response => {
+          if(response.category){
+            const nombre = response.category.nombre;
+            const userid = this.expense.user_id;
+            const initialState = {
+                list: [nombre, userid],
+                title: 'Nueva Subcategoria',
+                id: response.category.id
+            };
 
-          this.bsModalRef.content.onClose = new Subject<boolean>();
-          this.bsModalRef.content.onClose.subscribe(result => {
-            if(result !== null){
-              this.subcategories = result.data;
-              this.expense.subcategoria_id = result.newId;
-              this.onChgSubc(result.newId);
-            }
-          })
+            this.bsModalRef = this._modalService.show(NewsubcategoryComponent, {initialState});
+
+            this.bsModalRef.content.onClose = new Subject<boolean>();
+            this.bsModalRef.content.onClose.subscribe(result => {
+              if(result !== null){
+                this.subcategories = result.data;
+                this.expense.subcategoria_id = result.newId;
+                this.onChgSubc2(result.newId);
+              }
+            })
+          }
         }
-      }
-    )
+      )
+    }
+
   }
 
   newSubCategoria2(e: Event){
     e.preventDefault();
 
-    this._subcategoryService.getId(this.expense.subcategoria_id).subscribe(
-      response => {
-        if(response.subcategory){
-          const nombre = response.subcategory.nombre;
-          const initialState = {
-              list: [nombre],
-              title: 'Nueva Descripción',
-              id: response.subcategory.id
-          };
+    if(this.expense.subcategoria_id !== '0' && this.expense.subcategoria_id){
+      this._subcategoryService.getId(this.expense.subcategoria_id).subscribe(
+        response => {
+          if(response.subcategory){
+            const nombre = response.subcategory.nombre;
+            const userid = this.expense.user_id;
+            const initialState = {
+                list: [nombre, userid],
+                title: 'Nueva Descripción',
+                id: response.subcategory.id
+            };
 
-          this.bsModalRef = this._modalService.show(Newsubcategory2Component, {initialState});
+            this.bsModalRef = this._modalService.show(Newsubcategory2Component, {initialState});
 
-          this.bsModalRef.content.onClose = new Subject<boolean>();
-          this.bsModalRef.content.onClose.subscribe(result => {
-            if(result !== null){
-              this.subcategories2 = result.data;
-              this.expense.subcategoria2_id = result.newId;
-            }
-          })
+            this.bsModalRef.content.onClose = new Subject<boolean>();
+            this.bsModalRef.content.onClose.subscribe(result => {
+              if(result !== null){
+                this.subcategories2 = result.data;
+                this.expense.subcategoria2_id = result.newId;
+              }
+            })
+          }
         }
-      }
-    )
+      )
+
+    }
   }
 
   newProveedor(e: Event){
     e.preventDefault();
-    this.bsModalRef = this._modalService.show(NewproviderComponent);
+    const userid = this.expense.user_id;
+    const initialState = {
+      list: [userid]
+    };
+
+    this.bsModalRef = this._modalService.show(NewproviderComponent, {initialState});
 
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
       if(result !== null){
-        console.log(result);
-        this.providers = result;
-        console.log(this.providers);
+        this.providers = result.data;
         this.expense.proveedor_id = result.newId;
-        console.log(this.expense.proveedor_id)
+       // console.log(this.expense.proveedor_id)
       }
     })
 
@@ -658,9 +704,10 @@ export class ExpenseNewComponent implements OnInit {
 
   newProject(e: Event){
     e.preventDefault();
+    const userid = this.expense.user_id;
     const cecoid = localStorage.getItem('ceco');
     const initialState = {
-      list: [cecoid],
+      list: [cecoid, userid],
       title: 'Nuevo Proyecto',
   };
 

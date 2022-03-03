@@ -15,7 +15,7 @@ export class NewsubcategoryComponent implements OnInit {
 
   public title?: string;
   public list?: any;
-  public id?: number;
+  public id?: any;
 
   public subcategory: any;
 
@@ -31,11 +31,12 @@ export class NewsubcategoryComponent implements OnInit {
   }
 
   public onSubmit(form:any) {
-    
+
     this.subcategory.categoria_id = this.id;
+    this.subcategory.user_id = this.list[1];
 
     let newId;
-    
+
     this._subcategoryService.add(this.subcategory).subscribe(
       response => {
         if(response.status == 'success'){

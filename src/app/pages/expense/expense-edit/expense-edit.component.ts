@@ -90,7 +90,7 @@ export class ExpenseEditComponent implements OnInit {
   public totexp: any;
   public totpay: any;
 
-  public ceco:number;
+  public ceco:any;
   //public cecoName: string = '';
 
   public bsModalRef: BsModalRef;
@@ -115,9 +115,9 @@ export class ExpenseEditComponent implements OnInit {
     private _modalService: BsModalService
   ) {
 
-    this.ceco = parseInt(localStorage.getItem('ceco'));
+    this.ceco = localStorage.getItem('ceco');
 
-    this.expense = new Expense(null,1,0,null,null,null,null,null,null,0,null,null,1,0,0,0,null,1,1,1,this.ceco,1,1,1,null,1,'','');
+    this.expense = new Expense(null,null,0,null,null,null,null,null,null,0,null,null,null,null,0,0,null,null,null,null,this.ceco,null,null,null,null,1,'','');
     this.expenseImage = new ExpenseImage(null,'');
     this.title = 'Movimientos';
     this.subtitle = 'Editar Cargo';
@@ -152,7 +152,7 @@ export class ExpenseEditComponent implements OnInit {
   refreshData(){
 
     let body = {
-      ceco: this.ceco || 1,
+      ceco: this.ceco,
       desde: '2000-01-01',
       hasta: '2050-12-31'
     }
@@ -195,21 +195,29 @@ export class ExpenseEditComponent implements OnInit {
   }
 
   async onChgSubc(data: any){
-    let subc :any = document.getElementById('subcategoria_id');
-    let subc2 :any = document.getElementById('subcategoria2_id');
-    subc.disabled = false;
-    subc2.disabled = 'disabled';
-    await this.getSubCatId(data);
-    subc.selectedIndex = 0;
-    subc2.selectedIndex = 0;
+    let subc :any = (<HTMLInputElement>document.getElementById('subcategoria_id'));
+    let subc2 :any = (<HTMLInputElement>document.getElementById('subcategoria2_id'));
+    let catx :any = (<HTMLInputElement>document.getElementById('categoria_id'));
+
+    this.getSubCatId(data);
+    this.expense.subcategoria_id = 0;
+    this.expense.subcategoria2_id = 0;
+    subc.value = 0;
+    subc2.value = 0;
+    /* subc.selectedIndex = 0;
+    subc2.selectedIndex = 0; */
     /* this.subcategories2 = []; */
   }
 
-  async onChgSubc2(data: any){
-    let subc2 :any = document.getElementById('subcategoria2_id');
-    subc2.disabled = false;
-    await this.getSubCat2Id(data);
-    subc2.selectedIndex = 0;
+  onChgSubc2(data: any){
+    let subc2 :any = (<HTMLInputElement>document.getElementById('subcategoria2_id'));
+    this.getSubCat2Id(data);
+    /* let subc2 :any = document.getElementById('subcategoria2_id');
+    subc2.disabled = false; */
+    /* this.getSubCat2Id(data);
+    subc2.selectedIndex = 0; */
+    this.expense.subcategoria2_id = 0;
+    subc2.value = 0;
   }
 
   async onChgMonto(data: any) {
@@ -217,9 +225,18 @@ export class ExpenseEditComponent implements OnInit {
   }
 
   async onMetodChange(data:any){
-    let proy: any = document.getElementById('colproj');
+    /* let proy: any = document.getElementById('colproj');
     if(data == 4){
       proy.classList.add('d-block');
+    } else {
+      proy.classList.replace('d-block','d-none');
+    } */
+    let proy: any = (<HTMLInputElement>document.getElementById('colproj'));
+    let metod: any = (<HTMLInputElement>document.getElementById('tipogasto_id'));
+    let option = metod.options[metod.selectedIndex].text;
+
+    if(option.includes('Proyectos')){
+      proy.classList.replace('d-none','d-block');
     } else {
       proy.classList.replace('d-block','d-none');
     }
@@ -257,10 +274,9 @@ export class ExpenseEditComponent implements OnInit {
   onProjectChange(data:any){
     this._projectService.getId(data).subscribe(
       response => {
-        console.log(response.provider);
-        /* if(response.status = 'success'){
-          this.expense.provvedor_id = response.
-        } */
+        if(response.status = 'success'){
+          this.expense.proveedor_id = response.project.proveedor_id;
+        }
       },
       error => {
         console.log(error);
@@ -303,7 +319,8 @@ export class ExpenseEditComponent implements OnInit {
         response => {
           if(response.expense){
             this.expense = response.expense;
-            this.expense.fechainicio = moment(this.expense.fechainicio).format('YYYY-MM-DD');
+            //this.expense.fechainicio = moment(this.expense.fechainicio).format('YYYY-MM-DD');
+            this.expense.fechainicio = (this.expense.fechainicio).substr(0,10);
             if(this.expense.imagen){
               this.first = this.expense.imagen;
             }
@@ -313,7 +330,7 @@ export class ExpenseEditComponent implements OnInit {
 
             this.getEstTotal();
 
-            if(caso == '1') {
+            /* if(caso == '1') {
               this.tipocta = 'Cta. Corriente';
               //console.log(this.tipocta);
               this.montopresupuesto = this.estimates[0].totctacorriente;
@@ -336,7 +353,7 @@ export class ExpenseEditComponent implements OnInit {
               this.montopresupuesto = this.estimates[0].totlineacredito;
             }
             //console.log('ohoh', this.montopresupuesto);
-            this.total = this.montopresupuesto || 0 - this.montonvogasto || 0;
+            this.total = this.montopresupuesto || 0 - this.montonvogasto || 0; */
 
           } else {
             this._router.navigate(['/expense']);
@@ -354,9 +371,12 @@ export class ExpenseEditComponent implements OnInit {
   onSubmit(form:any){
     let imagen = this.fileName;
     let id = this.expense.id;
-    if(this.expense.tipogasto_id != 4){
+
+    let proy: any = (<HTMLInputElement>document.getElementById('tipogasto_id'));
+    if((proy.options[proy.selectedIndex].text).includes('Proyecto') == false) {
       this.expense.proyecto_id = 0;
     }
+
     let proyecto = this.expense.proyecto_id;
     let monto = this.expense.monto;
 
@@ -594,8 +614,8 @@ export class ExpenseEditComponent implements OnInit {
     )
   }
 
-  async getEstTotal(){
-    await this._estimateService.getTotals().subscribe(
+  getEstTotal(){
+    this._estimateService.getTotals().subscribe(
       response => {
         if(response.estimates){
           this.estimates = response.estimates;
@@ -652,43 +672,92 @@ export class ExpenseEditComponent implements OnInit {
 
   newCategoria(e: Event){
     e.preventDefault();
-    this.bsModalRef = this._modalService.show(NewcategoryComponent);
+    const userid = this.expense.user_id;
+    const initialState = {
+      list: [userid]
+    };
+
+    this.bsModalRef = this._modalService.show(NewcategoryComponent, {initialState});
 
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
       if(result !== null){
-        this.categories = result;
+        this.categories = result.data;
+        this.expense.categoria_id = result.newId;
       }
     })
   }
 
   newSubCategoria(e: Event){
     e.preventDefault();
-    this.bsModalRef = this._modalService.show(NewsubcategoryComponent);
 
-    this.bsModalRef.content.onClose = new Subject<boolean>();
-    this.bsModalRef.content.onClose.subscribe(result => {
-      if(result !== null){
-        this.categories = result;
-      }
-    })
+    if(this.expense.categoria_id !== '0' && this.expense.categoria_id) {
+
+      this._categoryService.getId(this.expense.categoria_id).subscribe(
+        response => {
+          if(response.category){
+            const nombre = response.category.nombre;
+            const userid = this.expense.user_id;
+            const initialState = {
+                list: [nombre, userid],
+                title: 'Nueva Subcategoria',
+                id: response.category.id
+            };
+
+            this.bsModalRef = this._modalService.show(NewsubcategoryComponent, {initialState});
+
+            this.bsModalRef.content.onClose = new Subject<boolean>();
+            this.bsModalRef.content.onClose.subscribe(result => {
+              if(result !== null){
+                this.subcategories = result.data;
+                this.expense.subcategoria_id = result.newId;
+                this.onChgSubc2(result.newId);
+              }
+            })
+          }
+        }
+      )
+    }
   }
 
   newSubCategoria2(e: Event){
     e.preventDefault();
-    this.bsModalRef = this._modalService.show(Newsubcategory2Component);
+    if(this.expense.subcategoria_id !== '0' && this.expense.subcategoria_id){
+      this._subcategoryService.getId(this.expense.subcategoria_id).subscribe(
+        response => {
+          if(response.subcategory){
+            const nombre = response.subcategory.nombre;
+            const userid = this.expense.user_id;
+            const initialState = {
+                list: [nombre, userid],
+                title: 'Nueva Descripción',
+                id: response.subcategory.id
+            };
 
-    this.bsModalRef.content.onClose = new Subject<boolean>();
-    this.bsModalRef.content.onClose.subscribe(result => {
-      if(result !== null){
-        this.categories = result;
-      }
-    })
+            this.bsModalRef = this._modalService.show(Newsubcategory2Component, {initialState});
+
+            this.bsModalRef.content.onClose = new Subject<boolean>();
+            this.bsModalRef.content.onClose.subscribe(result => {
+              if(result !== null){
+                this.subcategories2 = result.data;
+                this.expense.subcategoria2_id = result.newId;
+              }
+            })
+          }
+        }
+      )
+
+    }
   }
 
   newProveedor(e: Event){
     e.preventDefault();
-    this.bsModalRef = this._modalService.show(NewproviderComponent);
+    const userid = this.expense.user_id;
+    const initialState = {
+      list: [userid]
+    };
+
+    this.bsModalRef = this._modalService.show(NewproviderComponent, {initialState});
 
     this.bsModalRef.content.onClose = new Subject<boolean>();
     this.bsModalRef.content.onClose.subscribe(result => {
@@ -701,9 +770,10 @@ export class ExpenseEditComponent implements OnInit {
 
   newProject(e: Event){
     e.preventDefault();
+    const userid = this.expense.user_id;
     const cecoid = localStorage.getItem('ceco');
     const initialState = {
-      list: [cecoid],
+      list: [cecoid, userid],
       title: 'Nuevo Proyecto',
     };
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
 import {
     Chart,
     registerables,
@@ -15,6 +15,7 @@ import { CecoService } from '@services/ceco.service';
 import { ExpenseService } from '@services/expense.service';
 import { PaymentService } from '@services/payment.service';
 import { global } from '@services/global';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-dashboard',
@@ -22,7 +23,9 @@ import { global } from '@services/global';
     styleUrls: ['./dashboard.component.scss'],
     providers: [UserService, CecoService, ExpenseService, PaymentService]
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  //@Output() pruebatest: EventEmitter<string> = new EventEmitter();
 
     public url: string;
     public users: number;
@@ -95,12 +98,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     @ViewChild(BaseChartDirective) chartx?: BaseChartDirective;
 
-    public ceco: number = parseInt(localStorage.getItem('ceco'));
+    public ceco: any = localStorage.getItem('ceco');
     public today: any;
     public totexp: any;
     public totpay: any;
 
     public cecoName: string = '';
+
 
     constructor(
         private _userService: UserService,
@@ -114,7 +118,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.users = 0;
         this.cecos = null;
         this.is_ceco = false;
-        this.ceco =  parseInt(localStorage.getItem('ceco'));
+        this.ceco =  localStorage.getItem('ceco');
     }
 
     ngOnInit(): void {
@@ -124,6 +128,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.getCeco();
         this.refreshData();
         //this.getChart();
+    }
+
+    /* triggerBtn(){
+      this._userService.prueba.next(1);
+    }
+
+    sendEmit(){
+      this._userService.sendMensaje(2);
+      this._userService.enviar(5);
+    } */
+
+    ngOnDestroy(): void {
+
     }
 
     refreshData(){
@@ -256,30 +273,31 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
     async getCeco(){
+        if(this.ceco) {
 
-        (await this._userService.getIdentity()).subscribe(
-            response => {
-                if(response.status == 'success'){
-                    if(response.data.role != 'ROLE_ADMIN'){
-                        this.ceco = response.data.ceco_id;
-                    }
+          (await this._userService.getIdentity()).subscribe(
+              response => {
+                  if(response.status == 'success'){
+                      if(response.data.role != 'ROLE_ADMIN'){
+                          this.ceco = response.data.ceco_id;
+                      }
 
-                    this._cecoService.getId(this.ceco).subscribe(
-                    response => {
-                        if(response.ceco) {
-                            this.cecoName = response.ceco.centrocosto;
-                        }
-                    },
-                    error => {
-                        console.log(error);
-                    });
-                }
-            },
-            error => {
-                console.log(error);
-            }
-        )
-
+                      this._cecoService.getId(this.ceco).subscribe(
+                      response => {
+                          if(response.ceco) {
+                              this.cecoName = response.ceco.centrocosto;
+                          }
+                      },
+                      error => {
+                          console.log(error);
+                      });
+                  }
+              },
+              error => {
+                  console.log(error);
+              }
+          )
+        }
 
     }
 

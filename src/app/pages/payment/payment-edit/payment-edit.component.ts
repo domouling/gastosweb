@@ -34,7 +34,7 @@ export class PaymentEditComponent implements OnInit {
   public msg: string;
   public is_edit: boolean;
 
-  public ceco: number;
+  public ceco: any;
   public cecoName: string = '';
 
   constructor(
@@ -46,11 +46,11 @@ export class PaymentEditComponent implements OnInit {
     private _projectService: ProjectService,
     private _paymentService: PaymentService
   ) {
-    this.ceco =  parseInt(localStorage.getItem('ceco'));
+    this.ceco =  localStorage.getItem('ceco');
 
     this.today = moment().format('YYYY-MM-DD');
 
-    this.payment = new Payment(null,'',0,'',1,this.ceco,0,1,'','');
+    this.payment = new Payment(null,'',0,'',null,this.ceco,null,1,'','');
     this.title = 'Abonos';
     this.subtitle = 'Editar Abono';
     this.url = global.url;
@@ -94,7 +94,8 @@ export class PaymentEditComponent implements OnInit {
         response => {
           if(response.payment) {
             this.payment = response.payment;
-            this.payment.fecha = moment(this.payment.fecha).format('YYYY-MM-DD');
+            //this.payment.fecha = moment(this.payment.fecha).format('YYYY-MM-DD');
+            this.payment.fecha = (this.payment.fecha).substr(0,10);
           } else {
             this._router.navigate(['/expense']);
           }

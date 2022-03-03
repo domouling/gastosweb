@@ -1,10 +1,10 @@
 import { EventEmitter, Injectable, Output } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import {Router} from '@angular/router';
-import { Observable, BehaviorSubject, ReplaySubject } from "rxjs";
+import { Observable, BehaviorSubject, ReplaySubject, Subject } from "rxjs";
 import { global } from "./global";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserService {
     public url: string;
     public identity: any;
@@ -14,8 +14,12 @@ export class UserService {
     public cecoNombre: string;
     public test: any = '';
 
-    private mensajero = new BehaviorSubject<any>('');
+    /* private mensajero = new BehaviorSubject<any>('');
     public mensaje$ = this.mensajero.asObservable();
+
+    public prueba = new ReplaySubject<number>(1);
+
+    public pruebaEmitter: EventEmitter<any> = new EventEmitter<number>(); */
 
     //@Output() change: EventEmitter<string> = new EventEmitter();
 
@@ -28,20 +32,34 @@ export class UserService {
         this.identity = null;
         this.token = null;
         this.cecoch = null;
-    
+
     }
 
-    public get recibir() {
-        return this.mensajero.asObservable();
+    /* sendMensaje(count: number) {
+      this.prueba.next(count);
+      console.log('pase rieba')
     }
 
-    cambio(msg:any){
+    enviar(id:number){
+      this.prueba.next(id);
+    } */
+
+    /* getButton(): Observable<any> {
+      return this.prueba.asObservable();
+    } */
+
+    /* public get recibir() {
+        return this.prueba.asObservable();
+    } */
+
+    /* cambio(msg:any){
         /* console.log(msg);
         console.log('invocado');
         this.test = 'Cambie';
-        this.change.emit(msg); */
+        this.change.emit(msg);
         this.mensajero.next(msg);
-    }
+    } */
+
 
     signup(user:any, gettoken:any = null):Observable<any> {
         if(gettoken != null) {
@@ -66,7 +84,7 @@ export class UserService {
         return this._http.post(this.url + 'users', user, {headers: headers});
     }
 
-    update(id:number, user:any):Observable<any>{
+    update(id:any, user:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
@@ -79,7 +97,7 @@ export class UserService {
         formParams.append('image', file);
 
         let headers = new HttpHeaders().set('auth-token', this.getToken());
-        
+
         return this._http.post(this.url + 'users/upload-avatar', formParams, {headers: headers});
     }
 
@@ -87,13 +105,13 @@ export class UserService {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
-        return this._http.get(this.url + 'users/file/' + filename, {headers: headers}); 
+        return this._http.get(this.url + 'users/file/' + filename, {headers: headers});
     }
 
 
     deleteAvatar(filename: string){
         let headers = new HttpHeaders().set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'users/delete-avatar/' + filename, {headers: headers});
     }
 
@@ -109,21 +127,21 @@ export class UserService {
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'users', {headers: headers});
     }
 
-    getUser(id: number):Observable<any> {
+    getUser(id: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'users/' + id, {headers: headers});
     }
 
-    deleteUser(id:number){
+    deleteUser(id:any){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        
+
         return this._http.delete(this.url+'users/'+id, {headers: headers});
     }
 
@@ -137,7 +155,7 @@ export class UserService {
         return this.token;
     }
 
-    async getIdentity():Promise<Observable<any>> {
+    getIdentity():Observable<any> {
         /* let identity = JSON.parse(localStorage.getItem('identity')!);
         if(identity && identity != null && identity != undefined && identity != 'undefined') {
             this.identity = identity;
@@ -146,10 +164,10 @@ export class UserService {
         }
 
         return this.identity; */
-        
+
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        return await this._http.get(this.url + 'users/token/info', {headers: headers});
+        return this._http.get(this.url + 'users/token/info', {headers: headers});
     }
 
     getCecoChoice(){
@@ -162,7 +180,7 @@ export class UserService {
 
         return this.cecoch;
     }
-    
+
 
     logout() {
         localStorage.removeItem('token');

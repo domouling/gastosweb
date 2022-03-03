@@ -27,24 +27,24 @@ export class PaymentService {
         return this._http.post(this.url + 'payments', payment, {headers: headers});
     }
 
-    update(id:number, payment:any):Observable<any>{
+    update(id:any, payment:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
         return this._http.put(this.url + 'payments/' + id, payment, {headers: headers});
     }
 
-    getAll(ceco: number):Observable<any> {
+    getAll(ceco: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'payments/all/' + ceco, {headers: headers});
     }
 
-    getPaymentMonth(ceco: number):Observable<any> {
+    getPaymentMonth(ceco: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'payments/total/month/' + ceco, {headers: headers});
     }
 
@@ -55,18 +55,18 @@ export class PaymentService {
         return this._http.post(this.url + 'payments/total/ceco', data, {headers: headers});
     }
 
-    getId(id: number):Observable<any> {
+    getId(id: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'payments/' + id, {headers: headers});
     }
 
 
-    deletePayment(id:number){
+    deletePayment(id:any){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        
+
         return this._http.delete(this.url+'payments/'+id, {headers: headers});
     }
 
@@ -82,7 +82,7 @@ export class PaymentService {
     }
 
     async getIdentity():Promise<Observable<any>> {
-        
+
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
         return await this._http.get(this.url + 'users/token/info', {headers: headers});

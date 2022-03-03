@@ -37,7 +37,7 @@ export class Subcategory2EditComponent implements OnInit {
     private _subcategoryService: SubCategoryService,
     private _subcategoryService2: SubCategoryService2
   ) {
-    this.subcategory2 = new SubCategory2(null,'',0,0,0,1,null,1,'','');
+    this.subcategory2 = new SubCategory2(null,'',0,0,0,null,null,1,'','');
     this.title = 'Detalle';
     this.subtitle = 'Editar Detalle';
     this.url = global.url;
@@ -49,6 +49,20 @@ export class Subcategory2EditComponent implements OnInit {
   ngOnInit(): void {
     this.getCategories();
     this.getSubCategory();
+    this.getIdentity();
+  }
+
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.subcategory2.user_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   onSubmit(form:any){

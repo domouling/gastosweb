@@ -1,6 +1,6 @@
 export class Trxcurrency {
     constructor(
-        public id: number,
+        public id: string,
         public isocode: string,
         public nombre: string,
         public simbolo: string,

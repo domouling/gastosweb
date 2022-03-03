@@ -29,7 +29,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   public url: any;
   public msg: string;
   public prueba: any;
-  public ceco: number;
+  public ceco: any;
   //public cecoName: string = '';
 
   public desde: any;
@@ -53,7 +53,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     this.url = global.url;
     this.status = '';
     this.msg = '';
-    this.ceco = parseInt(localStorage.getItem('ceco'));
+    this.ceco = localStorage.getItem('ceco');
 
     this.desde = moment('2022-01-01').format('YYYY-MM-DD');
     this.hasta = moment('2022-12-31').format('YYYY-MM-DD');
@@ -128,6 +128,12 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     this.totales();
     this.refreshData();
   }
+
+  /* hola(){
+    alert('me llamaron')
+    this._userService.enviar(3);
+    this._userService.pruebaEmitter.emit(2);
+  } */
 
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();

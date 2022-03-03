@@ -27,7 +27,7 @@ export class CecoService {
         return this._http.post(this.url + 'cecos', ceco, {headers: headers});
     }
 
-    update(id:number, ceco:any):Observable<any>{
+    update(id:any, ceco:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
@@ -40,7 +40,7 @@ export class CecoService {
         formParams.append('image', file);
 
         let headers = new HttpHeaders().set('auth-token', this.getToken());
-        
+
         return this._http.post(this.url + 'cecos/upload-avatar', formParams, {headers: headers});
     }
 
@@ -48,13 +48,13 @@ export class CecoService {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
-        return this._http.get(this.url + 'cecos/file/' + filename, {headers: headers}); 
+        return this._http.get(this.url + 'cecos/file/' + filename, {headers: headers});
     }
 
 
     deleteAvatar(filename: string){
         let headers = new HttpHeaders().set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'cecos/delete-avatar/' + filename, {headers: headers});
     }
 
@@ -70,28 +70,28 @@ export class CecoService {
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'cecos', {headers: headers});
     }
 
     getAllAct():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'cecos/act/all', {headers: headers});
     }
 
-    getId(id: number):Observable<any> {
+    getId(id: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'cecos/' + id, {headers: headers});
     }
 
-    deleteCeco(id:number){
+    deleteCeco(id:any){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        
+
         return this._http.delete(this.url+'cecos/'+id, {headers: headers});
     }
 
@@ -118,7 +118,7 @@ export class CecoService {
     } */
 
     async getIdentity():Promise<Observable<any>> {
-        
+
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
         return await this._http.get(this.url + 'users/token/info', {headers: headers});

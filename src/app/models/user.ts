@@ -1,6 +1,6 @@
 export class User {
     constructor(
-        public id: number,
+        public id: string,
         public nombre: string,
         public password: string,
         public passnew: string,
@@ -9,7 +9,7 @@ export class User {
         public status: number,
         public email: string,
         public imagen: string,
-        public ceco_id: number,
+        public ceco_id: string,
         public ultimasesion: string,
         public created_at: string,
         public updated_at: string

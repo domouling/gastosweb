@@ -13,6 +13,7 @@ import { Provider } from '@/models/provider';
 })
 export class NewproviderComponent implements OnInit {
 
+  public list?: any = [];
   public provider: any;
 
   constructor(
@@ -26,6 +27,9 @@ export class NewproviderComponent implements OnInit {
   }
 
   public onSubmit(form:any) {
+
+    this.provider.user_id = this.list[0];
+
     let newId;
     this._providerService.add(this.provider).subscribe(
       response => {

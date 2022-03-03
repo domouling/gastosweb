@@ -27,7 +27,7 @@ export class SubCategoryService2 {
         return this._http.post(this.url + 'subcategories2', subcategory2, {headers: headers});
     }
 
-    update(id:number, subcategory2:any):Observable<any>{
+    update(id:any, subcategory2:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
@@ -37,28 +37,28 @@ export class SubCategoryService2 {
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'subcategories2', {headers: headers});
     }
 
-    getId(id: number):Observable<any> {
+    getId(id: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'subcategories2/' + id, {headers: headers});
     }
 
-    getSubCatId(id: number):Observable<any> {
+    getSubCatId(id: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'subcategories2/subcat/' + id, {headers: headers});
     }
 
-    deleteSubcategory2(id:number){
+    deleteSubcategory2(id:any){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        
+
         return this._http.delete(this.url+'subcategories2/'+id, {headers: headers});
     }
 
@@ -74,7 +74,7 @@ export class SubCategoryService2 {
     }
 
     async getIdentity():Promise<Observable<any>> {
-        
+
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
         return await this._http.get(this.url + 'users/token/info', {headers: headers});

@@ -40,7 +40,7 @@ export class UserEditComponent implements OnInit {
     private _userService: UserService,
     private _cecoService: CecoService
   ) {
-    this.user = new User(null,'','','','','ROLE_USER',1,'','',1,'','','');
+    this.user = new User(null,'','','','','ROLE_USER',1,'','',null,'','','');
     this.userImage = new UserImage('','');
     this.title = 'Usuarios';
     this.subtitle = 'Editar Usuario';
@@ -59,10 +59,23 @@ export class UserEditComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.getCecos();
+    this.getIdentity();
+  }
+
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.user.admin_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   onSubmit(form:any){
-    console.log(this.user);
     let imagen = this.fileName;
     let correo = this.user.email;
     let id = this.user.id;
@@ -70,7 +83,6 @@ export class UserEditComponent implements OnInit {
     this._userService.update(id,this.user).subscribe(
       response => {
         if(response.status == 'success'){
-          console.log(response);
           this.status = 'success';
           this.msg = 'Usuario actualizado con exito!';
           if(imagen){

@@ -23,7 +23,7 @@ export class PaymentListComponent implements OnInit, OnDestroy {
   public url: any;
   public msg: string;
   public prueba: any;
-  public ceco: number;
+  public ceco: any;
   //public cecoName: string = '';
 
   public dtOptions: DataTables.Settings = {};
@@ -40,7 +40,7 @@ export class PaymentListComponent implements OnInit, OnDestroy {
     this.url = global.url;
     this.status = '';
     this.msg = '';
-    this.ceco =  parseInt(localStorage.getItem('ceco'));
+    this.ceco =  localStorage.getItem('ceco');
   }
 
   ngOnInit(): void {

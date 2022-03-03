@@ -45,7 +45,7 @@
                 id="cecos" class="table table-bordered table-striped usuarios">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <!-- <th>ID</th> -->
                             <th>Centro Costos</th>
                             <th>Estatus</th>
                             <th>Acciones</th>
@@ -53,7 +53,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let ceco of cecos">
-                            <td>{{ ceco.id }}</td>
+                            <!-- <td>{{ ceco.id }}</td> -->
                             <td>
                                 <a *ngIf="ceco.imagen" [routerLink]="['/admin/ceco/edit/' + ceco.id]">
                                     <img class="img-avatar mr-2" src="{{ url + 'cecos/file/' + ceco.imagen }}">

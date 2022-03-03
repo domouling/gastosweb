@@ -27,7 +27,7 @@ export class TipoGastoService {
         return this._http.post(this.url + 'tpogastos', tipogasto, {headers: headers});
     }
 
-    update(id: number, tipogasto:any):Observable<any>{
+    update(id: any, tipogasto:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
@@ -37,28 +37,28 @@ export class TipoGastoService {
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'tpogastos', {headers: headers});
     }
 
     getAllAct():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'tpogastos/act/all', {headers: headers});
     }
 
-    getId(id: number):Observable<any> {
+    getId(id: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'tpogastos/' + id, {headers: headers});
     }
 
-    deleteTipogasto(id:number){
+    deleteTipogasto(id:any){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        
+
         return this._http.delete(this.url+'tpogastos/'+id, {headers: headers});
     }
 
@@ -74,7 +74,7 @@ export class TipoGastoService {
     }
 
     async getIdentity():Promise<Observable<any>> {
-        
+
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
         return await this._http.get(this.url + 'users/token/info', {headers: headers});

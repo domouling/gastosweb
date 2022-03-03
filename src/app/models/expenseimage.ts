@@ -1,6 +1,6 @@
 export class ExpenseImage {
     constructor(
-        public id: number,
+        public id: string,
         public imagen: string,
     ){}
 }

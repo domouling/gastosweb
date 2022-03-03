@@ -1,6 +1,6 @@
 export class Ceco {
     constructor(
-        public id: number,
+        public id: string,
         public centrocosto: string,
         public status: number,
         public unidadnegocio: string,

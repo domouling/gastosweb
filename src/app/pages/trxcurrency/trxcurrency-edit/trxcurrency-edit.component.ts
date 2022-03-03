@@ -43,6 +43,20 @@ export class TrxcurrencyEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTrxcurrency();
+    this.getIdentity();
+  }
+
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.trxcurrency.user_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   onSubmit(form:any){

@@ -1,8 +1,8 @@
 export class SubCategory {
     constructor(
-        public id: number,
+        public id: string,
         public nombre: string,
-        public categoria_id: number,
+        public categoria_id: string,
         public jerarquiasubcatpcpal: number,
         public jerarquiasubcat: number,
         public numjerarsubcat: number,

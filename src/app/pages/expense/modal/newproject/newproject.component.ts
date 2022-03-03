@@ -5,6 +5,7 @@ import moment, { Moment } from 'moment';
 import { ProjectService } from '@services/project.service';
 import { ProviderService } from '@services/provider.service';
 
+
 import { Project } from '@/models/project';
 
 @Component({
@@ -21,7 +22,7 @@ export class NewprojectComponent implements OnInit {
   public tomorrow: any;
 
   public providers: any;
-  
+
   public project: any;
 
   constructor(
@@ -33,7 +34,8 @@ export class NewprojectComponent implements OnInit {
     this.today = moment().format('YYYY-MM-DD');
     this.tomorrow = moment().add(3,'months').format('YYYY-MM-DD');
 
-    this.project = new Project(null,null,this.today,this.tomorrow,0,0,1,parseInt(this.list[0]),1,'','');
+    this.project = new Project(null,null,this.today,this.tomorrow,0,0,this.list[1],'0',this.list[0],1,'','');
+
 
   }
 
@@ -52,12 +54,13 @@ export class NewprojectComponent implements OnInit {
         console.log(error);
       }
     );
-      
+
   }
 
   public onSubmit(form:any) {
 
-    this.project.ceco_id = parseInt(this.list[0]);
+    this.project.ceco_id = this.list[0];
+    this.project.user_id = this.list[1];
 
     let newId;
     let prov;
@@ -69,7 +72,7 @@ export class NewprojectComponent implements OnInit {
         if(response.status == 'success'){
           newId = response.project.id;
           prov = response.project.proveedor_id;
-          this._projectService.getAll(parseInt(this.list[0])).subscribe(
+          this._projectService.getAll(this.list[0]).subscribe(
             response => {
               if(response.projects){
                 this.bsModalRef.content.onClose.next({

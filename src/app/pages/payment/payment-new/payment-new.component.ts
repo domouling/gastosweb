@@ -33,7 +33,7 @@ export class PaymentNewComponent implements OnInit {
   public msg: string;
   public is_edit: boolean;
 
-  public ceco: number;
+  public ceco: any;
   //public cecoName: string = '';
 
   constructor(
@@ -47,9 +47,9 @@ export class PaymentNewComponent implements OnInit {
   ) {
 
     this.today = moment().format('YYYY-MM-DD');
-    this.ceco =  parseInt(localStorage.getItem('ceco'));
+    this.ceco =  localStorage.getItem('ceco');
 
-    this.payment = new Payment(null,'',0,this.today,1,this.ceco,0,1,'','');
+    this.payment = new Payment(null,'',0,this.today,null,this.ceco,null,1,'','');
 
     this.title = 'Abonos';
     this.subtitle = 'Abono Nuevo';
@@ -61,6 +61,7 @@ export class PaymentNewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getIdentity();
     this.getCecos();
     //this.getCeco();
     this.getUsers();
@@ -109,6 +110,19 @@ export class PaymentNewComponent implements OnInit {
       },
       error => {
         console.log(error);
+      }
+    )
+  }
+
+  getIdentity() {
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.payment.user_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
       }
     )
   }

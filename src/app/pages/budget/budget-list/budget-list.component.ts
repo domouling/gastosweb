@@ -23,7 +23,7 @@ export class BudgetListComponent implements OnInit, OnDestroy {
   public msg: string;
   public prueba: any;
 
-  public ceco: number;
+  public ceco: any;
 
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject<any>();
@@ -38,7 +38,7 @@ export class BudgetListComponent implements OnInit, OnDestroy {
     this.url = global.url;
     this.status = '';
     this.msg = '';
-    this.ceco =  parseInt(localStorage.getItem('ceco'));
+    this.ceco =  localStorage.getItem('ceco');
   }
 
   ngOnInit(): void {
@@ -53,11 +53,11 @@ export class BudgetListComponent implements OnInit, OnDestroy {
       language: {url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json'},
     }
 
-    this.getEstimates(this.ceco);  
+    this.getEstimates(this.ceco);
   }
 
   ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();  
+    this.dtTrigger.unsubscribe();
   }
 
   getEstimates(ceco:number) {

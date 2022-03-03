@@ -54,6 +54,20 @@ export class CecoEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCeco();
+    this.getIdentity();
+  }
+
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.ceco.user_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   onSubmit(form:any){

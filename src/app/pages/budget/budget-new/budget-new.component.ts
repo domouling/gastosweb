@@ -32,7 +32,7 @@ export class BudgetNewComponent implements OnInit {
   public error: any;
   public is_edit: boolean;
 
-  public ceco: number;
+  public ceco: any;
 
   constructor(
     private _router: Router,
@@ -45,9 +45,9 @@ export class BudgetNewComponent implements OnInit {
     private _estimateService: EstimateService
   ) {
 
-    this.ceco =  parseInt(localStorage.getItem('ceco'));
+    this.ceco =  localStorage.getItem('ceco');
 
-    this.estimate = new Estimate(null,'','',0,0,0,0,0,'',1,this.ceco,1,null,1,'','');
+    this.estimate = new Estimate(null,'','',0,0,0,0,0,'',1,this.ceco,null,null,1,'','');
     this.title = 'Presupuestos';
     this.subtitle = 'Nuevo Presupuesto';
     this.url = global.url;

@@ -29,7 +29,7 @@ export class MenuSidebarComponent implements OnInit {
 
     ngOnInit() {
         this.getInfo();
-        this._userService.mensaje$.pipe(take(1)).subscribe(msg => this.message);
+        //this._userService.mensaje$.pipe(take(1)).subscribe(msg => this.message);
         /* this._userService.change.subscribe(message => {
             this.message = message;
             console.log('entre' + this.message);
@@ -77,25 +77,31 @@ export const MENU = [
         role: 'ALL',
         name: 'Abonos',
         path: ['/payments']
-    }, */
-    /* {
+      }, */
+      /* {
         icon: 'bi bi-kanban',
         role: 'ALL',
         name: 'Presupuestos',
         path: ['/estimate']
-    }, */
-    {
+      }, */
+      {
         icon: 'bi bi-journals',
         role: 'ALL',
         name: 'Proyectos',
         path: ['/projects']
-    },
-    {
+      },
+      {
+          icon: 'bi bi-journal-richtext',
+          role: 'ALL',
+          name: 'Reportes',
+          path: ['/reports']
+      },
+      {
         icon: 'bi bi-gear',
         role: 'ROLE_ADMIN',
         name: 'Administrador',
         children: [
-            {
+          {
                 icon: 'bi bi-people',
                 role: 'ROLE_ADMIN',
                 name: 'Usuarios',
@@ -150,12 +156,6 @@ export const MENU = [
                 path: ['/admin/subcategory2']
             },
         ]
-    },
-    {
-        icon: 'bi bi-journal-richtext',
-        role: 'ALL',
-        name: 'Reportes',
-        path: ['/reports']
     },
 
 ];

@@ -40,7 +40,7 @@ export class ProjectNewComponent implements OnInit {
 
   public expense: any;
 
-  public ceco: number;
+  public ceco: any;
   //public cecoName: string = '';
 
   public totexp: any;
@@ -65,9 +65,9 @@ export class ProjectNewComponent implements OnInit {
     this.today = moment().format('YYYY-MM-DD');
     this.tomorrow = moment().add(3,'months').format('YYYY-MM-DD');
 
-    this.ceco =  parseInt(localStorage.getItem('ceco'));
+    this.ceco =  localStorage.getItem('ceco');
+    this.project = new Project(null, null, this.today, this.tomorrow, 0, 0, '0', '0', this.ceco, 1, '', '');
 
-    this.project = new Project(null,'',this.today,this.tomorrow,0,0,0,this.ceco,1,'','');
     this.title = 'Proyectos';
     this.subtitle = 'Proyecto Nuevo';
     this.url = global.url;
@@ -79,6 +79,7 @@ export class ProjectNewComponent implements OnInit {
   ngOnInit(): void {
     this.getProviders();
     this.getCecos();
+    this.getIdentity();
     //this.getCeco();
     this.refreshData();
   }
@@ -146,6 +147,19 @@ export class ProjectNewComponent implements OnInit {
         }
       }
     );
+  }
+
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.project.user_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   getProviders(){

@@ -25,7 +25,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public url: any;
   public msg: string;
   public prueba: any;
-  public ceco: number;
+  public ceco: any;
   //public cecoName: string = '';
 
   public totexp: any;
@@ -47,7 +47,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.url = global.url;
     this.status = '';
     this.msg = '';
-    this.ceco =  parseInt(localStorage.getItem('ceco'));
+    this.ceco =  localStorage.getItem('ceco');
   }
 
   ngOnInit(): void {
@@ -120,7 +120,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
               if(response.status == 'success'){
                 this.totpay = response.payments[0].montotot;
                 let total:any = this.totpay - this.totexp;
-
                 let tot = total;
                 total = total.toLocaleString('en') || '0';
 
@@ -166,7 +165,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
           this.status = 'error';
           if(error.status == 419){
             this._userService.logout();
-            setTimeout(() => this._router.navigate(['/login']), 1500);
+            setTimeout(() => this._router.navigate(['/login']), 500);
           }
         }
       )

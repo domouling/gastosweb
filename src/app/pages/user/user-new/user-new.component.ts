@@ -39,7 +39,7 @@ export class UserNewComponent implements OnInit {
     private _userService: UserService,
     private _cecoService: CecoService
   ) {
-    this.user = new User(null,'','','','','ROLE_USER',1,'','',1,'','','');
+    this.user = new User(null,'','','','','ROLE_USER',1,'','',null,'','','');
     this.userImage = new UserImage('','');
     this.title = 'Usuarios';
     this.subtitle = 'Nuevo Usuario';
@@ -57,6 +57,20 @@ export class UserNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCecos();
+    this.getIdentity();
+  }
+
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.user.admin_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   onSubmit(form:any){

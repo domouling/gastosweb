@@ -27,7 +27,7 @@ export class TpoCuentaService {
         return this._http.post(this.url + 'tpocuentas', tpocuenta, {headers: headers});
     }
 
-    update(id: number, tpocuenta:any):Observable<any>{
+    update(id: any, tpocuenta:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
@@ -37,21 +37,21 @@ export class TpoCuentaService {
     getAll():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'tpocuentas', {headers: headers});
     }
 
-    getId(id: number):Observable<any> {
+    getId(id: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'tpocuentas/' + id, {headers: headers});
     }
 
-    deleteTpocuenta(id:number){
+    deleteTpocuenta(id:any){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        
+
         return this._http.delete(this.url+'tpocuentas/'+id, {headers: headers});
     }
 
@@ -67,7 +67,7 @@ export class TpoCuentaService {
     }
 
     async getIdentity():Promise<Observable<any>> {
-        
+
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
         return await this._http.get(this.url + 'users/token/info', {headers: headers});

@@ -45,7 +45,6 @@
                 id="proyecto" class="table table-bordered table-striped proyecto">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Nombre</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
@@ -59,10 +58,9 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let project of projects">
-                            <td>{{ project.id }}</td>
                             <td>{{ project.nombre }}</td>
-                            <td>{{ project.fechainicio | date: 'dd/MM/yyyy' }}</td>
-                            <td>{{ project.fechafin | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ (project.fechainicio).substr(0,10) }}</td>
+                            <td>{{ (project.fechafin).substr(0,10) }}</td>
                             <td class="text-right">${{ project.monto | mask: 'separator':','}}</td>
                             <td class="text-right">${{ project.pagado | mask: 'separator':','}}</td>
                             <td *ngIf="project.monto-project.pagado<0" class="text-right">$-{{ project.monto - project.pagado | mask: 'separator':','}}</td>

@@ -27,7 +27,7 @@ export class EstimateService {
         return this._http.post(this.url + 'estimates', estimate, {headers: headers});
     }
 
-    update(id: number, estimate:any):Observable<any>{
+    update(id: any, estimate:any):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
@@ -35,31 +35,31 @@ export class EstimateService {
     }
 
 
-    getAll(ceco: number):Observable<any> {
+    getAll(ceco: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'estimates/all/' + ceco, {headers: headers});
     }
 
-    getId(id: number):Observable<any> {
+    getId(id: any):Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'estimates/' + id, {headers: headers});
     }
 
     getTotals():Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'estimates/totales/total', {headers: headers});
     }
 
-    deleteEstimate(id:number){
+    deleteEstimate(id:any){
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
-        
+
         return this._http.delete(this.url+'estimates/'+id, {headers: headers});
     }
 
@@ -68,7 +68,7 @@ export class EstimateService {
         formParams.append('image', file);
 
         let headers = new HttpHeaders().set('auth-token', this.getToken());
-        
+
         return this._http.post(this.url + 'estimates/archivo/upload', formParams, {headers: headers});
     }
 
@@ -76,13 +76,13 @@ export class EstimateService {
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                       .set('auth-token', this.getToken());
 
-        return this._http.get(this.url + 'estiamtes/file/' + filename, {headers: headers}); 
+        return this._http.get(this.url + 'estiamtes/file/' + filename, {headers: headers});
     }
 
 
     deleteAvatar(filename: string){
         let headers = new HttpHeaders().set('auth-token', this.getToken());
-        
+
         return this._http.get(this.url + 'estimates/delete-avatar/' + filename, {headers: headers});
     }
 
@@ -106,11 +106,11 @@ export class EstimateService {
     }
 
     async getIdentity():Promise<Observable<any>> {
-        
+
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('auth-token', this.getToken());
         return await this._http.get(this.url + 'users/token/info', {headers: headers});
     }
 
-    
+
 }

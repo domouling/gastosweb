@@ -46,7 +46,11 @@
                                     <span class="input-group-text"><b>Tipo Mov.</b></span>
                                     <select class="form-select" name="tipogasto_id" id="tipogasto_id" #tipogasto_id="ngModel"
                                     [(ngModel)]="expense.tipogasto_id" (change)="onMetodChange(expense.tipogasto_id)">
-                                        <option *ngFor="let tipogasto of tipogastos" [value]=tipogasto.id>{{ tipogasto.nombre }}</option>
+                                        <option value="0" selected disabled hidden>Elegir Opción</option>
+                                        <option *ngFor="let tipogasto of tipogastos; let i = index"
+                                          [value]=tipogasto.id
+                                          [attr.selected]="i == 0 ? 'selected' : null"
+                                          >{{ tipogasto.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -63,8 +67,8 @@
                             </div>
 
                             <div *ngIf="is_edit == true" class="col-md" [ngClass]="{
-                                'd-none': expense.tipogasto_id != 4,
-                                'd-block': expense.tipogasto_id == 4
+                                'd-none': expense.proyecto_id == '0',
+                                'd-block': expense.proyecto_id != '0'
                             }" id="colproj">
                                 <div class="input-group">
                                     <span class="input-group-text"><b>Proyecto</b></span>
@@ -100,7 +104,7 @@
                                     <span class="input-group-text"><b>Categoria</b></span>
                                     <select class="form-select" name="categoria_id" id="categoria_id" #categoria_id="ngModel"
                                     [(ngModel)]="expense.categoria_id" (change)="onChgSubc(expense.categoria_id)">
-                                        <option value="0" selected>Elegir Categoria...</option>
+                                        <option value="0" selected disabled hidden>Elegir Categoria</option>
                                         <option *ngFor="let category of categories" [value]=category.id>{{ category.nombre }}</option>
                                     </select>
                                     <button (click)="newCategoria($event)" class="btn btn-success"><b>+</b></button>
@@ -112,7 +116,7 @@
                                     <span class="input-group-text"><b>Concepto</b></span>
                                     <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
                                     [(ngModel)]="expense.subcategoria_id" (change)="onChgSubc2(expense.subcategoria_id)">
-                                        <option value="0">Elegir Concepto...</option>
+                                        <option value="0" selected disabled hidden>Elegir Concepto</option>
                                         <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>
                                     </select>
                                     <button (click)="newSubCategoria($event)" class="btn btn-success"><b>+</b></button>
@@ -121,7 +125,7 @@
                                     <span class="input-group-text"><b>Concepto</b></span>
                                     <select class="form-select" name="subcategoria_id" id="subcategoria_id" #subcategoria_id="ngModel"
                                     [(ngModel)]="expense.subcategoria_id" (change)="onChgSubc2(expense.subcategoria_id)">
-                                        <option value="0">Elegir Concepto...</option>
+                                        <option value="0" selected disabled hidden>Elegir Concepto</option>
                                         <option *ngFor="let subcategory of subcategories" [value]=subcategory.id>{{ subcategory.nombre }}</option>
                                     </select>
                                     <button (click)="newSubCategoria($event)" class="btn btn-success"><b>+</b></button>
@@ -133,7 +137,7 @@
                                     <span class="input-group-text"><b>Detalle</b></span>
                                     <select class="form-select" name="subcategoria2_id" id="subcategoria2_id" #subcategoria2_id="ngModel"
                                     [(ngModel)]="expense.subcategoria2_id">
-                                        <option value="0">Elegir Detalle...</option>
+                                        <option value="0" selected disabled hidden>Elegir Detalle...</option>
                                         <option *ngFor="let subcategory2 of subcategories2" [value]=subcategory2.id>{{ subcategory2.nombre }}</option>
                                     </select>
                                     <button (click)="newSubCategoria2($event)" class="btn btn-success" ><b>+</b></button>
@@ -142,7 +146,7 @@
                                     <span class="input-group-text"><b>Detalle</b></span>
                                     <select class="form-select" name="subcategoria2_id" id="subcategoria2_id" #subcategoria2_id="ngModel"
                                     [(ngModel)]="expense.subcategoria2_id">
-                                        <option value="0">Elegir Detalle...</option>
+                                        <option value="0" selected disabled hidden>Elegir Detalle...</option>
                                         <option *ngFor="let subcategory2 of subcategories2" [value]=subcategory2.id>{{ subcategory2.nombre }}</option>
                                     </select>
                                     <button (click)="newSubCategoria2($event)" class="btn btn-success"><b>+</b></button>
@@ -193,6 +197,7 @@
                                     <span class="input-group-text"><b>Metodo</b></span>
                                     <select class="form-select" name="metodo" id="metodo" #metodo="ngModel"
                                     [(ngModel)]="expense.metodo" (change)="onChgMetod(expense.metodo)">
+                                        <option value="0" selected disabled hidden>Elegir Metodo</option>
                                         <option *ngFor="let tipocuenta of tipocuentas" [value]=tipocuenta.id>{{ tipocuenta.nombre }}</option>
                                     </select>
                                 </div>
@@ -203,6 +208,7 @@
                                     <span class="input-group-text"><b>Proveedor</b></span>
                                     <select class="form-select" name="proveedor_id" id="proveedor_id" #proveedor_id="ngModel"
                                     [(ngModel)]="expense.proveedor_id">
+                                        <option value="0" selected disabled hidden>Elegir Proveedor</option>
                                         <option *ngFor="let provider of providers" [value]=provider.id>{{ provider.nombre }}</option>
                                     </select>
                                     <button (click)="newProveedor($event)" class="btn btn-success"><b>+</b></button>
@@ -312,7 +318,7 @@
                         <!-- <input type="submit" *ngIf="is_edit == false" value="Guardar" class="btn btn-success btn-sm"
                         [disabled]="cajaForm.invalid"> -->
                         <input type="submit" value="Guardar" class="btn btn-success btn-sm"
-                        [disabled]="newExpense.invalid">
+                        [disabled]="newExpense.invalid || expense.tipogasto_id == 0 || expense.metodo == 0">
                     </div>
                 </div>
                 <!-- /.card-footer-->

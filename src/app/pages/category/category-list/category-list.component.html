@@ -45,7 +45,7 @@
                 id="categoria" class="table table-bordered table-striped categoria">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <!-- <th>ID</th> -->
                             <th>Nombre</th>
                             <th>Cta. Contable</th>
                             <th>Estatus</th>
@@ -54,7 +54,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let category of categories">
-                            <td>{{ category.id }}</td>
+                            <!-- <td>{{ category.id }}</td> -->
                             <td>{{ category.nombre }}</td>
                             <td>{{ category.unidadnegocio }}</td>
                             <td *ngIf="category.status == 1"><span class="badge badge-success">Activo</span></td>

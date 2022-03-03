@@ -81,20 +81,20 @@
                             <td>{{ expense.tipogasto }}</td>
                             <td>{{ expense.proyecto || '-' }}</td>
                             <!-- <td>{{ expense.metodo }}</td> -->
-                            <td>{{ expense.fecha | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ (expense.fecha).substr(0,10) }}</td>
                             <td class="text-right fw-bold" [ngClass]="{
-                                'colorred': expense.tabla == 'cargo' && expense.metodo == 1,
-                                'colorblue': expense.tabla == 'cargo' && expense.metodo == 5,
-                                'colorgreen': expense.tabla == 'abono'
+                                'colorred': expense.tabla == 'Cargo' && expense.metodo.includes('Corriente'),
+                                'colorblue': expense.tabla == 'Cargo' && expense.metodo.includes('Credito'),
+                                'colorgreen': expense.tabla == 'Abono'
                             }">
                                 ${{ expense.monto | mask: 'separator':',' }}
                             </td>
                             <!-- <td>{{ expense.fechainicio | date: 'dd/MM/yyyy' }}</td> -->
                             <td>
-                                <a  *ngIf="expense.tabla == 'cargo'"  [routerLink]="['/expense/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1"
+                                <a  *ngIf="expense.tabla == 'Cargo'"  [routerLink]="['/expense/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
 
-                                <a  *ngIf="expense.tabla == 'abono'"  [routerLink]="['/payments/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1"
+                                <a  *ngIf="expense.tabla == 'Abono'"  [routerLink]="['/payments/edit/' + expense.idreg]" class="btn btn-primary btn-sm mr-1"
                                 title="Editar"><i class="fa fa-pen"></i></a>
 
                                 <button type="button" class="btn btn-sm btn-danger"
@@ -103,7 +103,7 @@
                                 </button>
 
                                 <!-- /* Modal */ -->
-                                <div *ngIf="expense.tabla=='cargo'" class="modal fade" id="{{'modal' + expense.idreg}}" tabindex="-1">
+                                <div *ngIf="expense.tabla=='Cargo'" class="modal fade" id="{{'modal' + expense.idreg}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">
                                         <div class="modal-header">
@@ -123,7 +123,7 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="expense.tabla=='abono'" class="modal fade" id="{{'modal' + expense.idreg}}" tabindex="-1">
+                                <div *ngIf="expense.tabla=='Abono'" class="modal fade" id="{{'modal' + expense.idreg}}" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">
                                         <div class="modal-header">

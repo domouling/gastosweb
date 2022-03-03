@@ -14,10 +14,11 @@ import { Category } from '@/models/category';
 export class NewcategoryComponent implements OnInit {
 
   public category: any;
+  public list?: any = [];
 
   constructor(
     public bsModalRef: BsModalRef,
-    private _categoryService: CategoryService  
+    private _categoryService: CategoryService
   ) {
     this.category = new Category(null,1,null,null,1,'','');
   }
@@ -26,6 +27,7 @@ export class NewcategoryComponent implements OnInit {
   }
 
   public onSubmit(form:any) {
+    this.category.user_id = this.list[0];
     let newId;
     this._categoryService.add(this.category).subscribe(
       response => {

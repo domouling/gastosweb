@@ -44,6 +44,20 @@ export class TpocuentaEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTpocuenta();
+    this.getIdentity();
+  }
+
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.tpocuenta.user_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   onSubmit(form:any){

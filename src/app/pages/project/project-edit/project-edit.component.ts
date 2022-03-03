@@ -39,7 +39,7 @@ export class ProjectEditComponent implements OnInit {
 
   public expense: any;
 
-  public ceco: number;
+  public ceco: any;
   //public cecoName: string = '';
 
   public totexp: any;
@@ -60,9 +60,9 @@ export class ProjectEditComponent implements OnInit {
     private _modalService: BsModalService
   ) {
 
-    this.ceco =  parseInt(localStorage.getItem('ceco'));
+    this.ceco =  localStorage.getItem('ceco');
 
-    this.project = new Project(null,'','','',0,0,0,this.ceco,1,'','');
+    this.project = new Project(null,'','','',0,0,null,null,this.ceco,1,'','');
     this.title = 'Proyectos';
     this.subtitle = 'Editar Proyecto';
     this.url = global.url;
@@ -74,6 +74,7 @@ export class ProjectEditComponent implements OnInit {
   ngOnInit(): void {
     this.getProviders();
     this.getCecos();
+    this.getIdentity();
     //this.getCeco();
     this.getProject();
     this.getExpenseId();
@@ -145,6 +146,19 @@ export class ProjectEditComponent implements OnInit {
     );
   }
 
+  getIdentity(){
+    this._userService.getIdentity().subscribe(
+      response => {
+        if(response.status === 'success'){
+          this.project.user_id = response.data._id;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
   getProject(){
     this._route.params.subscribe(params => {
       let id = params['id'];
@@ -152,8 +166,9 @@ export class ProjectEditComponent implements OnInit {
         response => {
           if(response.project) {
             this.project = response.project;
-            this.project.fechainicio = moment(this.project.fechainicio).format('YYYY-MM-DD');
-            this.project.fechafin = moment(this.project.fechafin).format('YYYY-MM-DD');
+
+            this.project.fechainicio = (this.project.fechainicio).substr(0,10);
+            this.project.fechafin = (this.project.fechafin).substr(0,10);
           } else {
             this._router.navigate(['/projects']);
           }

@@ -1,6 +1,6 @@
 export class Tipogasto {
     constructor(
-        public id: number,
+        public id: string,
         public nombre: string,
         public status: number,
         public created_at: string,
